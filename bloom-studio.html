@@ -1,0 +1,1627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bloom Studio — Bloom & Co</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+  --navy:#06101f;--navy2:#0a1628;--navy3:#0d1e35;--navy4:#111e33;--navy5:#1a2d45;
+  --border:#1e2d4a;--border2:#2a3d5a;
+  --gold:#c9a84c;--gold2:#e0bc6a;--gold-dim:rgba(201,168,76,0.15);--gold-dim2:rgba(201,168,76,0.07);
+  --text:#e8edf3;--text2:#9ab0c8;--text3:#4a6080;--text4:#2a3d5a;
+  --green:#4caf7a;--green-bg:#071a0e;
+  --red:#e05a5a;--red-bg:#1a0707;
+  --blue:#4a9edd;--blue-bg:#071220;
+  --amber:#e0a040;--amber-bg:#1a1007;
+  --purple:#9a7add;--purple-bg:#120a20;
+  --r8:8px;--r12:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);height:100vh;display:flex;flex-direction:column;overflow:hidden}
+
+/* ── TOP BAR ── */
+.topbar{height:48px;background:var(--navy2);border-bottom:0.5px solid var(--border);display:flex;align-items:center;gap:10px;padding:0 14px;flex-shrink:0}
+.logo{font-family:'Playfair Display',serif;font-size:17px;color:var(--gold)}
+.logo-sub{font-size:9px;color:var(--text4);text-transform:uppercase;letter-spacing:1.5px}
+.top-center{display:flex;align-items:center;gap:6px;margin:0 auto}
+.role-indicator{display:flex;align-items:center;gap:8px;background:var(--navy3);border-radius:8px;padding:4px 6px}
+.role-btn{padding:4px 12px;border-radius:6px;font-size:11px;color:var(--text3);cursor:pointer;transition:all .15s;white-space:nowrap;border:none;background:transparent}
+.role-btn.active{background:var(--gold);color:var(--navy);font-weight:600}
+.top-right{display:flex;align-items:center;gap:8px}
+.alert-pill{background:var(--red-bg);border:0.5px solid var(--red);color:var(--red);border-radius:20px;padding:3px 10px;font-size:10px;cursor:pointer;display:flex;align-items:center;gap:4px}
+.cur-role-badge{background:var(--gold-dim);border:0.5px solid var(--gold);color:var(--gold);border-radius:20px;padding:3px 10px;font-size:10px;font-weight:500}
+.av-top{width:28px;height:28px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--navy);cursor:pointer}
+
+/* ── LAYOUT ── */
+.body-wrap{display:flex;flex:1;overflow:hidden}
+.sidebar{width:188px;background:var(--navy2);border-right:0.5px solid var(--border);display:flex;flex-direction:column;overflow-y:auto;flex-shrink:0}
+.main{flex:1;overflow-y:auto;background:var(--navy3)}
+
+/* ── SIDEBAR ── */
+.nav-grp{padding:12px 0 4px}
+.nav-lbl{font-size:9px;color:var(--text4);text-transform:uppercase;letter-spacing:1.2px;padding:0 13px 5px}
+.ni{display:flex;align-items:center;gap:8px;padding:8px 13px;font-size:12px;color:var(--text3);cursor:pointer;transition:all .12s;border-left:2px solid transparent}
+.ni:hover{background:var(--navy4);color:var(--text2)}
+.ni.active{background:var(--navy4);color:var(--gold);border-left-color:var(--gold)}
+.ni i{font-size:14px;flex-shrink:0}
+.ni .bdg{margin-left:auto;background:var(--red);color:#fff;border-radius:10px;padding:1px 6px;font-size:9px;font-weight:700}
+.ni .bdg-g{margin-left:auto;background:var(--gold-dim);color:var(--gold);border-radius:10px;padding:1px 6px;font-size:9px}
+.sidebar-foot{margin-top:auto;padding:12px 13px;border-top:0.5px solid var(--border)}
+.sf-role{font-size:10px;color:var(--text3);margin-bottom:3px}
+.sf-name{font-size:12px;color:var(--gold);font-weight:500}
+
+/* ── SCREENS ── */
+.screen{display:none;padding:16px 18px}
+.screen.active{display:block}
+
+/* ── PAGE HDR ── */
+.ph{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px}
+.pt{font-family:'Playfair Display',serif;font-size:19px;color:var(--text)}
+.ps{font-size:11px;color:var(--text3);margin-top:2px}
+.ha{display:flex;gap:7px;align-items:center}
+.btn-g{background:var(--gold);color:var(--navy);border:none;border-radius:7px;padding:6px 13px;font-size:12px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:5px}
+.btn-n{background:transparent;color:var(--text2);border:0.5px solid var(--border2);border-radius:7px;padding:6px 13px;font-size:12px;cursor:pointer;display:inline-flex;align-items:center;gap:5px;transition:all .12s}
+.btn-n:hover{border-color:var(--gold);color:var(--gold)}
+.btn-r{background:var(--red-bg);color:var(--red);border:0.5px solid var(--red);border-radius:7px;padding:6px 13px;font-size:12px;cursor:pointer;display:inline-flex;align-items:center;gap:5px}
+
+/* ── STATS ── */
+.sg{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:14px}
+.sg3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:14px}
+.sg2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-bottom:14px}
+.stat{background:var(--navy2);border:0.5px solid var(--border);border-radius:var(--r8);padding:12px 13px}
+.sl{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px}
+.sv{font-size:20px;font-weight:500;color:var(--text)}
+.sd{font-size:11px;color:var(--gold);margin-top:3px}
+.sd.g{color:var(--green)}.sd.r{color:var(--red)}
+
+/* ── CARDS ── */
+.card{background:var(--navy2);border:0.5px solid var(--border);border-radius:var(--r12);overflow:hidden;margin-bottom:12px}
+.ch{padding:10px 13px;border-bottom:0.5px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.ct{font-size:10px;font-weight:500;color:var(--text3);text-transform:uppercase;letter-spacing:.5px}
+.th-row{display:grid;padding:7px 13px;border-bottom:0.5px solid var(--border)}
+.th{font-size:10px;color:var(--text4);text-transform:uppercase;letter-spacing:.4px}
+.tr{display:grid;padding:10px 13px;border-bottom:0.5px solid var(--navy3);align-items:center;cursor:pointer;transition:background .1s}
+.tr:hover{background:var(--navy4)}
+.tr:last-child{border-bottom:none}
+.td{font-size:12px;color:var(--text2)}
+.tn{font-size:12px;color:var(--text);font-weight:500}
+.ts-{font-size:10px;color:var(--text3)}
+
+/* ── AVATARS ── */
+.av{width:28px;height:28px;border-radius:50%;background:var(--navy5);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:var(--gold);flex-shrink:0}
+.av-sq{width:30px;height:30px;border-radius:7px;background:var(--navy5);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:var(--gold);flex-shrink:0}
+.av-lg{width:50px;height:50px;border-radius:50%;background:var(--navy5);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600;color:var(--gold);flex-shrink:0;border:2px solid var(--gold)}
+
+/* ── PILLS ── */
+.pill{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:500}
+.pg{background:var(--green-bg);color:var(--green);border:0.5px solid var(--green)}
+.pr{background:var(--red-bg);color:var(--red);border:0.5px solid var(--red)}
+.pa{background:var(--amber-bg);color:var(--amber);border:0.5px solid var(--amber)}
+.pb{background:var(--blue-bg);color:var(--blue);border:0.5px solid var(--blue)}
+.pp{background:var(--purple-bg);color:var(--purple);border:0.5px solid var(--purple)}
+.pgold{background:var(--gold-dim);color:var(--gold);border:0.5px solid var(--gold)}
+
+/* ── PLATFORMS ── */
+.plats{display:flex;gap:4px;flex-wrap:wrap}
+.plat{padding:2px 6px;border-radius:4px;font-size:9px;font-weight:700;text-transform:uppercase}
+.tt{background:#1a0a12;color:#ff2d78;border:0.5px solid #ff2d78}
+.ig{background:#1a0a10;color:#e1306c;border:0.5px solid #e1306c}
+.yt{background:#1a0808;color:#ff4444;border:0.5px solid #ff4444}
+.xp{background:#0a0a0a;color:#aaa;border:0.5px solid #444}
+.fb{background:#081428;color:#4267B2;border:0.5px solid #4267B2}
+.sc{background:#0a1008;color:#FFFC00;border:0.5px solid #FFFC00}
+.kk{background:#061a08;color:#53fc18;border:0.5px solid #53fc18}
+.tw{background:#100816;color:#9146ff;border:0.5px solid #9146ff}
+
+/* ── TWO/THREE COL ── */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:12px}
+.panel{background:var(--navy2);border:0.5px solid var(--border);border-radius:var(--r12);padding:13px}
+.pnl-t{font-size:10px;font-weight:500;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
+
+/* ── ALERTS ── */
+.al{display:flex;align-items:flex-start;gap:9px;padding:10px;border-radius:8px;margin-bottom:6px;border:0.5px solid}
+.al.danger{background:var(--red-bg);border-color:var(--red)}
+.al.warn{background:var(--amber-bg);border-color:var(--amber)}
+.al.info{background:var(--blue-bg);border-color:var(--blue)}
+.al.succ{background:var(--green-bg);border-color:var(--green)}
+.al-icon{font-size:14px;flex-shrink:0;margin-top:1px}
+.al-body{flex:1}
+.al-title{font-size:12px;font-weight:500;color:var(--text)}
+.al-sub{font-size:11px;color:var(--text3);margin-top:1px;line-height:1.5}
+.al-time{font-size:10px;color:var(--text4);flex-shrink:0}
+
+/* ── MISSIONS ── */
+.mis{background:var(--navy3);border:0.5px solid var(--border);border-radius:8px;padding:11px;margin-bottom:7px}
+.mis-ttl{font-size:12px;font-weight:500;color:var(--text);margin-bottom:3px}
+.mis-desc{font-size:11px;color:var(--text3);line-height:1.5;margin-bottom:7px}
+.bar-wrap{background:var(--navy5);border-radius:4px;height:4px;overflow:hidden;margin-bottom:5px}
+.bar{height:4px;background:var(--gold);border-radius:4px}
+.mis-foot{display:flex;align-items:center;justify-content:space-between}
+
+/* ── LOG ── */
+.li{display:flex;align-items:flex-start;gap:8px;margin-bottom:8px}
+.li i{font-size:13px;color:var(--gold);flex-shrink:0;margin-top:1px}
+.li-txt{font-size:11px;color:var(--text2);line-height:1.5;flex:1}
+.li-time{font-size:10px;color:var(--text4);flex-shrink:0}
+
+/* ── NET ITEMS ── */
+.ni-item{display:flex;align-items:center;gap:9px;padding:9px 0;border-bottom:0.5px solid var(--border)}
+.ni-item:last-child{border-bottom:none}
+.ni-name{font-size:12px;color:var(--text);font-weight:500}
+.ni-meta{font-size:10px;color:var(--text3);margin-top:1px}
+.ni-btn{margin-left:auto;background:transparent;border:0.5px solid var(--border2);color:var(--text3);border-radius:6px;padding:4px 9px;font-size:10px;cursor:pointer}
+.ni-btn:hover,.ni-btn.gold{border-color:var(--gold);color:var(--gold)}
+
+/* ── COLLAB ── */
+.ccard{background:var(--navy2);border:0.5px solid var(--border);border-radius:var(--r12);padding:13px;margin-bottom:10px}
+.split-bdg{background:var(--gold-dim);border:0.5px solid var(--gold);border-radius:6px;padding:3px 9px;font-size:10px;color:var(--gold)}
+
+/* ── METRICS ── */
+.mg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-bottom:12px}
+.mg2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-bottom:12px}
+.met{background:var(--navy3);border-radius:8px;padding:10px 11px}
+.ml{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px}
+.mv{font-size:13px;font-weight:500;color:var(--text)}
+.md{font-size:10px;color:var(--green);margin-top:2px}
+
+/* ── SCORE ── */
+.score-ring{width:52px;height:52px;border-radius:50%;border:2.5px solid var(--gold);display:flex;align-items:center;justify-content:center;flex-direction:column;flex-shrink:0}
+.sn{font-size:16px;font-weight:600;color:var(--gold)}
+.sl2{font-size:8px;color:var(--text3)}
+
+/* ── CFG ── */
+.cfg{background:var(--navy3);border-radius:8px;padding:10px 12px;margin-bottom:7px}
+.cfg-lbl{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px}
+.cfg-row{display:flex;align-items:center;gap:9px}
+.cfg-val{font-size:12px;color:var(--gold);font-weight:500;min-width:36px;text-align:right}
+input[type=range]{flex:1;accent-color:var(--gold)}
+.tog-wrap{display:flex;align-items:center;gap:8px}
+.tog{width:32px;height:18px;border-radius:9px;position:relative;cursor:pointer;flex-shrink:0;transition:background .2s}
+.tog.on{background:var(--gold)}.tog.off{background:var(--navy5)}
+.tog-dot{width:12px;height:12px;border-radius:50%;background:var(--navy);position:absolute;top:3px;transition:left .15s}
+.tog.on .tog-dot{left:17px}.tog.off .tog-dot{left:3px}
+.tog-lbl{font-size:12px;color:var(--text)}
+
+/* ── ACTION ── */
+.act-item{display:flex;align-items:center;gap:9px;padding:9px 11px;background:var(--navy3);border-radius:8px;margin-bottom:6px;cursor:pointer;transition:background .1s}
+.act-item:hover{background:var(--navy4)}
+.ck{width:16px;height:16px;border-radius:4px;border:0.5px solid var(--border2);flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.ck.done{background:var(--gold);border-color:var(--gold)}
+.act-txt{font-size:12px;color:var(--text);flex:1}
+
+/* ── POLICY ── */
+.policy{background:var(--red-bg);border:0.5px solid var(--red);border-radius:8px;padding:12px 13px;margin-bottom:12px}
+.policy-t{font-size:12px;font-weight:500;color:var(--red);display:flex;align-items:center;gap:6px;margin-bottom:5px}
+.policy-b{font-size:11px;color:var(--text2);line-height:1.6}
+
+/* ── NOTICE ── */
+.notice{background:var(--gold-dim2);border:0.5px solid var(--gold);border-radius:8px;padding:10px 12px;margin-bottom:12px;font-size:11px;color:var(--gold);display:flex;align-items:flex-start;gap:8px;line-height:1.5}
+.notice i{flex-shrink:0;margin-top:1px}
+
+/* ── DIR BOX ── */
+.dir-box{background:var(--navy2);border:0.5px solid var(--gold);border-radius:var(--r12);padding:13px;margin-bottom:10px}
+.dir-t{font-size:12px;font-weight:500;color:var(--gold);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.lock-bdg{background:var(--gold-dim);border:0.5px solid var(--gold);border-radius:20px;padding:1px 7px;font-size:9px;color:var(--gold);margin-left:auto}
+
+/* ── BRIEF SECTION ── */
+.bsec{margin-bottom:14px}
+.bsec-t{font-size:10px;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.bsec-t::after{content:'';flex:1;height:0.5px;background:var(--border);display:block}
+
+/* ── PLATFORM TABS ── */
+.plat-tabs{display:flex;gap:3px;background:var(--navy2);border:0.5px solid var(--border);border-radius:8px;padding:3px;margin-bottom:12px;flex-wrap:wrap}
+.ptab{padding:4px 10px;border-radius:6px;font-size:11px;color:var(--text3);cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:4px}
+.ptab.active{background:var(--gold);color:var(--navy);font-weight:600}
+
+/* ── LOCKED SCREEN ── */
+.locked-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:400px;text-align:center;gap:12px}
+.locked-icon{font-size:48px;color:var(--text4)}
+.locked-title{font-size:16px;font-weight:500;color:var(--text3)}
+.locked-sub{font-size:12px;color:var(--text4);line-height:1.6;max-width:300px}
+
+/* ── AGENCY PORTAL NOTICE ── */
+.agency-portal-wrap{background:var(--navy2);border:0.5px solid var(--border);border-radius:var(--r12);padding:0;overflow:hidden}
+.agency-portal-header{background:var(--gold);padding:14px 16px;display:flex;align-items:center;gap:10px}
+.agency-portal-title{font-size:15px;font-weight:600;color:var(--navy);font-family:'Playfair Display',serif}
+.agency-portal-body{padding:16px}
+
+.msg-thread:hover{background:var(--navy4)!important}.active-thread{background:var(--navy4)!important}
+.del-btn{background:var(--red-bg);border:0.5px solid var(--red);color:var(--red);border-radius:6px;padding:4px 7px;font-size:12px;cursor:pointer;transition:all .15s;flex-shrink:0}
+.del-btn:hover{background:var(--red);color:#fff}
+.del-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);display:flex;align-items:center;justify-content:center;z-index:1000}
+.del-modal{background:var(--navy2);border:0.5px solid var(--red);border-radius:var(--r12);padding:24px;width:320px;text-align:center}
+.del-modal-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:8px}
+.del-modal-sub{font-size:12px;color:var(--text3);margin-bottom:20px;line-height:1.5}
+.del-modal-btns{display:flex;gap:8px;justify-content:center}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div style="display:flex;align-items:center;gap:8px">
+    <div class="logo">Bloom Studio</div>
+    <div class="logo-sub">Bloom & Co</div>
+  </div>
+  <div class="top-center">
+    <span style="font-size:10px;color:var(--text4)">View as:</span>
+    <div class="role-indicator">
+      <button class="role-btn active" onclick="setRole('director',this)">Director</button>
+      <button class="role-btn" onclick="setRole('agentmgr',this)">Agent Mgr</button>
+      <button class="role-btn" onclick="setRole('agent',this)">Agent</button>
+      <button class="role-btn" onclick="setRole('agency',this)">Agency</button>
+      <button class="role-btn" onclick="setRole('creator',this)">Creator</button>
+    </div>
+  </div>
+  <div class="top-right">
+    <div class="alert-pill" id="alertPill" onclick="nav('briefing')"><i class="ti ti-bell"></i><span id="alertCount">6 alerts</span></div>
+    <div class="cur-role-badge" id="roleBadge">Director · Full access</div>
+    <div class="av-top">JD</div>
+  </div>
+</div>
+
+<div class="body-wrap">
+<!-- SIDEBAR -->
+<div class="sidebar" id="sidebar">
+  <!-- Director -->
+  <div class="nav-grp" data-roles="director">
+    <div class="nav-lbl">Command</div>
+    <div class="ni active" onclick="nav('briefing')"><i class="ti ti-dashboard"></i>Daily briefing<span class="bdg">6</span></div>
+    <div class="ni" onclick="nav('director')"><i class="ti ti-lock"></i>Director dashboard</div>
+  </div>
+  <div class="nav-grp" data-roles="director">
+    <div class="nav-lbl">Scouting</div>
+    <div class="ni" onclick="nav('scout')"><i class="ti ti-telescope"></i>Scout feed</div>
+    <div class="ni" onclick="nav('bot')"><i class="ti ti-robot"></i>Bot settings</div>
+  </div>
+  <div class="nav-grp" data-roles="director agentmgr agent">
+    <div class="nav-lbl">Creators</div>
+    <div class="ni" onclick="nav('roster')" data-roles="director agentmgr agent"><i class="ti ti-users"></i>My roster</div>
+    <div class="ni" onclick="nav('profile')" data-roles="director agentmgr agent"><i class="ti ti-user"></i>Creator profile</div>
+    <div class="ni" onclick="nav('missions')" data-roles="director agentmgr agent"><i class="ti ti-target"></i>Missions<span class="bdg-g">7</span></div>
+    <div class="ni" onclick="nav('retention')" data-roles="director agentmgr"><i class="ti ti-heart"></i>Retention bot</div>
+    <div class="ni" onclick="nav('review')" data-roles="director agentmgr"><i class="ti ti-eye-check"></i>Content review<span class="bdg">5</span></div>
+    <div class="ni" onclick="nav('mediakits')" data-roles="director agentmgr"><i class="ti ti-id-badge"></i>Media kits</div>
+  </div>
+  <div class="nav-grp" data-roles="director agentmgr agent">
+    <div class="nav-lbl">Brands</div>
+    <div class="ni" onclick="nav('deals')" data-roles="director agentmgr agent"><i class="ti ti-tag"></i>Brand deals</div>
+    <div class="ni" onclick="nav('contracts')" data-roles="director agentmgr"><i class="ti ti-file-text"></i>Contracts<span class="bdg-g">3</span></div>
+    <div class="ni" onclick="nav('invoices')" data-roles="director agentmgr"><i class="ti ti-receipt"></i>Invoices</div>
+    <div class="ni" onclick="nav('revenue')" data-roles="director agentmgr"><i class="ti ti-currency-dollar"></i>Revenue</div>
+  </div>
+  <div class="nav-grp" data-roles="director agentmgr agent">
+    <div class="nav-lbl">Messages</div>
+    <div class="ni" onclick="nav('messaging')"><i class="ti ti-message"></i>Inbox<span class="bdg">4</span></div>
+  </div>
+  <div class="nav-grp" data-roles="director agentmgr">
+    <div class="nav-lbl">Network</div>
+    <div class="ni" onclick="nav('collab')" data-roles="director agentmgr"><i class="ti ti-share"></i>Collaborate<span class="bdg">2</span></div>
+    <div class="ni" onclick="nav('agencies')" data-roles="director agentmgr"><i class="ti ti-building"></i>Agencies</div>
+  </div>
+  <div class="nav-grp" data-roles="director agentmgr agent">
+    <div class="nav-lbl">Content</div>
+    <div class="ni" onclick="nav('review')" data-roles="director agentmgr agent"><i class="ti ti-eye-check"></i>Content review<span class="bdg">4</span></div>
+    <div class="ni" onclick="nav('analytics')" data-roles="director agentmgr"><i class="ti ti-chart-line"></i>Analytics &amp; ROI</div>
+    <div class="ni" onclick="nav('compliance')" data-roles="director agentmgr"><i class="ti ti-shield-check"></i>FTC &amp; compliance</div>
+  </div>
+  <div class="nav-grp" data-roles="director agentmgr agent">
+    <div class="nav-lbl">Communication</div>
+    <div class="ni" onclick="nav('inbox')" data-roles="director agentmgr agent"><i class="ti ti-messages"></i>Inbox<span class="bdg">5</span></div>
+  </div>
+  <div class="nav-grp" data-roles="director agentmgr">
+    <div class="nav-lbl">Team</div>
+    <div class="ni" onclick="nav('agentmgr-dash')" data-roles="director agentmgr"><i class="ti ti-briefcase"></i>Agent manager</div>
+    <div class="ni" onclick="nav('agent-dash')" data-roles="director agentmgr agent"><i class="ti ti-id-badge"></i>Agent view</div>
+  </div>
+  <!-- Agency portal nav -->
+  <div class="nav-grp" data-roles="agency">
+    <div class="nav-lbl">My portal</div>
+    <div class="ni active" onclick="nav('agency-portal')"><i class="ti ti-building"></i>Agency dashboard</div>
+    <div class="ni" onclick="nav('agency-deals')"><i class="ti ti-share"></i>Collab deals</div>
+    <div class="ni" onclick="nav('agency-profile')"><i class="ti ti-id"></i>My profile</div>
+  </div>
+  <!-- Creator nav -->
+  <div class="nav-grp" data-roles="creator">
+    <div class="nav-lbl">My dashboard</div>
+    <div class="ni active" onclick="nav('creator-dash')"><i class="ti ti-star"></i>My overview</div>
+    <div class="ni" onclick="nav('creator-missions')"><i class="ti ti-target"></i>My missions</div>
+    <div class="ni" onclick="nav('creator-deals')"><i class="ti ti-tag"></i>My deals</div>
+    <div class="ni" onclick="nav('creator-earnings')"><i class="ti ti-currency-dollar"></i>My earnings</div>
+    <div class="ni" onclick="nav('creator-mediakit')"><i class="ti ti-id-badge"></i>My media kit</div>
+    <div class="ni" onclick="nav('creator-inbox')"><i class="ti ti-messages"></i>My inbox<span class="bdg">2</span></div>
+  </div>
+
+  <div class="sidebar-foot">
+    <div class="sf-role" id="sfRole">Director · Full access</div>
+    <div class="sf-name" id="sfName">Jordan Davis</div>
+  </div>
+</div>
+
+<!-- MAIN AREA -->
+<div class="main" id="main">
+
+<!-- ══════════════════════════════════════
+     DIRECTOR: DAILY BRIEFING
+══════════════════════════════════════ -->
+<div id="s-briefing" class="screen active">
+  <div class="ph">
+    <div><div class="pt">Daily briefing</div><div class="ps">Sunday, June 8 2026 · Good morning, Jordan</div></div>
+    <div class="ha"><button class="btn-n"><i class="ti ti-download"></i>Export</button><button class="btn-g"><i class="ti ti-refresh"></i>Refresh</button></div>
+  </div>
+  <div class="sg">
+    <div class="stat"><div class="sl">Active alerts</div><div class="sv">6</div><div class="sd r">3 urgent</div></div>
+    <div class="stat"><div class="sl">Action queue</div><div class="sv">11</div><div class="sd">Items pending</div></div>
+    <div class="stat"><div class="sl">Missions running</div><div class="sv">7</div><div class="sd r">2 delayed</div></div>
+    <div class="stat"><div class="sl">Network activity</div><div class="sv">High</div><div class="sd g">4 collab requests</div></div>
+  </div>
+  <div class="two-col">
+    <div>
+      <div class="bsec">
+        <div class="bsec-t"><i class="ti ti-alert-triangle"></i>Alerts — Director &amp; Managers only</div>
+        <div class="al danger"><i class="ti ti-shield-off al-icon" style="color:var(--red)"></i><div class="al-body"><div class="al-title">Brand safety risk — @jtrendsetter</div><div class="al-sub">Posted controversial content. FreshKicks deal at risk. Review now.</div></div><div class="al-time">2h</div></div>
+        <div class="al danger"><i class="ti ti-user-off al-icon" style="color:var(--red)"></i><div class="al-body"><div class="al-title">Inactivity — @tektalks (11 days)</div><div class="al-sub">NovaTech campaign due in 5 days. Retention bot triggered check-in.</div></div><div class="al-time">6h</div></div>
+        <div class="al warn"><i class="ti ti-clock al-icon" style="color:var(--amber)"></i><div class="al-body"><div class="al-title">Campaign delay — GlowLab × @kaylalooks</div><div class="al-sub">Content submission 2 days overdue. Client follow-up needed.</div></div><div class="al-time">1d</div></div>
+        <div class="al info"><i class="ti ti-trending-up al-icon" style="color:var(--blue)"></i><div class="al-body"><div class="al-title">Engagement spike — @mrealness</div><div class="al-sub">Last video: 2.4M views, +340% above baseline. Pitch brands now.</div></div><div class="al-time">3h</div></div>
+        <div class="al succ"><i class="ti ti-check al-icon" style="color:var(--green)"></i><div class="al-body"><div class="al-title">Mission complete — @alexjones · DripRoom</div><div class="al-sub">All 3 posts submitted and approved. Payment processing.</div></div><div class="al-time">5h</div></div>
+        <div class="al warn"><i class="ti ti-building-store al-icon" style="color:var(--amber)"></i><div class="al-body"><div class="al-title">New brand lead — SportZone</div><div class="al-sub">Bot detected SportZone scaling TikTok + Instagram spend. 4 creator matches.</div></div><div class="al-time">8h</div></div>
+      </div>
+    </div>
+    <div>
+      <div class="bsec">
+        <div class="bsec-t"><i class="ti ti-list-check"></i>Action queue</div>
+        <div class="act-item" onclick="toggleCheck(this)"><div class="ck"><i class="ti ti-check" style="font-size:9px;color:var(--navy)"></i></div><div class="act-txt">Review @jtrendsetter brand safety post</div><span class="pill pr">Urgent</span></div>
+        <div class="act-item" onclick="toggleCheck(this)"><div class="ck"></div><div class="act-txt">Contact @tektalks re: NovaTech deadline</div><span class="pill pr">Urgent</span></div>
+        <div class="act-item" onclick="toggleCheck(this)"><div class="ck"></div><div class="act-txt">Accept/decline Viral Partners collab ($8K)</div><span class="pill pa">High</span></div>
+        <div class="act-item" onclick="toggleCheck(this)"><div class="ck"></div><div class="act-txt">Assign creator to FreshKicks open deal</div><span class="pill pa">High</span></div>
+        <div class="act-item" onclick="toggleCheck(this)"><div class="ck"></div><div class="act-txt">Approve bot outreach — 12 new creator leads</div><span class="pill pb">Normal</span></div>
+        <div class="act-item" onclick="toggleCheck(this)"><div class="ck"></div><div class="act-txt">Pitch brands on @mrealness engagement spike</div><span class="pill pb">Normal</span></div>
+        <div class="act-item" onclick="toggleCheck(this)"><div class="ck"></div><div class="act-txt">Review @shopwithsoph contract expiry (14 days)</div><span class="pill pa">High</span></div>
+      </div>
+      <div class="bsec">
+        <div class="bsec-t"><i class="ti ti-target"></i>Mission status</div>
+        <div class="mis">
+          <div style="display:flex;align-items:center;gap:7px;margin-bottom:5px"><span class="pill pb">Campaign</span><div class="mis-ttl" style="margin-bottom:0">DripRoom Fashion Week</div><span class="pill pg" style="margin-left:auto">Done</span></div>
+          <div class="bar-wrap"><div class="bar" style="width:100%"></div></div>
+          <div class="mis-foot"><span style="font-size:10px;color:var(--text3)">@alexjones · 3/3 posts</span><span style="font-size:10px;color:var(--green)">$3,600</span></div>
+        </div>
+        <div class="mis">
+          <div style="display:flex;align-items:center;gap:7px;margin-bottom:5px"><span class="pill pp">Promo</span><div class="mis-ttl" style="margin-bottom:0">GlowLab Summer</div><span class="pill pa" style="margin-left:auto">Delayed</span></div>
+          <div class="bar-wrap"><div class="bar" style="width:33%"></div></div>
+          <div class="mis-foot"><span style="font-size:10px;color:var(--text3)">@kaylalooks · 1/3</span><span style="font-size:10px;color:var(--amber)">Due Jun 18</span></div>
+        </div>
+        <div class="mis">
+          <div style="display:flex;align-items:center;gap:7px;margin-bottom:5px"><span class="pill pgold">Event</span><div class="mis-ttl" style="margin-bottom:0">NovaTech Product Drop</div><span class="pill pr" style="margin-left:auto">At risk</span></div>
+          <div class="bar-wrap"><div class="bar" style="width:0%"></div></div>
+          <div class="mis-foot"><span style="font-size:10px;color:var(--text3)">@tektalks · 0/3</span><span style="font-size:10px;color:var(--red)">Overdue</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     DIRECTOR DASHBOARD
+══════════════════════════════════════ -->
+<div id="s-director" class="screen">
+  <div class="ph">
+    <div><div class="pt">Director dashboard</div><div class="ps">Full platform control · Director access only</div></div>
+    <div class="ha"><span class="pill pgold"><i class="ti ti-lock"></i>Director only</span></div>
+  </div>
+  <div class="notice"><i class="ti ti-shield-lock"></i>You are in Director mode. All platform-wide settings, access controls, policies, and bot master switches are managed here. No other role can see or modify these settings.</div>
+  <div class="three-col">
+    <div class="dir-box">
+      <div class="dir-t"><i class="ti ti-users"></i>Role access control<span class="lock-bdg">Director only</span></div>
+      <div class="cfg"><div class="tog-wrap"><div class="tog on" onclick="togT(this)"><div class="tog-dot"></div></div><div class="tog-lbl">Agent managers active</div></div></div>
+      <div class="cfg"><div class="tog-wrap"><div class="tog on" onclick="togT(this)"><div class="tog-dot"></div></div><div class="tog-lbl">Agents active</div></div></div>
+      <div class="cfg"><div class="tog-wrap"><div class="tog on" onclick="togT(this)"><div class="tog-dot"></div></div><div class="tog-lbl">Creator dashboards active</div></div></div>
+      <div class="cfg"><div class="tog-wrap"><div class="tog off" onclick="togT(this)"><div class="tog-dot"></div></div><div class="tog-lbl">Agency portal open</div></div></div>
+    </div>
+    <div class="dir-box">
+      <div class="dir-t"><i class="ti ti-robot"></i>Bot master controls<span class="lock-bdg">Director only</span></div>
+      <div class="cfg"><div class="tog-wrap"><div class="tog on" onclick="togT(this)"><div class="tog-dot"></div></div><div class="tog-lbl">Scout bot running</div></div></div>
+      <div class="cfg"><div class="tog-wrap"><div class="tog on" onclick="togT(this)"><div class="tog-dot"></div></div><div class="tog-lbl">Retention bot running</div></div></div>
+      <div class="cfg"><div class="tog-wrap"><div class="tog on" onclick="togT(this)"><div class="tog-dot"></div></div><div class="tog-lbl">Brand scout bot running</div></div></div>
+      <div class="cfg"><div class="tog-wrap"><div class="tog on" onclick="togT(this)"><div class="tog-dot"></div></div><div class="tog-lbl">Auto outreach enabled</div></div></div>
+    </div>
+    <div class="dir-box">
+      <div class="dir-t"><i class="ti ti-currency-dollar"></i>Revenue rules<span class="lock-bdg">Director only</span></div>
+      <div class="cfg"><div class="cfg-lbl">Agency commission %</div><div class="cfg-row"><input type="range" min="10" max="40" value="20" step="1" oninput="this.nextElementSibling.textContent=this.value+'%'"><span class="cfg-val">20%</span></div></div>
+      <div class="cfg"><div class="cfg-lbl">Min collab split to network</div><div class="cfg-row"><input type="range" min="30" max="70" value="50" step="5" oninput="this.nextElementSibling.textContent=this.value+'%'"><span class="cfg-val">50%</span></div></div>
+      <div class="cfg"><div class="cfg-lbl">Creator payout %</div><div class="cfg-row"><input type="range" min="50" max="85" value="70" step="5" oninput="this.nextElementSibling.textContent=this.value+'%'"><span class="cfg-val">70%</span></div></div>
+    </div>
+  </div>
+  <div class="policy">
+    <div class="policy-t"><i class="ti ti-gavel"></i>Network anti-poaching policy — enforced platform-wide</div>
+    <div class="policy-b">All connected agencies agree to this at signup and it is displayed on their portal at all times: <strong style="color:var(--red)">You may not directly contact, solicit, recruit, or attempt to sign any creator who is currently listed as signed or pending within any connected network on this platform. Violation results in immediate removal, forfeiture of all pending revenue, and a permanent ban from Bloom Studio.</strong> The bot monitors all cross-network creator contacts and flags violations automatically.</div>
+  </div>
+  <div class="two-col">
+    <div class="card">
+      <div class="ch"><div class="ct">Access log — director only</div></div>
+      <div style="padding:12px 13px">
+        <div class="li"><i class="ti ti-login" style="color:var(--green)"></i><div class="li-txt">Agent Mgr Marcus logged in · NYC</div><div class="li-time">12m</div></div>
+        <div class="li"><i class="ti ti-login" style="color:var(--green)"></i><div class="li-txt">Agent Tasha accessed @kaylalooks profile</div><div class="li-time">34m</div></div>
+        <div class="li"><i class="ti ti-alert-triangle" style="color:var(--red)"></i><div class="li-txt">Agency Viral Partners attempted search in restricted creator list — flagged</div><div class="li-time">1h</div></div>
+        <div class="li"><i class="ti ti-settings"></i><div class="li-txt">Director updated bot criteria for Instagram</div><div class="li-time">2h</div></div>
+        <div class="li"><i class="ti ti-download"></i><div class="li-txt">Agent Mgr exported revenue report</div><div class="li-time">3h</div></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="ch"><div class="ct">Network health</div></div>
+      <div style="padding:12px 13px">
+        <div class="mg2">
+          <div class="met"><div class="ml">Total creators</div><div class="mv">14</div><div class="md">+2 this week</div></div>
+          <div class="met"><div class="ml">Connected agencies</div><div class="mv">14</div><div class="md">2 pending</div></div>
+          <div class="met"><div class="ml">Active missions</div><div class="mv">7</div><div class="md" style="color:var(--amber)">2 delayed</div></div>
+          <div class="met"><div class="ml">MTD revenue</div><div class="mv">$38K</div><div class="md">+18%</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     SCOUT FEED (Director only)
+══════════════════════════════════════ -->
+<div id="s-scout" class="screen">
+  <div class="ph">
+    <div><div class="pt">Scout feed</div><div class="ps" id="scout-sub">All platforms · Bot last scanned 4 min ago · <span style="color:var(--red);font-size:10px">Director access only</span></div></div>
+    <div class="ha"><button class="btn-n"><i class="ti ti-adjustments-horizontal"></i>Filters</button><button class="btn-g"><i class="ti ti-robot"></i>Bot active</button></div>
+  </div>
+  <div class="plat-tabs">
+    <div class="ptab active" onclick="setPlatTab(this,'All')"><i class="ti ti-layout-grid"></i>All</div>
+    <div class="ptab" onclick="setPlatTab(this,'TikTok')"><i class="ti ti-brand-tiktok"></i>TikTok</div>
+    <div class="ptab" onclick="setPlatTab(this,'Instagram')"><i class="ti ti-brand-instagram"></i>Instagram</div>
+    <div class="ptab" onclick="setPlatTab(this,'YouTube')"><i class="ti ti-brand-youtube"></i>YouTube</div>
+    <div class="ptab" onclick="setPlatTab(this,'X')"><i class="ti ti-brand-x"></i>X</div>
+    <div class="ptab" onclick="setPlatTab(this,'Facebook')"><i class="ti ti-brand-facebook"></i>Facebook</div>
+    <div class="ptab" onclick="setPlatTab(this,'Kick')"><i class="ti ti-player-play"></i>Kick</div>
+    <div class="ptab" onclick="setPlatTab(this,'Snapchat')"><i class="ti ti-brand-snapchat"></i>Snap</div>
+    <div class="ptab" onclick="setPlatTab(this,'Twitch')"><i class="ti ti-brand-twitch"></i>Twitch</div>
+  </div>
+  <div class="sg">
+    <div class="stat"><div class="sl">Scouted today</div><div class="sv">847</div><div class="sd">All platforms</div></div>
+    <div class="stat"><div class="sl">New matches</div><div class="sv">34</div><div class="sd g">Above threshold</div></div>
+    <div class="stat"><div class="sl">Outreach sent</div><div class="sv">47</div><div class="sd">68% open rate</div></div>
+    <div class="stat"><div class="sl">Brand leads</div><div class="sv">12</div><div class="sd">6 warm</div></div>
+  </div>
+  <div class="card">
+    <div class="ch"><div class="ct">Top creator matches</div><button class="btn-n" style="font-size:11px;padding:3px 9px">Sort: Score</button></div>
+    <div class="th-row" style="grid-template-columns:2.2fr 1.4fr 1fr 1fr 1fr 65px"><div class="th">Creator</div><div class="th">Platforms</div><div class="th">Reach</div><div class="th">Eng.</div><div class="th">Growth</div><div class="th">Score</div></div>
+    <div class="tr" style="grid-template-columns:2.2fr 1.4fr 1fr 1fr 1fr 65px" onclick="nav('profile')"><div style="display:flex;align-items:center;gap:8px"><div class="av">AJ</div><div><div class="tn">@alexjones</div><div class="ts-">Lifestyle · Fashion</div></div><span class="pill pgold" style="margin-left:5px">New</span></div><div><div class="plats"><span class="plat tt">TT</span><span class="plat ig">IG</span><span class="plat yt">YT</span></div></div><div class="td">1.1M</div><div class="td">7.4%</div><div class="td" style="color:var(--green)">+18%</div><div><span class="pill pg">96</span></div></div>
+    <div class="tr" style="grid-template-columns:2.2fr 1.4fr 1fr 1fr 1fr 65px"><div style="display:flex;align-items:center;gap:8px"><div class="av">MR</div><div><div class="tn">@mrealness</div><div class="ts-">Comedy · Street</div></div><span class="pill pb" style="margin-left:5px">Hot</span></div><div><div class="plats"><span class="plat tt">TT</span><span class="plat xp">X</span><span class="plat kk">KICK</span></div></div><div class="td">380K</div><div class="td">11.2%</div><div class="td" style="color:var(--green)">+31%</div><div><span class="pill pg">93</span></div></div>
+    <div class="tr" style="grid-template-columns:2.2fr 1.4fr 1fr 1fr 1fr 65px"><div style="display:flex;align-items:center;gap:8px"><div class="av">SN</div><div><div class="tn">@snapqueen</div><div class="ts-">Beauty · Lifestyle</div></div></div><div><div class="plats"><span class="plat sc">SNAP</span><span class="plat tt">TT</span><span class="plat ig">IG</span></div></div><div class="td">540K</div><div class="td">8.9%</div><div class="td" style="color:var(--green)">+21%</div><div><span class="pill pg">85</span></div></div>
+    <div class="tr" style="grid-template-columns:2.2fr 1.4fr 1fr 1fr 1fr 65px"><div style="display:flex;align-items:center;gap:8px"><div class="av">KV</div><div><div class="tn">@kvibe</div><div class="ts-">Fitness · Wellness</div></div></div><div><div class="plats"><span class="plat yt">YT</span><span class="plat ig">IG</span></div></div><div class="td">892K</div><div class="td">6.1%</div><div class="td" style="color:var(--green)">+12%</div><div><span class="pill pg">81</span></div></div>
+    <div class="tr" style="grid-template-columns:2.2fr 1.4fr 1fr 1fr 1fr 65px"><div style="display:flex;align-items:center;gap:8px"><div class="av">DX</div><div><div class="tn">@dxclusive</div><div class="ts-">Music · Culture</div></div></div><div><div class="plats"><span class="plat tt">TT</span><span class="plat fb">FB</span><span class="plat tw">TW</span></div></div><div class="td">210K</div><div class="td">9.8%</div><div class="td" style="color:var(--green)">+24%</div><div><span class="pill pg">88</span></div></div>
+  </div>
+  <div class="two-col">
+    <div class="panel">
+      <div class="pnl-t">Bot activity log — live</div>
+      <div class="li"><i class="ti ti-brand-tiktok"></i><div class="li-txt">Scanned #fashiontok — 1,204 accounts</div><div class="li-time">2m</div></div>
+      <div class="li"><i class="ti ti-brand-instagram"></i><div class="li-txt">Instagram reels — beauty niche, 892 accounts</div><div class="li-time">8m</div></div>
+      <div class="li"><i class="ti ti-brand-youtube"></i><div class="li-txt">YouTube Shorts — fitness, 341 channels</div><div class="li-time">14m</div></div>
+      <div class="li"><i class="ti ti-shield-off" style="color:var(--red)"></i><div class="li-txt">@fakeviralz skipped — 74% bot followers</div><div class="li-time">20m</div></div>
+      <div class="li"><i class="ti ti-send"></i><div class="li-txt">DM sent to @mrealness via TikTok</div><div class="li-time">26m</div></div>
+      <div class="li"><i class="ti ti-player-play" style="color:var(--green)"></i><div class="li-txt">Kick scan — gaming niche, 520 accounts</div><div class="li-time">31m</div></div>
+    </div>
+    <div class="panel">
+      <div class="pnl-t">Brand leads scouted</div>
+      <div class="ni-item"><div class="av-sq">SZ</div><div><div class="ni-name">SportZone</div><div class="ni-meta">Sports · Scaling TikTok + Instagram fast</div></div><span class="pill pr" style="margin-left:auto">Hot</span></div>
+      <div class="ni-item"><div class="av-sq">FK</div><div><div class="ni-name">FreshKicks</div><div class="ni-meta">Footwear · Active TikTok ads</div></div><span class="pill pg" style="margin-left:auto">Warm</span></div>
+      <div class="ni-item"><div class="av-sq">GL</div><div><div class="ni-name">GlowLab</div><div class="ni-meta">Skincare · YouTube + Instagram</div></div><span class="pill pg" style="margin-left:auto">Warm</span></div>
+      <div class="ni-item"><div class="av-sq">NV</div><div><div class="ni-name">NovaTech</div><div class="ni-meta">Gadgets · New to social ads</div></div><span class="pill pa" style="margin-left:auto">New</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     BOT SETTINGS (Director only)
+══════════════════════════════════════ -->
+<div id="s-bot" class="screen">
+  <div class="ph">
+    <div><div class="pt">Bot settings</div><div class="ps">Configure scout, retention, and brand bots · <span style="color:var(--red);font-size:10px">Director access only</span></div></div>
+    <div class="ha"><button class="btn-g"><i class="ti ti-device-floppy"></i>Save all</button></div>
+  </div>
+  <div class="three-col">
+    <div>
+      <div style="font-size:10px;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">Creator scout criteria</div>
+      <div class="cfg"><div class="cfg-lbl">Min followers</div><div class="cfg-row"><input type="range" min="1000" max="500000" value="10000" step="1000" oninput="this.nextElementSibling.textContent=Math.round(this.value/1000)+'K'"><span class="cfg-val">10K</span></div></div>
+      <div class="cfg"><div class="cfg-lbl">Max followers</div><div class="cfg-row"><input type="range" min="10000" max="2000000" value="500000" step="10000" oninput="this.nextElementSibling.textContent=Math.round(this.value/1000)+'K'"><span class="cfg-val">500K</span></div></div>
+      <div class="cfg"><div class="cfg-lbl">Min engagement rate</div><div class="cfg-row"><input type="range" min="1" max="20" value="4" step="1" oninput="this.nextElementSibling.textContent=this.value+'%'"><span class="cfg-val">4%</span></div></div>
+      <div class="cfg"><div class="cfg-lbl">Min monthly growth</div><div class="cfg-row"><input type="range" min="1" max="50" value="8" step="1" oninput="this.nextElementSibling.textContent=this.value+'%'"><span class="cfg-val">8%</span></div></div>
+      <div class="cfg"><div class="cfg-lbl">Max fake followers allowed</div><div class="cfg-row"><input type="range" min="1" max="30" value="10" step="1" oninput="this.nextElementSibling.textContent=this.value+'%'"><span class="cfg-val">10%</span></div></div>
+      <div class="cfg"><div class="cfg-lbl">Min brand safety score</div><div class="cfg-row"><input type="range" min="5" max="10" value="8" step="0.5" oninput="this.nextElementSibling.textContent=this.value"><span class="cfg-val">8.0</span></div></div>
+    </div>
+    <div>
+      <div style="font-size:10px;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">Platforms to scan</div>
+      <div class="cfg"><div class="tog-wrap"><div class="tog on" onclick="togT(this)"><div class="tog-dot"></div></div><div class="tog-lbl">TikTok</div></div></div>
+      <div class="cfg"><div class="tog-wrap"><div class="tog on" onclick="togT(this)"><div class="tog-dot"></div></div><div class="tog-lbl">Instagram</div></div></div>
+      <div class="cfg"><div class="tog-wrap"><div class="tog on" onclick="togT(this)"><div class="tog-dot"></div></div><div class="tog-lbl">YouTube</div></div></div>
+      <div class="cfg"><div class="tog-wrap"><div class="tog on" onclick="togT(this)"><div class="tog-dot"></div></div><div class="tog-lbl">X (Twitter)</div></div></div>
+      <div class="cfg"><div class="tog-wrap"><div class="tog off" onclick="togT(this)"><div class="tog-dot"></div></div><div class="tog-lbl">Facebook</div></div></div>
+      <div class="cfg"><div class="tog-wrap"><div class="tog on" onclick="togT(this)"><div class="tog-dot"></div></div><div class="tog-lbl">Kick</div></div></div>
+      <div class="cfg"><div class="tog-wrap"><div class="tog off" onclick="togT(this)"><div class="tog-dot"></div></div><div class="tog-lbl">Snapchat</div></div></div>
+      <div class="cfg"><div class="tog-wrap"><div class="tog on" onclick="togT(this)"><div class="tog-dot"></div></div><div class="tog-lbl">Twitch</div></div></div>
+    </div>
+    <div>
+      <div style="font-size:10px;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">Outreach &amp; retention</div>
+      <div class="cfg"><div class="tog-wrap"><div class="tog on" onclick="togT(this)"><div class="tog-dot"></div></div><div class="tog-lbl">Auto-send first DM</div></div></div>
+      <div class="cfg"><div class="tog-wrap"><div class="tog on" onclick="togT(this)"><div class="tog-dot"></div></div><div class="tog-lbl">Auto follow-up (3 days)</div></div></div>
+      <div class="cfg"><div class="tog-wrap"><div class="tog on" onclick="togT(this)"><div class="tog-dot"></div></div><div class="tog-lbl">Retention check-ins</div></div></div>
+      <div class="cfg"><div class="tog-wrap"><div class="tog on" onclick="togT(this)"><div class="tog-dot"></div></div><div class="tog-lbl">Inactivity alerts</div></div></div>
+      <div class="cfg"><div class="tog-wrap"><div class="tog on" onclick="togT(this)"><div class="tog-dot"></div></div><div class="tog-lbl">Trend alerts to creators</div></div></div>
+      <div class="cfg"><div class="tog-wrap"><div class="tog off" onclick="togT(this)"><div class="tog-dot"></div></div><div class="tog-lbl">Brand pitch emails</div></div></div>
+      <div class="cfg"><div class="tog-wrap"><div class="tog on" onclick="togT(this)"><div class="tog-dot"></div></div><div class="tog-lbl">Weekly summary email</div></div></div>
+      <div class="cfg"><div class="cfg-lbl">Inactivity trigger (days)</div><div class="cfg-row"><input type="range" min="3" max="14" value="7" step="1" oninput="this.nextElementSibling.textContent=this.value+'d'"><span class="cfg-val">7d</span></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     ROSTER
+══════════════════════════════════════ -->
+<div id="s-roster" class="screen">
+  <div class="ph">
+    <div><div class="pt">My roster</div><div class="ps">14 signed creators · all platforms</div></div>
+    <div class="ha"><button class="btn-n"><i class="ti ti-download"></i>Export</button><button class="btn-g"><i class="ti ti-plus"></i>Add creator</button></div>
+  </div>
+  <div class="sg">
+    <div class="stat"><div class="sl">Total reach</div><div class="sv">24M</div><div class="sd">All platforms</div></div>
+    <div class="stat"><div class="sl">Avg engagement</div><div class="sv">6.2%</div><div class="sd g">All channels</div></div>
+    <div class="stat"><div class="sl">Active deals</div><div class="sv">11</div><div class="sd">In progress</div></div>
+    <div class="stat"><div class="sl">Revenue MTD</div><div class="sv">$38K</div><div class="sd g">+$6K vs last</div></div>
+  </div>
+  <div class="card">
+    <div class="th-row" style="grid-template-columns:2fr 1.5fr 1fr 1fr 1fr 80px"><div class="th">Creator</div><div class="th">Platforms</div><div class="th">Reach</div><div class="th">Eng.</div><div class="th">Deals</div><div class="th">Status</div></div>
+    <div class="tr" style="grid-template-columns:2fr 1.5fr 1fr 1fr 1fr 80px 50px" onclick="nav('profile')"><div style="display:flex;align-items:center;gap:8px"><div class="av">AJ</div><div><div class="tn">@alexjones</div><div class="ts-">Fashion</div></div></div><div><div class="plats"><span class="plat tt">TT</span><span class="plat ig">IG</span><span class="plat yt">YT</span></div></div><div class="td">1.1M</div><div class="td">7.4%</div><div class="td">2</div><div><span class="pill pg">Active</span></div><div onclick="event.stopPropagation()"><button class="del-btn" title="Remove creator" onclick="confirmDel(this,'creator')"><i class="ti ti-user-minus"></i></button></div></div>
+    <div class="tr" style="grid-template-columns:2fr 1.5fr 1fr 1fr 1fr 80px 50px"><div style="display:flex;align-items:center;gap:8px"><div class="av">MR</div><div><div class="tn">@mrealness</div><div class="ts-">Comedy</div></div></div><div><div class="plats"><span class="plat tt">TT</span><span class="plat xp">X</span><span class="plat kk">KICK</span></div></div><div class="td">380K</div><div class="td">11.2%</div><div class="td">1</div><div><span class="pill pg">Active</span></div><div><button class="del-btn" title="Remove creator" onclick="confirmDel(this,'creator')"><i class="ti ti-user-minus"></i></button></div></div>
+    <div class="tr" style="grid-template-columns:2fr 1.5fr 1fr 1fr 1fr 80px 50px"><div style="display:flex;align-items:center;gap:8px"><div class="av">KL</div><div><div class="tn">@kaylalooks</div><div class="ts-">Beauty</div></div></div><div><div class="plats"><span class="plat tt">TT</span><span class="plat ig">IG</span><span class="plat yt">YT</span><span class="plat sc">SNAP</span></div></div><div class="td">1.8M</div><div class="td">4.1%</div><div class="td">3</div><div><span class="pill pg">Active</span></div><div><button class="del-btn" title="Remove creator" onclick="confirmDel(this,'creator')"><i class="ti ti-user-minus"></i></button></div></div>
+    <div class="tr" style="grid-template-columns:2fr 1.5fr 1fr 1fr 1fr 80px 50px"><div style="display:flex;align-items:center;gap:8px"><div class="av">JT</div><div><div class="tn">@jtrendsetter</div><div class="ts-">Dance</div></div></div><div><div class="plats"><span class="plat tt">TT</span><span class="plat yt">YT</span></div></div><div class="td">2.3M</div><div class="td">2.8%</div><div class="td">0</div><div><span class="pill pr">Risk</span></div><div><button class="del-btn" title="Remove creator" onclick="confirmDel(this,'creator')"><i class="ti ti-user-minus"></i></button></div></div>
+    <div class="tr" style="grid-template-columns:2fr 1.5fr 1fr 1fr 1fr 80px 50px"><div style="display:flex;align-items:center;gap:8px"><div class="av">TK</div><div><div class="tn">@tektalks</div><div class="ts-">Tech</div></div></div><div><div class="plats"><span class="plat yt">YT</span><span class="plat xp">X</span></div></div><div class="td">67K</div><div class="td">8.3%</div><div class="td">1</div><div><span class="pill pa">Inactive</span></div><div><button class="del-btn" title="Remove creator" onclick="confirmDel(this,'creator')"><i class="ti ti-user-minus"></i></button></div></div>
+    <div class="tr" style="grid-template-columns:2fr 1.5fr 1fr 1fr 1fr 80px 50px"><div style="display:flex;align-items:center;gap:8px"><div class="av">SP</div><div><div class="tn">@shopwithsoph</div><div class="ts-">Lifestyle</div></div></div><div><div class="plats"><span class="plat tt">TT</span><span class="plat ig">IG</span><span class="plat fb">FB</span></div></div><div class="td">780K</div><div class="td">5.9%</div><div class="td">2</div><div><span class="pill pg">Active</span></div><div><button class="del-btn" title="Remove creator" onclick="confirmDel(this,'creator')"><i class="ti ti-user-minus"></i></button></div></div>
+  </div>
+</div>
+
+<!-- CREATOR PROFILE -->
+<div id="s-profile" class="screen">
+  <div class="ph"><div><div class="pt">Creator profile</div><div class="ps">Cross-platform analysis · @alexjones</div></div><div class="ha"><button class="btn-n"><i class="ti ti-send"></i>DM</button><button class="btn-g"><i class="ti ti-user-plus"></i>Sign creator</button></div></div>
+  <div class="card" style="padding:14px;margin-bottom:12px">
+    <div style="display:flex;gap:13px;align-items:flex-start">
+      <div class="av-lg">AJ</div>
+      <div style="flex:1"><div style="font-size:16px;font-weight:500;color:var(--text)">Alex Jones</div><div style="font-size:11px;color:var(--text3);margin-top:2px">Lifestyle &amp; Fashion · NYC · Age 22</div><div class="plats" style="margin-top:8px"><span class="plat tt">TikTok 284K</span><span class="plat ig">Instagram 501K</span><span class="plat yt">YouTube 312K</span></div></div>
+      <div class="score-ring"><div class="sn">96</div><div class="sl2">Score</div></div>
+    </div>
+  </div>
+  <div class="mg"><div class="met"><div class="ml">Total reach</div><div class="mv">1.1M</div><div class="md">All platforms</div></div><div class="met"><div class="ml">Avg engagement</div><div class="mv">7.4%</div><div class="md">Above average</div></div><div class="met"><div class="ml">Avg views/post</div><div class="mv">284K</div><div class="md">Strong</div></div><div class="met"><div class="ml">Posting freq</div><div class="mv">6x/week</div><div class="md">Very consistent</div></div><div class="met"><div class="ml">Fake followers</div><div class="mv">2.1%</div><div class="md">Very clean</div></div><div class="met"><div class="ml">Est. rate/post</div><div class="mv">$2,800</div><div class="md">Sponsored</div></div></div>
+  <div class="two-col">
+    <div class="panel"><div class="pnl-t">Fraud &amp; safety analysis</div>
+      <div class="li"><i class="ti ti-check" style="color:var(--green)"></i><div class="li-txt">Engagement 7.4% — real audience confirmed</div></div>
+      <div class="li"><i class="ti ti-check" style="color:var(--green)"></i><div class="li-txt">Follower growth organic — no spikes</div></div>
+      <div class="li"><i class="ti ti-check" style="color:var(--green)"></i><div class="li-txt">Comment quality: genuine conversations</div></div>
+      <div class="li"><i class="ti ti-check" style="color:var(--green)"></i><div class="li-txt">Brand safety: 9.2/10 — no controversial content</div></div>
+      <div class="li"><i class="ti ti-alert-triangle" style="color:var(--amber)"></i><div class="li-txt">2.1% estimated bot followers — within safe range</div></div>
+    </div>
+    <div class="panel"><div class="pnl-t">Brand fit matches</div>
+      <div class="ni-item"><div class="av-sq">DR</div><div><div class="ni-name">DripRoom</div><div class="ni-meta">Fashion · 94% match</div></div><span class="pill pg" style="margin-left:auto">Top fit</span></div>
+      <div class="ni-item"><div class="av-sq">FK</div><div><div class="ni-name">FreshKicks</div><div class="ni-meta">Footwear · 87% match</div></div><span class="pill pg" style="margin-left:auto">Strong</span></div>
+      <div class="ni-item"><div class="av-sq">GL</div><div><div class="ni-name">GlowLab</div><div class="ni-meta">Beauty · 71% match</div></div><span class="pill pa" style="margin-left:auto">Good</span></div>
+    </div>
+  </div>
+  <div style="display:flex;gap:8px"><button class="btn-g" style="flex:1;justify-content:center"><i class="ti ti-user-plus"></i>Sign to roster</button><button class="btn-n" style="flex:1;justify-content:center"><i class="ti ti-send"></i>Send outreach DM</button><button class="btn-r" style="flex:1;justify-content:center"><i class="ti ti-x"></i>Pass</button></div>
+</div>
+
+<!-- MISSIONS -->
+<div id="s-missions" class="screen">
+  <div class="ph"><div><div class="pt">Missions</div><div class="ps">Campaigns, events, promos, challenges</div></div><div class="ha"><button class="btn-n"><i class="ti ti-filter"></i>Filter</button><button class="btn-g"><i class="ti ti-plus"></i>Create mission</button></div></div>
+  <div class="sg"><div class="stat"><div class="sl">Active</div><div class="sv">7</div><div class="sd">Running now</div></div><div class="stat"><div class="sl">On track</div><div class="sv">4</div><div class="sd g">Ahead</div></div><div class="stat"><div class="sl">Delayed</div><div class="sv">2</div><div class="sd r">Needs attention</div></div><div class="stat"><div class="sl">Completed</div><div class="sv">18</div><div class="sd">This quarter</div></div></div>
+  <div class="three-col">
+    <div>
+      <div style="font-size:10px;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Campaigns</div>
+      <div class="mis"><div style="display:flex;align-items:center;gap:6px;margin-bottom:5px"><span class="pill pb">Campaign</span><span class="pill pg" style="margin-left:auto">Done</span><button class="del-btn" style="margin-left:4px" onclick="confirmDel(this,'mission')" title="Remove mission"><i class="ti ti-trash"></i></button></div><div class="mis-ttl">DripRoom Fashion Week</div><div class="mis-desc">3 posts across TikTok and Instagram. Summer collection.</div><div class="bar-wrap"><div class="bar" style="width:100%"></div></div><div class="mis-foot"><span style="font-size:10px;color:var(--text3)">@alexjones · 3/3</span><span style="font-size:10px;color:var(--green)">$3,600</span></div></div>
+      <div class="mis"><div style="display:flex;align-items:center;gap:6px;margin-bottom:5px"><span class="pill pb">Campaign</span><span class="pill pa" style="margin-left:auto">Delayed</span><button class="del-btn" style="margin-left:4px" onclick="confirmDel(this,'mission')" title="Remove mission"><i class="ti ti-trash"></i></button></div><div class="mis-ttl">GlowLab Summer Launch</div><div class="mis-desc">TikTok review, Instagram reel, YouTube short.</div><div class="bar-wrap"><div class="bar" style="width:33%"></div></div><div class="mis-foot"><span style="font-size:10px;color:var(--text3)">@kaylalooks · 1/3</span><span style="font-size:10px;color:var(--amber)">Due Jun 18</span></div></div>
+    </div>
+    <div>
+      <div style="font-size:10px;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Events &amp; promos</div>
+      <div class="mis"><div style="display:flex;align-items:center;gap:6px;margin-bottom:5px"><span class="pill pgold">Event</span><span class="pill pg" style="margin-left:auto">Confirmed</span><button class="del-btn" style="margin-left:4px" onclick="confirmDel(this,'mission')" title="Remove mission"><i class="ti ti-trash"></i></button></div><div class="mis-ttl">FreshKicks NYC Pop-Up</div><div class="mis-desc">Attend event June 20. TikTok live + Instagram stories.</div><div class="bar-wrap"><div class="bar" style="width:20%"></div></div><div class="mis-foot"><span style="font-size:10px;color:var(--text3)">@alexjones · Jun 20</span><span style="font-size:10px;color:var(--blue)">Confirmed</span></div></div>
+      <div class="mis"><div style="display:flex;align-items:center;gap:6px;margin-bottom:5px"><span class="pill pp">Promo</span><span class="pill pg" style="margin-left:auto">On track</span></div><div class="mis-ttl">HydroDaily #HydrateChallenge</div><div class="mis-desc">30-day challenge across TikTok and Instagram.</div><div class="bar-wrap"><div class="bar" style="width:70%"></div></div><div class="mis-foot"><span style="font-size:10px;color:var(--text3)">@shopwithsoph · Day 21/30</span><span style="font-size:10px;color:var(--green)">On track</span></div></div>
+    </div>
+    <div>
+      <div style="font-size:10px;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Creator challenges</div>
+      <div class="mis"><div style="display:flex;align-items:center;gap:6px;margin-bottom:5px"><span class="pill pr">At risk</span><span class="pill pr" style="margin-left:auto">Overdue</span><button class="del-btn" style="margin-left:4px" onclick="confirmDel(this,'mission')" title="Remove mission"><i class="ti ti-trash"></i></button></div><div class="mis-ttl">NovaTech Product Drop</div><div class="mis-desc">2 YouTube reviews + 1 TikTok unboxing. Creator inactive.</div><div class="bar-wrap"><div class="bar" style="width:0%"></div></div><div class="mis-foot"><span style="font-size:10px;color:var(--text3)">@tektalks · 0/3</span><span style="font-size:10px;color:var(--red)">Overdue</span></div></div>
+      <div class="mis"><div style="display:flex;align-items:center;gap:6px;margin-bottom:5px"><span class="pill pp">Challenge</span><span class="pill pg" style="margin-left:auto">On track</span></div><div class="mis-ttl">Grow &amp; Earn — 100K challenge</div><div class="mis-desc">First creator to gain 100K new followers earns $500 bonus.</div><div class="bar-wrap"><div class="bar" style="width:62%"></div></div><div class="mis-foot"><span style="font-size:10px;color:var(--text3)">@mrealness leading · 62K</span><span style="font-size:10px;color:var(--green)">Jun 30</span></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- RETENTION BOT -->
+<div id="s-retention" class="screen">
+  <div class="ph"><div><div class="pt">Retention bot</div><div class="ps">AI-powered creator engagement and loyalty</div></div><div class="ha"><button class="btn-g"><i class="ti ti-settings"></i>Configure</button></div></div>
+  <div class="sg"><div class="stat"><div class="sl">Retention rate</div><div class="sv">94%</div><div class="sd g">+4% this quarter</div></div><div class="stat"><div class="sl">Bot actions today</div><div class="sv">23</div><div class="sd">Automated</div></div><div class="stat"><div class="sl">Creators at risk</div><div class="sv">2</div><div class="sd r">Needs attention</div></div><div class="stat"><div class="sl">Missions built</div><div class="sv">31</div><div class="sd">This quarter</div></div></div>
+  <div class="two-col">
+    <div class="panel"><div class="pnl-t">What the retention bot does</div>
+      <div class="li"><i class="ti ti-target"></i><div class="li-txt"><strong style="color:var(--text)">Builds campaigns &amp; missions</strong> — auto-generates content briefs and post schedules from brand deal details</div></div>
+      <div class="li"><i class="ti ti-bell"></i><div class="li-txt"><strong style="color:var(--text)">Inactivity alerts</strong> — flags creators inactive 7+ days and sends motivational check-ins on your behalf</div></div>
+      <div class="li"><i class="ti ti-calendar-event"></i><div class="li-txt"><strong style="color:var(--text)">Event &amp; promo support</strong> — sends reminders, prep checklists, and post-event follow-ups automatically</div></div>
+      <div class="li"><i class="ti ti-trophy"></i><div class="li-txt"><strong style="color:var(--text)">Milestone rewards</strong> — detects follower milestones and sends bonus deal opportunities automatically</div></div>
+      <div class="li"><i class="ti ti-trending-up"></i><div class="li-txt"><strong style="color:var(--text)">Trend alerts</strong> — notifies creators when a trending sound or format matches their niche within hours</div></div>
+      <div class="li"><i class="ti ti-heart"></i><div class="li-txt"><strong style="color:var(--text)">Satisfaction check-ins</strong> — monthly pulse survey to spot disengagement early before creators leave</div></div>
+    </div>
+    <div>
+      <div class="panel" style="margin-bottom:10px"><div class="pnl-t">Recent bot actions</div>
+        <div class="li"><i class="ti ti-send"></i><div class="li-txt">Check-in sent to @tektalks — inactive 11 days</div><div class="li-time">2h</div></div>
+        <div class="li"><i class="ti ti-trophy" style="color:var(--gold)"></i><div class="li-txt">Milestone alert — @mrealness hit 90K on TikTok</div><div class="li-time">3h</div></div>
+        <div class="li"><i class="ti ti-trending-up" style="color:var(--green)"></i><div class="li-txt">Trend alert to @kaylalooks — #glazeskin trending</div><div class="li-time">5h</div></div>
+        <div class="li"><i class="ti ti-target"></i><div class="li-txt">Mission brief built for @shopwithsoph — NikeDunk</div><div class="li-time">6h</div></div>
+      </div>
+      <div class="panel"><div class="pnl-t">Quick settings</div>
+        <div class="cfg"><div class="tog-wrap"><div class="tog on" onclick="togT(this)"><div class="tog-dot"></div></div><div class="tog-lbl">Auto-build campaign briefs</div></div></div>
+        <div class="cfg"><div class="tog-wrap"><div class="tog on" onclick="togT(this)"><div class="tog-dot"></div></div><div class="tog-lbl">Inactivity check-ins</div></div></div>
+        <div class="cfg"><div class="tog-wrap"><div class="tog on" onclick="togT(this)"><div class="tog-dot"></div></div><div class="tog-lbl">Trend alerts to creators</div></div></div>
+        <div class="cfg"><div class="cfg-lbl">Inactivity trigger</div><div class="cfg-row"><input type="range" min="3" max="14" value="7" step="1" oninput="this.nextElementSibling.textContent=this.value+'d'"><span class="cfg-val">7d</span></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BRAND DEALS -->
+<div id="s-deals" class="screen">
+  <div class="ph"><div><div class="pt">Brand deals</div><div class="ps">Open, active, and completed pipeline</div></div><div class="ha"><button class="btn-n"><i class="ti ti-filter"></i>Filter</button><button class="btn-g"><i class="ti ti-plus"></i>Add deal</button></div></div>
+  <div class="sg"><div class="stat"><div class="sl">Open deals</div><div class="sv">7</div><div class="sd">Need assignment</div></div><div class="stat"><div class="sl">In progress</div><div class="sv">11</div><div class="sd">Content in review</div></div><div class="stat"><div class="sl">Completed</div><div class="sv">34</div><div class="sd g">This quarter</div></div><div class="stat"><div class="sl">Pipeline value</div><div class="sv">$94K</div><div class="sd">Total open</div></div></div>
+  <div class="card">
+    <div class="th-row" style="grid-template-columns:2fr 1.4fr 1fr 1fr 1fr 80px"><div class="th">Brand</div><div class="th">Creator</div><div class="th">Platform</div><div class="th">Budget</div><div class="th">Status</div><div class="th">Due</div></div>
+    <div class="tr" style="grid-template-columns:2fr 1.4fr 1fr 1fr 1fr 80px"><div style="display:flex;align-items:center;gap:8px"><div class="av-sq">DR</div><div><div class="tn">DripRoom</div><div class="ts-">Fashion · 3 posts</div></div></div><div style="display:flex;align-items:center;gap:6px"><div class="av" style="width:22px;height:22px;font-size:9px">AJ</div><div class="td">@alexjones</div></div><div><div class="plats"><span class="plat tt">TT</span><span class="plat ig">IG</span></div></div><div class="td">$3,600</div><div><span class="pill pb">Progress</span></div><div class="td">Jun 14</div></div>
+    <div class="tr" style="grid-template-columns:2fr 1.4fr 1fr 1fr 1fr 80px"><div style="display:flex;align-items:center;gap:8px"><div class="av-sq">GL</div><div><div class="tn">GlowLab</div><div class="ts-">Beauty · 3 posts</div></div></div><div style="display:flex;align-items:center;gap:6px"><div class="av" style="width:22px;height:22px;font-size:9px">KL</div><div class="td">@kaylalooks</div></div><div><div class="plats"><span class="plat tt">TT</span><span class="plat ig">IG</span><span class="plat yt">YT</span></div></div><div class="td">$2,400</div><div><span class="pill pa">Delayed</span></div><div class="td">Jun 18</div></div>
+    <div class="tr" style="grid-template-columns:2fr 1.4fr 1fr 1fr 1fr 80px"><div style="display:flex;align-items:center;gap:8px"><div class="av-sq">FK</div><div><div class="tn">FreshKicks</div><div class="ts-">Footwear · 1 post</div></div></div><div class="td" style="color:var(--text4)">— unassigned</div><div><div class="plats"><span class="plat tt">TT</span></div></div><div class="td">$1,800</div><div><span class="pill pa">Open</span></div><div class="td">Jun 21</div></div>
+    <div class="tr" style="grid-template-columns:2fr 1.4fr 1fr 1fr 1fr 80px"><div style="display:flex;align-items:center;gap:8px"><div class="av-sq">NV</div><div><div class="tn">NovaTech</div><div class="ts-">Gadgets · 2 posts</div></div></div><div class="td" style="color:var(--text4)">— unassigned</div><div><div class="plats"><span class="plat yt">YT</span><span class="plat xp">X</span></div></div><div class="td">$2,200</div><div><span class="pill pa">Open</span></div><div class="td">Jun 28</div></div>
+    <div class="tr" style="grid-template-columns:2fr 1.4fr 1fr 1fr 1fr 80px"><div style="display:flex;align-items:center;gap:8px"><div class="av-sq">HD</div><div><div class="tn">HydroDaily</div><div class="ts-">Wellness · 4 posts</div></div></div><div style="display:flex;align-items:center;gap:6px"><div class="av" style="width:22px;height:22px;font-size:9px">SP</div><div class="td">@shopwithsoph</div></div><div><div class="plats"><span class="plat tt">TT</span><span class="plat ig">IG</span><span class="plat fb">FB</span></div></div><div class="td">$4,800</div><div><span class="pill pg">Done</span></div><div class="td">Jun 1</div></div>
+  </div>
+</div>
+
+<!-- REVENUE -->
+<div id="s-revenue" class="screen">
+  <div class="ph"><div><div class="pt">Revenue</div><div class="ps">Agency earnings · all platforms</div></div><div class="ha"><button class="btn-n"><i class="ti ti-download"></i>Export</button></div></div>
+  <div class="sg"><div class="stat"><div class="sl">This month</div><div class="sv">$38K</div><div class="sd g">+18% vs last</div></div><div class="stat"><div class="sl">Collab revenue</div><div class="sv">$11K</div><div class="sd">29% of total</div></div><div class="stat"><div class="sl">Avg deal size</div><div class="sv">$2,800</div><div class="sd g">Up from $2,100</div></div><div class="stat"><div class="sl">Top earner</div><div class="sv">@kaylalooks</div><div class="sd">$9,200 MTD</div></div></div>
+  <div class="card">
+    <div class="th-row" style="grid-template-columns:2fr 1.5fr 1fr 1fr 1fr 80px"><div class="th">Creator</div><div class="th">Brand</div><div class="th">Platforms</div><div class="th">Deal value</div><div class="th">Agency cut</div><div class="th">Source</div></div>
+    <div class="tr" style="grid-template-columns:2fr 1.5fr 1fr 1fr 1fr 80px"><div style="display:flex;align-items:center;gap:8px"><div class="av">KL</div><div class="tn">@kaylalooks</div></div><div class="td">GlowLab</div><div><div class="plats"><span class="plat tt">TT</span><span class="plat ig">IG</span><span class="plat yt">YT</span></div></div><div class="td">$2,400</div><div class="td" style="color:var(--green)">$480</div><div><span class="pill pg">Direct</span></div></div>
+    <div class="tr" style="grid-template-columns:2fr 1.5fr 1fr 1fr 1fr 80px"><div style="display:flex;align-items:center;gap:8px"><div class="av">AJ</div><div class="tn">@alexjones</div></div><div class="td">DripRoom</div><div><div class="plats"><span class="plat tt">TT</span><span class="plat ig">IG</span></div></div><div class="td">$3,600</div><div class="td" style="color:var(--green)">$720</div><div><span class="pill pg">Direct</span></div></div>
+    <div class="tr" style="grid-template-columns:2fr 1.5fr 1fr 1fr 1fr 80px"><div style="display:flex;align-items:center;gap:8px"><div class="av">MR</div><div class="tn">@mrealness</div></div><div class="td">NikeDunk</div><div><div class="plats"><span class="plat tt">TT</span><span class="plat ig">IG</span></div></div><div class="td">$6,000</div><div class="td" style="color:var(--green)">$3,600</div><div><span class="pill pp">Collab</span></div></div>
+    <div class="tr" style="grid-template-columns:2fr 1.5fr 1fr 1fr 1fr 80px"><div style="display:flex;align-items:center;gap:8px"><div class="av">SP</div><div class="tn">@shopwithsoph</div></div><div class="td">HydroDaily</div><div><div class="plats"><span class="plat tt">TT</span><span class="plat ig">IG</span><span class="plat fb">FB</span></div></div><div class="td">$4,800</div><div class="td" style="color:var(--green)">$960</div><div><span class="pill pg">Direct</span></div></div>
+  </div>
+</div>
+
+<!-- COLLABORATE -->
+<div id="s-collab" class="screen">
+  <div class="ph"><div><div class="pt">Collaborate</div><div class="ps">Network deals · split revenue · Director &amp; managers only</div></div><div class="ha"><button class="btn-g"><i class="ti ti-plus"></i>Post collab deal</button></div></div>
+  <div class="policy"><div class="policy-t"><i class="ti ti-gavel"></i>Anti-poaching policy — all connected agencies have agreed to this</div><div class="policy-b">Agencies may not contact, recruit, or sign any creator currently signed or pending in any connected network. Violations result in immediate removal, revenue forfeiture, and permanent ban. The bot auto-flags any cross-network creator contacts.</div></div>
+  <div class="sg"><div class="stat"><div class="sl">Incoming requests</div><div class="sv">4</div><div class="sd r">2 pending</div></div><div class="stat"><div class="sl">Active collabs</div><div class="sv">3</div><div class="sd">3 agencies</div></div><div class="stat"><div class="sl">Network revenue</div><div class="sv">$11K</div><div class="sd g">Via collabs</div></div><div class="stat"><div class="sl">Avg split</div><div class="sv">55/45</div><div class="sd">Your favor</div></div></div>
+  <div class="ccard"><div style="display:flex;align-items:center;gap:9px;margin-bottom:9px"><div class="av-sq">VP</div><div style="flex:1"><div style="font-size:13px;font-weight:500;color:var(--text)">Viral Partners · Atlanta</div><div style="font-size:10px;color:var(--text3)">61 creators · 2 hours ago</div></div><span class="pill pa">Pending</span></div><div style="font-size:12px;color:var(--text2);line-height:1.6;margin-bottom:10px">Confirmed $8,000 deal with SportZone — shoe launch. Need 2 lifestyle/fashion creators, 100K–500K, TikTok + Instagram. 60/40 split, 3 weeks timeline.</div><div style="display:flex;align-items:center;gap:8px"><span class="split-bdg">60/40 split</span><span style="font-size:10px;color:var(--text3);margin-left:4px">$8K · 2 creators · TT + IG</span><button class="btn-g" style="margin-left:auto;font-size:11px;padding:5px 10px"><i class="ti ti-check"></i>Accept</button><button class="btn-n" style="font-size:11px;padding:5px 10px"><i class="ti ti-x"></i>Decline</button></div></div>
+  <div class="ccard"><div style="display:flex;align-items:center;gap:9px;margin-bottom:9px"><div class="av-sq">CM</div><div style="flex:1"><div style="font-size:13px;font-weight:500;color:var(--text)">Create Media Co. · Miami</div><div style="font-size:10px;color:var(--text3)">19 creators · yesterday</div></div><span class="pill pa">Pending</span></div><div style="font-size:12px;color:var(--text2);line-height:1.6;margin-bottom:10px">GlowSkin beauty campaign, $4,500. Need 1 beauty creator for YouTube + Instagram. Happy to do 50/50.</div><div style="display:flex;align-items:center;gap:8px"><span class="split-bdg">50/50 split</span><span style="font-size:10px;color:var(--text3);margin-left:4px">$4,500 · 1 creator · YT + IG</span><button class="btn-g" style="margin-left:auto;font-size:11px;padding:5px 10px"><i class="ti ti-check"></i>Accept</button><button class="btn-n" style="font-size:11px;padding:5px 10px"><i class="ti ti-x"></i>Decline</button></div></div>
+  <div class="card"><div class="ch"><div class="ct">Active collabs</div></div><div class="th-row" style="grid-template-columns:2fr 1.5fr 1fr 1fr 1fr 90px"><div class="th">Agency</div><div class="th">Deal</div><div class="th">Platforms</div><div class="th">Your cut</div><div class="th">Status</div><div class="th">Creator</div></div><div class="tr" style="grid-template-columns:2fr 1.5fr 1fr 1fr 1fr 90px"><div style="display:flex;align-items:center;gap:8px"><div class="av-sq">EL</div><div><div class="tn">Elevate Agency</div><div class="ts-">NYC</div></div></div><div class="td">NikeDunk $6K</div><div><div class="plats"><span class="plat tt">TT</span><span class="plat ig">IG</span></div></div><div class="td" style="color:var(--green)">$3,600</div><div><span class="pill pb">Progress</span></div><div style="display:flex;align-items:center;gap:5px"><div class="av" style="width:20px;height:20px;font-size:9px">MR</div><div class="td">@mrealness</div></div></div><div class="tr" style="grid-template-columns:2fr 1.5fr 1fr 1fr 1fr 90px"><div style="display:flex;align-items:center;gap:8px"><div class="av-sq">NX</div><div><div class="tn">NxGen Talent</div><div class="ts-">LA</div></div></div><div class="td">UrbanWear $5K</div><div><div class="plats"><span class="plat tt">TT</span><span class="plat yt">YT</span></div></div><div class="td" style="color:var(--green)">$2,500</div><div><span class="pill pg">Done</span></div><div style="display:flex;align-items:center;gap:5px"><div class="av" style="width:20px;height:20px;font-size:9px">DX</div><div class="td">@dxclusive</div></div></div></div>
+</div>
+
+<!-- AGENCIES -->
+<div id="s-agencies" class="screen">
+  <div class="ph"><div><div class="pt">Agencies</div><div class="ps">Your connected network · Director &amp; managers only</div></div><div class="ha"><button class="btn-g"><i class="ti ti-user-plus"></i>Invite agency</button></div></div>
+  <div class="policy"><div class="policy-t"><i class="ti ti-gavel"></i>All agencies have signed the anti-poaching agreement at registration</div><div class="policy-b">This is displayed prominently on every agency's portal. The bot flags any attempt by an agency to contact creators in your or another connected agency's roster.</div></div>
+  <div class="card"><div class="th-row" style="grid-template-columns:2fr 1fr 1.2fr 1fr 1fr 80px"><div class="th">Agency</div><div class="th">Creators</div><div class="th">Platforms</div><div class="th">Location</div><div class="th">Collabs</div><div class="th">Status</div></div>
+    <div class="tr" style="grid-template-columns:2fr 1fr 1.2fr 1fr 1fr 80px 50px"><div style="display:flex;align-items:center;gap:8px"><div class="av-sq">EL</div><div><div class="tn">Elevate Agency</div><div class="ts-">Fashion · Lifestyle</div></div></div><div class="td">43</div><div><div class="plats"><span class="plat tt">TT</span><span class="plat ig">IG</span></div></div><div class="td">NYC</div><div class="td">3</div><div><span class="pill pg">Active</span></div><div><button class="del-btn" title="Remove agency" onclick="confirmDel(this,'agency')"><i class="ti ti-building-minus"></i></button></div></div>
+    <div class="tr" style="grid-template-columns:2fr 1fr 1.2fr 1fr 1fr 80px 50px"><div style="display:flex;align-items:center;gap:8px"><div class="av-sq">NX</div><div><div class="tn">NxGen Talent</div><div class="ts-">Music · Dance</div></div></div><div class="td">28</div><div><div class="plats"><span class="plat tt">TT</span><span class="plat yt">YT</span><span class="plat tw">TW</span></div></div><div class="td">LA</div><div class="td">2</div><div><span class="pill pg">Active</span></div><div><button class="del-btn" title="Remove agency" onclick="confirmDel(this,'agency')"><i class="ti ti-building-minus"></i></button></div></div>
+    <div class="tr" style="grid-template-columns:2fr 1fr 1.2fr 1fr 1fr 80px 50px"><div style="display:flex;align-items:center;gap:8px"><div class="av-sq">VP</div><div><div class="tn">Viral Partners</div><div class="ts-">Sports · Street</div></div></div><div class="td">61</div><div><div class="plats"><span class="plat tt">TT</span><span class="plat ig">IG</span><span class="plat xp">X</span></div></div><div class="td">Atlanta</div><div class="td">0</div><div><span class="pill pa">Pending</span></div><div><button class="del-btn" title="Remove agency" onclick="confirmDel(this,'agency')"><i class="ti ti-building-minus"></i></button></div></div>
+    <div class="tr" style="grid-template-columns:2fr 1fr 1.2fr 1fr 1fr 80px 50px"><div style="display:flex;align-items:center;gap:8px"><div class="av-sq">CM</div><div><div class="tn">Create Media Co.</div><div class="ts-">Beauty · Wellness</div></div></div><div class="td">19</div><div><div class="plats"><span class="plat yt">YT</span><span class="plat ig">IG</span></div></div><div class="td">Miami</div><div class="td">0</div><div><span class="pill pa">Pending</span></div><div><button class="del-btn" title="Remove agency" onclick="confirmDel(this,'agency')"><i class="ti ti-building-minus"></i></button></div></div>
+    <div class="tr" style="grid-template-columns:2fr 1fr 1.2fr 1fr 1fr 80px 50px"><div style="display:flex;align-items:center;gap:8px"><div class="av-sq">TW</div><div><div class="tn">TrendWave</div><div class="ts-">Tech · Gaming</div></div></div><div class="td">33</div><div><div class="plats"><span class="plat yt">YT</span><span class="plat tw">TW</span><span class="plat xp">X</span></div></div><div class="td">Chicago</div><div class="td">1</div><div><span class="pill pg">Active</span></div><div><button class="del-btn" title="Remove agency" onclick="confirmDel(this,'agency')"><i class="ti ti-building-minus"></i></button></div></div>
+  </div>
+</div>
+
+<!-- AGENT MANAGER DASH -->
+<div id="s-agentmgr-dash" class="screen">
+  <div class="ph"><div><div class="pt">Agent manager</div><div class="ps">Manage your team and their creator assignments</div></div><div class="ha"><button class="btn-g"><i class="ti ti-plus"></i>Add agent</button></div></div>
+  <div class="sg"><div class="stat"><div class="sl">Agents</div><div class="sv">5</div><div class="sd">3 active today</div></div><div class="stat"><div class="sl">Creators managed</div><div class="sv">14</div><div class="sd">Avg 2.8/agent</div></div><div class="stat"><div class="sl">Open tasks</div><div class="sv">18</div><div class="sd r">3 overdue</div></div><div class="stat"><div class="sl">Team revenue</div><div class="sv">$38K</div><div class="sd g">MTD</div></div></div>
+  <div class="card"><div class="ch"><div class="ct">Agent team</div></div><div class="th-row" style="grid-template-columns:2fr 1fr 1fr 1fr 1fr 80px"><div class="th">Agent</div><div class="th">Creators</div><div class="th">Active deals</div><div class="th">Tasks due</div><div class="th">Revenue</div><div class="th">Status</div></div>
+    <div class="tr" style="grid-template-columns:2fr 1fr 1fr 1fr 1fr 80px"><div style="display:flex;align-items:center;gap:8px"><div class="av">MC</div><div><div class="tn">Marcus Cole</div><div class="ts-">Senior agent</div></div></div><div class="td">4</div><div class="td">5</div><div class="td" style="color:var(--amber)">2 overdue</div><div class="td" style="color:var(--green)">$14K</div><div><span class="pill pg">Active</span></div></div>
+    <div class="tr" style="grid-template-columns:2fr 1fr 1fr 1fr 1fr 80px"><div style="display:flex;align-items:center;gap:8px"><div class="av">TA</div><div><div class="tn">Tasha Adams</div><div class="ts-">Agent</div></div></div><div class="td">3</div><div class="td">4</div><div class="td" style="color:var(--red)">1 overdue</div><div class="td" style="color:var(--green)">$10K</div><div><span class="pill pg">Active</span></div></div>
+    <div class="tr" style="grid-template-columns:2fr 1fr 1fr 1fr 1fr 80px"><div style="display:flex;align-items:center;gap:8px"><div class="av">JW</div><div><div class="tn">Jordan Wells</div><div class="ts-">Agent</div></div></div><div class="td">3</div><div class="td">2</div><div class="td" style="color:var(--green)">On track</div><div class="td" style="color:var(--green)">$8K</div><div><span class="pill pg">Active</span></div></div>
+    <div class="tr" style="grid-template-columns:2fr 1fr 1fr 1fr 1fr 80px"><div style="display:flex;align-items:center;gap:8px"><div class="av">RN</div><div><div class="tn">Ria Nguyen</div><div class="ts-">Junior agent</div></div></div><div class="td">2</div><div class="td">0</div><div class="td" style="color:var(--text3)">None</div><div class="td">$4K</div><div><span class="pill pb">Training</span></div></div>
+  </div>
+</div>
+
+<!-- AGENT VIEW -->
+<div id="s-agent-dash" class="screen">
+  <div class="ph"><div><div class="pt">Agent dashboard</div><div class="ps">Your assigned creators and tasks — Marcus Cole</div></div><div class="ha"><button class="btn-g"><i class="ti ti-plus"></i>Log activity</button></div></div>
+  <div class="sg"><div class="stat"><div class="sl">My creators</div><div class="sv">4</div><div class="sd">Assigned</div></div><div class="stat"><div class="sl">Active deals</div><div class="sv">5</div><div class="sd">In progress</div></div><div class="stat"><div class="sl">My tasks</div><div class="sv">7</div><div class="sd r">2 overdue</div></div><div class="stat"><div class="sl">My revenue</div><div class="sv">$14K</div><div class="sd g">This month</div></div></div>
+  <div class="notice"><i class="ti ti-info-circle"></i>You can see your assigned creators and their deal/mission status. Scout feed, bot settings, full revenue, and alerts are managed by your director.</div>
+  <div class="two-col">
+    <div class="card"><div class="ch"><div class="ct">My creators</div></div>
+      <div class="ni-item" style="padding:9px 13px"><div class="av">AJ</div><div style="margin-left:8px"><div class="ni-name">@alexjones</div><div class="ni-meta">TikTok · Instagram · YouTube</div></div><span class="pill pg" style="margin-left:auto">Active</span></div>
+      <div class="ni-item" style="padding:9px 13px"><div class="av">KL</div><div style="margin-left:8px"><div class="ni-name">@kaylalooks</div><div class="ni-meta">TikTok · Instagram · Snapchat</div></div><span class="pill pa" style="margin-left:auto">Delayed</span></div>
+      <div class="ni-item" style="padding:9px 13px"><div class="av">JT</div><div style="margin-left:8px"><div class="ni-name">@jtrendsetter</div><div class="ni-meta">TikTok · YouTube</div></div><span class="pill pr" style="margin-left:auto">Risk</span></div>
+      <div class="ni-item" style="padding:9px 13px;border-bottom:none"><div class="av">SP</div><div style="margin-left:8px"><div class="ni-name">@shopwithsoph</div><div class="ni-meta">TikTok · Instagram · Facebook</div></div><span class="pill pg" style="margin-left:auto">Active</span></div>
+    </div>
+    <div class="card"><div class="ch"><div class="ct">My task queue</div></div>
+      <div style="padding:10px 13px">
+        <div class="act-item" style="background:var(--red-bg);border:0.5px solid var(--red)" onclick="toggleCheck(this)"><div class="ck"><i class="ti ti-check" style="font-size:9px;color:var(--navy)"></i></div><div class="act-txt">Review @jtrendsetter brand safety issue</div><span class="pill pr">Overdue</span></div>
+        <div class="act-item" onclick="toggleCheck(this)"><div class="ck"></div><div class="act-txt">Follow up @kaylalooks re: GlowLab delay</div><span class="pill pa">Today</span></div>
+        <div class="act-item" onclick="toggleCheck(this)"><div class="ck"></div><div class="act-txt">Submit @alexjones for FreshKicks deal</div><span class="pill pb">Tomorrow</span></div>
+        <div class="act-item" onclick="toggleCheck(this)"><div class="ck"></div><div class="act-txt">Confirm @shopwithsoph for event Jun 20</div><span class="pill pb">Jun 15</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     AGENCY PORTAL (What agencies see)
+══════════════════════════════════════ -->
+<div id="s-agency-portal" class="screen">
+  <div class="agency-portal-wrap">
+    <div class="agency-portal-header">
+      <div class="av-sq" style="background:var(--navy);border:none">VP</div>
+      <div>
+        <div class="agency-portal-title">Viral Partners — Agency Portal</div>
+        <div style="font-size:10px;color:var(--navy);opacity:0.7;margin-top:1px">Connected to Bloom &amp; Co Network · Atlanta, GA</div>
+      </div>
+      <span style="margin-left:auto;background:var(--navy);color:var(--gold);border-radius:6px;padding:3px 9px;font-size:10px;font-weight:600">Verified agency</span>
+    </div>
+    <div class="agency-portal-body">
+      <div class="policy" style="margin-bottom:14px">
+        <div class="policy-t"><i class="ti ti-gavel"></i>Anti-poaching agreement — you have agreed to these terms</div>
+        <div class="policy-b">You may not directly contact, solicit, recruit, or attempt to sign any creator who is currently listed as signed or pending within any connected network on this platform. Violation results in immediate removal from the network, forfeiture of any pending revenue, and a permanent ban from Bloom Studio. This is monitored and enforced automatically.</div>
+      </div>
+      <div class="sg2">
+        <div class="stat"><div class="sl">Open collab deals</div><div class="sv">3</div><div class="sd">Available to you</div></div>
+        <div class="stat"><div class="sl">Your active collabs</div><div class="sv">1</div><div class="sd">In progress</div></div>
+      </div>
+      <div style="font-size:11px;font-weight:500;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px">Open collab deals from Bloom &amp; Co network</div>
+      <div class="ccard">
+        <div style="display:flex;align-items:center;gap:9px;margin-bottom:9px"><div class="av-sq">HD</div><div style="flex:1"><div style="font-size:13px;font-weight:500;color:var(--text)">HydroDaily Wellness Campaign</div><div style="font-size:10px;color:var(--text3)">Posted by Bloom &amp; Co Network · TikTok + Instagram + Facebook</div></div><span class="pill pg">Open</span></div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.6;margin-bottom:10px">Need 2 wellness/fitness creators for 30-day hydration campaign. $6,000 budget, 50/50 split. Your creators post on their platforms, we handle brand coordination.</div>
+        <div style="display:flex;align-items:center;gap:8px"><span class="split-bdg">50/50 split</span><span style="font-size:10px;color:var(--text3);margin-left:4px">$6,000 · 2 creators · Wellness niche</span><button class="btn-g" style="margin-left:auto;font-size:11px;padding:5px 10px">Apply</button></div>
+      </div>
+      <div style="font-size:11px;font-weight:500;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin:14px 0 10px">What you cannot see</div>
+      <div class="three-col" style="margin-bottom:0">
+        <div style="background:var(--navy3);border:0.5px solid var(--border);border-radius:8px;padding:12px;text-align:center">
+          <div style="font-size:24px;color:var(--text4);margin-bottom:6px"><i class="ti ti-eye-off"></i></div>
+          <div style="font-size:11px;color:var(--text3)">Bloom Studio creator roster — no visibility</div>
+        </div>
+        <div style="background:var(--navy3);border:0.5px solid var(--border);border-radius:8px;padding:12px;text-align:center">
+          <div style="font-size:24px;color:var(--text4);margin-bottom:6px"><i class="ti ti-robot"></i></div>
+          <div style="font-size:11px;color:var(--text3)">Scout feed, bot settings — no visibility</div>
+        </div>
+        <div style="background:var(--navy3);border:0.5px solid var(--border);border-radius:8px;padding:12px;text-align:center">
+          <div style="font-size:24px;color:var(--text4);margin-bottom:6px"><i class="ti ti-bell-off"></i></div>
+          <div style="font-size:11px;color:var(--text3)">Alerts, revenue, internal data — no visibility</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- AGENCY DEALS -->
+<div id="s-agency-deals" class="screen">
+  <div class="ph"><div><div class="pt">Collab deals</div><div class="ps">Deals available to your agency from the network</div></div></div>
+  <div class="ccard"><div style="display:flex;align-items:center;gap:9px;margin-bottom:9px"><div class="av-sq">HD</div><div style="flex:1"><div style="font-size:13px;font-weight:500;color:var(--text)">HydroDaily Wellness Campaign</div><div style="font-size:10px;color:var(--text3)">Posted by Bloom &amp; Co Network</div></div><span class="pill pg">Open</span></div><div style="font-size:12px;color:var(--text2);line-height:1.6;margin-bottom:10px">Need 2 wellness/fitness creators, TikTok + Instagram + Facebook. $6,000 budget, 50/50 split.</div><div style="display:flex;align-items:center;gap:8px"><span class="split-bdg">50/50 split</span><button class="btn-g" style="margin-left:auto;font-size:11px;padding:5px 10px">Apply</button></div></div>
+  <div class="notice"><i class="ti ti-lock"></i>You can only see deals that the Bloom &amp; Co network has chosen to share. Internal feeds, creator rosters, and bot data are not visible to partner agencies.</div>
+</div>
+
+<!-- AGENCY PROFILE -->
+<div id="s-agency-profile" class="screen">
+  <div class="ph"><div><div class="pt">My agency profile</div><div class="ps">Visible to the Bloom &amp; Co network</div></div><div class="ha"><button class="btn-g"><i class="ti ti-edit"></i>Edit profile</button></div></div>
+  <div class="card" style="padding:14px;margin-bottom:12px"><div style="display:flex;gap:13px;align-items:center"><div class="av-lg">VP</div><div><div style="font-size:16px;font-weight:500;color:var(--text)">Viral Partners</div><div style="font-size:11px;color:var(--text3);margin-top:2px">Atlanta, GA · Sports, Street, Lifestyle</div><div class="plats" style="margin-top:8px"><span class="plat tt">TikTok</span><span class="plat ig">Instagram</span><span class="plat xp">X</span></div></div></div></div>
+  <div class="mg"><div class="met"><div class="ml">Creators</div><div class="mv">61</div></div><div class="met"><div class="ml">Network collabs</div><div class="mv">0</div></div><div class="met"><div class="ml">Status</div><div class="mv">Verified</div><div class="md">Anti-poaching signed</div></div></div>
+</div>
+
+<!-- ══════════════════════════════════════
+     CREATOR DASHBOARD (What creators see)
+══════════════════════════════════════ -->
+<div id="s-creator-dash" class="screen">
+  <div class="ph"><div><div class="pt">My overview</div><div class="ps">Welcome back, Alex · @alexjones</div></div><span class="pill pgold"><i class="ti ti-eye"></i>Creator view</span></div>
+  <div class="notice"><i class="ti ti-lock"></i>This is your personal dashboard. You can only see your own stats, missions, deals, and earnings. No other creator data, internal agency feeds, alerts, or network information is visible here.</div>
+  <div class="sg"><div class="stat"><div class="sl">Total followers</div><div class="sv">1.1M</div><div class="sd g">+18% this month</div></div><div class="stat"><div class="sl">Active missions</div><div class="sv">2</div><div class="sd">1 due soon</div></div><div class="stat"><div class="sl">My earnings MTD</div><div class="sv">$4,200</div><div class="sd g">70% of deal value</div></div><div class="stat"><div class="sl">Avg engagement</div><div class="sv">7.4%</div><div class="sd g">Above average</div></div></div>
+  <div class="two-col">
+    <div class="panel"><div class="pnl-t">My platforms</div>
+      <div class="ni-item"><div class="plat tt" style="padding:5px 9px;font-size:11px;border-radius:6px">TikTok</div><div style="margin-left:9px"><div class="ni-name">284K followers</div><div class="ni-meta">7.2% engagement · +18%/mo</div></div><span class="pill pg" style="margin-left:auto">Growing</span></div>
+      <div class="ni-item"><div class="plat ig" style="padding:5px 9px;font-size:11px;border-radius:6px">Instagram</div><div style="margin-left:9px"><div class="ni-name">501K followers</div><div class="ni-meta">6.8% engagement · +12%/mo</div></div><span class="pill pg" style="margin-left:auto">Growing</span></div>
+      <div class="ni-item" style="border-bottom:none"><div class="plat yt" style="padding:5px 9px;font-size:11px;border-radius:6px">YouTube</div><div style="margin-left:9px"><div class="ni-name">312K subscribers</div><div class="ni-meta">8.1% engagement · +9%/mo</div></div><span class="pill pg" style="margin-left:auto">Growing</span></div>
+    </div>
+    <div class="panel"><div class="pnl-t">Notifications from your team</div>
+      <div class="li"><i class="ti ti-bell" style="color:var(--green)"></i><div class="li-txt">DripRoom posts approved — payment processing now</div><div class="li-time">2h</div></div>
+      <div class="li"><i class="ti ti-trending-up"></i><div class="li-txt">Trend alert: #glazeskin is blowing up — consider posting this week</div><div class="li-time">5h</div></div>
+      <div class="li"><i class="ti ti-calendar"></i><div class="li-txt">Reminder: FreshKicks pop-up is June 20 — confirm attendance</div><div class="li-time">8h</div></div>
+      <div class="li"><i class="ti ti-trophy" style="color:var(--gold)"></i><div class="li-txt">You're leading the Grow &amp; Earn challenge — 62K new followers!</div><div class="li-time">1d</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- CREATOR MISSIONS -->
+<div id="s-creator-missions" class="screen">
+  <div class="ph"><div><div class="pt">My missions</div><div class="ps">Your active campaigns and challenges</div></div></div>
+  <div class="mis"><div style="display:flex;align-items:center;gap:6px;margin-bottom:5px"><span class="pill pb">Campaign</span><span class="pill pg" style="margin-left:auto">Complete</span></div><div class="mis-ttl">DripRoom Fashion Week</div><div class="mis-desc">3 posts across TikTok and Instagram featuring DripRoom summer collection. All posts approved.</div><div class="bar-wrap"><div class="bar" style="width:100%"></div></div><div class="mis-foot"><span style="font-size:10px;color:var(--text3)">3/3 complete</span><span style="font-size:10px;color:var(--green)">$2,520 earned</span></div></div>
+  <div class="mis"><div style="display:flex;align-items:center;gap:6px;margin-bottom:5px"><span class="pill pgold">Event</span><span class="pill pa" style="margin-left:auto">Coming up</span></div><div class="mis-ttl">FreshKicks NYC Pop-Up</div><div class="mis-desc">Attend and post live coverage June 20. TikTok live + Instagram stories. Tag @freshkicks throughout.</div><div class="bar-wrap"><div class="bar" style="width:10%"></div></div><div class="mis-foot"><span style="font-size:10px;color:var(--text3)">Jun 20 · NYC</span><span style="font-size:10px;color:var(--amber)">Prepare now</span></div></div>
+  <div class="mis"><div style="display:flex;align-items:center;gap:6px;margin-bottom:5px"><span class="pill pp">Challenge</span><span class="pill pg" style="margin-left:auto">Leading</span></div><div class="mis-ttl">Grow &amp; Earn — 100K challenge</div><div class="mis-desc">First creator to gain 100K new followers this month wins $500 bonus. You're currently in first place.</div><div class="bar-wrap"><div class="bar" style="width:62%"></div></div><div class="mis-foot"><span style="font-size:10px;color:var(--text3)">62K gained · Jun 30</span><span style="font-size:10px;color:var(--green)">You're leading</span></div></div>
+</div>
+
+<!-- CREATOR DEALS -->
+<div id="s-creator-deals" class="screen">
+  <div class="ph"><div><div class="pt">My deals</div><div class="ps">Brand deals assigned to you</div></div></div>
+  <div class="card"><div class="th-row" style="grid-template-columns:2fr 1fr 1fr 1fr 80px"><div class="th">Brand</div><div class="th">Platforms</div><div class="th">My cut</div><div class="th">Status</div><div class="th">Due</div></div>
+    <div class="tr" style="grid-template-columns:2fr 1fr 1fr 1fr 80px"><div style="display:flex;align-items:center;gap:8px"><div class="av-sq">DR</div><div><div class="tn">DripRoom</div><div class="ts-">Fashion · 3 posts</div></div></div><div><div class="plats"><span class="plat tt">TT</span><span class="plat ig">IG</span></div></div><div class="td" style="color:var(--green)">$2,520</div><div><span class="pill pg">Done</span></div><div class="td">Jun 14</div></div>
+    <div class="tr" style="grid-template-columns:2fr 1fr 1fr 1fr 80px"><div style="display:flex;align-items:center;gap:8px"><div class="av-sq">FK</div><div><div class="tn">FreshKicks</div><div class="ts-">Footwear · 1 post</div></div></div><div><div class="plats"><span class="plat tt">TT</span></div></div><div class="td">$1,260</div><div><span class="pill pb">Offer</span></div><div class="td">Jun 21</div></div>
+  </div>
+</div>
+
+<!-- CREATOR EARNINGS -->
+<div id="s-creator-earnings" class="screen">
+  <div class="ph"><div><div class="pt">My earnings</div><div class="ps">Your payout history</div></div></div>
+  <div class="sg2"><div class="stat"><div class="sl">Earned MTD</div><div class="sv">$4,200</div><div class="sd g">70% of deal value</div></div><div class="stat"><div class="sl">Pending payout</div><div class="sv">$2,520</div><div class="sd">Processing 3–5 days</div></div></div>
+  <div class="card"><div class="th-row" style="grid-template-columns:2fr 1fr 1fr 80px"><div class="th">Brand</div><div class="th">Deal value</div><div class="th">My cut (70%)</div><div class="th">Status</div></div>
+    <div class="tr" style="grid-template-columns:2fr 1fr 1fr 80px"><div style="display:flex;align-items:center;gap:8px"><div class="av-sq">DR</div><div class="tn">DripRoom</div></div><div class="td">$3,600</div><div class="td" style="color:var(--green)">$2,520</div><div><span class="pill pa">Processing</span></div></div>
+    <div class="tr" style="grid-template-columns:2fr 1fr 1fr 80px"><div style="display:flex;align-items:center;gap:8px"><div class="av-sq">HD</div><div class="tn">HydroDaily</div></div><div class="td">$2,400</div><div class="td" style="color:var(--green)">$1,680</div><div><span class="pill pg">Paid</span></div></div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     CONTRACTS & LEGAL
+══════════════════════════════════════ -->
+<div id="s-contracts" class="screen">
+  <div class="ph"><div><div class="pt">Contracts &amp; legal</div><div class="ps">All creator and brand agreements · Director &amp; managers only</div></div><div class="ha"><button class="btn-n"><i class="ti ti-download"></i>Export</button><button class="btn-g"><i class="ti ti-plus"></i>New contract</button></div></div>
+  <div class="sg"><div class="stat"><div class="sl">Active contracts</div><div class="sv">11</div><div class="sd g">All signed</div></div><div class="stat"><div class="sl">Awaiting signature</div><div class="sv">3</div><div class="sd r">Pending</div></div><div class="stat"><div class="sl">Expiring soon</div><div class="sv">2</div><div class="sd r">Within 30 days</div></div><div class="stat"><div class="sl">Total value</div><div class="sv">$94K</div><div class="sd">Under contract</div></div></div>
+  <div style="font-size:10px;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;display:flex;align-items:center;gap:6px">Creator contracts<span style="flex:1;height:0.5px;background:var(--border);display:block"></span></div>
+  <div class="card" style="margin-bottom:14px">
+    <div class="th-row" style="grid-template-columns:2fr 1fr 1fr 1fr 1fr 80px 50px"><div class="th">Creator</div><div class="th">Type</div><div class="th">Start</div><div class="th">Expires</div><div class="th">Status</div><div class="th">E-sign</div><div class="th"></div></div>
+    <div class="tr" style="grid-template-columns:2fr 1fr 1fr 1fr 1fr 80px 50px"><div style="display:flex;align-items:center;gap:8px"><div class="av">AJ</div><div class="tn">@alexjones</div></div><div class="td">Management</div><div class="td">Jan 1 2026</div><div class="td">Dec 31 2026</div><div><span class="pill pg"><i class="ti ti-check"></i>Signed</span></div><div><button class="btn-n" style="font-size:10px;padding:3px 8px"><i class="ti ti-eye"></i>View</button></div><div><button class="del-btn" onclick="confirmDel(this,'deal')"><i class="ti ti-trash"></i></button></div></div>
+    <div class="tr" style="grid-template-columns:2fr 1fr 1fr 1fr 1fr 80px 50px"><div style="display:flex;align-items:center;gap:8px"><div class="av">MR</div><div class="tn">@mrealness</div></div><div class="td">Management</div><div class="td">Mar 1 2026</div><div class="td">Feb 28 2027</div><div><span class="pill pg"><i class="ti ti-check"></i>Signed</span></div><div><button class="btn-n" style="font-size:10px;padding:3px 8px"><i class="ti ti-eye"></i>View</button></div><div><button class="del-btn" onclick="confirmDel(this,'deal')"><i class="ti ti-trash"></i></button></div></div>
+    <div class="tr" style="grid-template-columns:2fr 1fr 1fr 1fr 1fr 80px 50px"><div style="display:flex;align-items:center;gap:8px"><div class="av">SP</div><div class="tn">@shopwithsoph</div></div><div class="td">Management</div><div class="td">Feb 1 2026</div><div class="td">Jun 21 2026</div><div><span class="pill pr"><i class="ti ti-alert-triangle"></i>Expiring</span></div><div><button class="btn-n" style="font-size:10px;padding:3px 8px"><i class="ti ti-refresh"></i>Renew</button></div><div><button class="del-btn" onclick="confirmDel(this,'deal')"><i class="ti ti-trash"></i></button></div></div>
+    <div class="tr" style="grid-template-columns:2fr 1fr 1fr 1fr 1fr 80px 50px"><div style="display:flex;align-items:center;gap:8px"><div class="av">TK</div><div class="tn">@tektalks</div></div><div class="td">Management</div><div class="td">Apr 1 2026</div><div class="td">Mar 31 2027</div><div><span class="pill pa"><i class="ti ti-clock"></i>Pending</span></div><div><button class="btn-g" style="font-size:10px;padding:3px 8px"><i class="ti ti-send"></i>Send</button></div><div><button class="del-btn" onclick="confirmDel(this,'deal')"><i class="ti ti-trash"></i></button></div></div>
+  </div>
+  <div style="font-size:10px;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;display:flex;align-items:center;gap:6px">Brand deal contracts<span style="flex:1;height:0.5px;background:var(--border);display:block"></span></div>
+  <div class="card" style="margin-bottom:14px">
+    <div class="th-row" style="grid-template-columns:2fr 1.5fr 1fr 1fr 1fr 80px 50px"><div class="th">Brand</div><div class="th">Creator</div><div class="th">Value</div><div class="th">Signed</div><div class="th">Status</div><div class="th">E-sign</div><div class="th"></div></div>
+    <div class="tr" style="grid-template-columns:2fr 1.5fr 1fr 1fr 1fr 80px 50px"><div style="display:flex;align-items:center;gap:8px"><div class="av-sq">DR</div><div class="tn">DripRoom</div></div><div style="display:flex;align-items:center;gap:6px"><div class="av" style="width:20px;height:20px;font-size:9px">AJ</div><div class="td">@alexjones</div></div><div class="td">$3,600</div><div class="td">Jun 1</div><div><span class="pill pg"><i class="ti ti-check"></i>Signed</span></div><div><button class="btn-n" style="font-size:10px;padding:3px 8px"><i class="ti ti-eye"></i>View</button></div><div><button class="del-btn" onclick="confirmDel(this,'deal')"><i class="ti ti-trash"></i></button></div></div>
+    <div class="tr" style="grid-template-columns:2fr 1.5fr 1fr 1fr 1fr 80px 50px"><div style="display:flex;align-items:center;gap:8px"><div class="av-sq">GL</div><div class="tn">GlowLab</div></div><div style="display:flex;align-items:center;gap:6px"><div class="av" style="width:20px;height:20px;font-size:9px">KL</div><div class="td">@kaylalooks</div></div><div class="td">$2,400</div><div class="td">Jun 3</div><div><span class="pill pg"><i class="ti ti-check"></i>Signed</span></div><div><button class="btn-n" style="font-size:10px;padding:3px 8px"><i class="ti ti-eye"></i>View</button></div><div><button class="del-btn" onclick="confirmDel(this,'deal')"><i class="ti ti-trash"></i></button></div></div>
+    <div class="tr" style="grid-template-columns:2fr 1.5fr 1fr 1fr 1fr 80px 50px"><div style="display:flex;align-items:center;gap:8px"><div class="av-sq">FK</div><div class="tn">FreshKicks</div></div><div class="td" style="color:var(--text4)">Unassigned</div><div class="td">$1,800</div><div class="td">—</div><div><span class="pill pa"><i class="ti ti-clock"></i>Pending</span></div><div><button class="btn-g" style="font-size:10px;padding:3px 8px"><i class="ti ti-send"></i>Send</button></div><div><button class="del-btn" onclick="confirmDel(this,'deal')"><i class="ti ti-trash"></i></button></div></div>
+  </div>
+  <div style="font-size:10px;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;display:flex;align-items:center;gap:6px">Contract templates<span style="flex:1;height:0.5px;background:var(--border);display:block"></span></div>
+  <div class="three-col">
+    <div class="panel" style="cursor:pointer"><div style="font-size:20px;color:var(--gold);margin-bottom:8px"><i class="ti ti-file-text"></i></div><div style="font-size:13px;font-weight:500;color:var(--text);margin-bottom:4px">Creator management agreement</div><div style="font-size:11px;color:var(--text3);line-height:1.5">Standard management contract. Covers commission %, exclusivity, term length, termination clauses, IP ownership.</div><button class="btn-g" style="margin-top:10px;font-size:11px;padding:5px 10px;width:100%;justify-content:center"><i class="ti ti-copy"></i>Use template</button></div>
+    <div class="panel" style="cursor:pointer"><div style="font-size:20px;color:var(--gold);margin-bottom:8px"><i class="ti ti-ad"></i></div><div style="font-size:13px;font-weight:500;color:var(--text);margin-bottom:4px">Brand deal agreement</div><div style="font-size:11px;color:var(--text3);line-height:1.5">Covers deliverables, platforms, timeline, FTC disclosure requirements, content usage rights, payment terms.</div><button class="btn-g" style="margin-top:10px;font-size:11px;padding:5px 10px;width:100%;justify-content:center"><i class="ti ti-copy"></i>Use template</button></div>
+    <div class="panel" style="cursor:pointer"><div style="font-size:20px;color:var(--gold);margin-bottom:8px"><i class="ti ti-share"></i></div><div style="font-size:13px;font-weight:500;color:var(--text);margin-bottom:4px">Agency collab agreement</div><div style="font-size:11px;color:var(--text3);line-height:1.5">Network collaboration terms. Revenue split, anti-poaching clause, creator IP rights, dispute resolution.</div><button class="btn-g" style="margin-top:10px;font-size:11px;padding:5px 10px;width:100%;justify-content:center"><i class="ti ti-copy"></i>Use template</button></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     INVOICES
+══════════════════════════════════════ -->
+<div id="s-invoices" class="screen">
+  <div class="ph"><div><div class="pt">Invoices</div><div class="ps">Auto-generated from deal completions · Director &amp; managers only</div></div><div class="ha"><button class="btn-n"><i class="ti ti-download"></i>Export all</button><button class="btn-g"><i class="ti ti-plus"></i>Create invoice</button></div></div>
+  <div class="sg"><div class="stat"><div class="sl">Total invoiced</div><div class="sv">$38K</div><div class="sd g">This month</div></div><div class="stat"><div class="sl">Paid</div><div class="sv">$26K</div><div class="sd g">3 invoices</div></div><div class="stat"><div class="sl">Pending</div><div class="sv">$9K</div><div class="sd">2 invoices</div></div><div class="stat"><div class="sl">Overdue</div><div class="sv">$3K</div><div class="sd r">1 invoice</div></div></div>
+  <div class="card">
+    <div class="th-row" style="grid-template-columns:80px 2fr 1.5fr 1fr 1fr 1fr 80px 50px"><div class="th">Invoice #</div><div class="th">Bill to</div><div class="th">For</div><div class="th">Amount</div><div class="th">Issued</div><div class="th">Status</div><div class="th">Action</div><div class="th"></div></div>
+    <div class="tr" style="grid-template-columns:80px 2fr 1.5fr 1fr 1fr 1fr 80px 50px"><div class="td" style="color:var(--gold)">#INV-041</div><div class="td">DripRoom</div><div style="display:flex;align-items:center;gap:6px"><div class="av" style="width:20px;height:20px;font-size:9px">AJ</div><div class="td">@alexjones · 3 posts</div></div><div class="td">$3,600</div><div class="td">Jun 5</div><div><span class="pill pg">Paid</span></div><div><button class="btn-n" style="font-size:10px;padding:3px 8px"><i class="ti ti-download"></i>PDF</button></div><div><button class="del-btn" onclick="confirmDel(this,'deal')"><i class="ti ti-trash"></i></button></div></div>
+    <div class="tr" style="grid-template-columns:80px 2fr 1.5fr 1fr 1fr 1fr 80px 50px"><div class="td" style="color:var(--gold)">#INV-042</div><div class="td">NikeDunk / Elevate</div><div style="display:flex;align-items:center;gap:6px"><div class="av" style="width:20px;height:20px;font-size:9px">MR</div><div class="td">@mrealness · collab</div></div><div class="td">$6,000</div><div class="td">Jun 6</div><div><span class="pill pg">Paid</span></div><div><button class="btn-n" style="font-size:10px;padding:3px 8px"><i class="ti ti-download"></i>PDF</button></div><div><button class="del-btn" onclick="confirmDel(this,'deal')"><i class="ti ti-trash"></i></button></div></div>
+    <div class="tr" style="grid-template-columns:80px 2fr 1.5fr 1fr 1fr 1fr 80px 50px"><div class="td" style="color:var(--gold)">#INV-043</div><div class="td">GlowLab</div><div style="display:flex;align-items:center;gap:6px"><div class="av" style="width:20px;height:20px;font-size:9px">KL</div><div class="td">@kaylalooks · 3 posts</div></div><div class="td">$2,400</div><div class="td">Jun 7</div><div><span class="pill pa">Pending</span></div><div><button class="btn-g" style="font-size:10px;padding:3px 8px"><i class="ti ti-send"></i>Send</button></div><div><button class="del-btn" onclick="confirmDel(this,'deal')"><i class="ti ti-trash"></i></button></div></div>
+    <div class="tr" style="grid-template-columns:80px 2fr 1.5fr 1fr 1fr 1fr 80px 50px"><div class="td" style="color:var(--gold)">#INV-044</div><div class="td">NovaTech</div><div style="display:flex;align-items:center;gap:6px"><div class="av" style="width:20px;height:20px;font-size:9px">TK</div><div class="td">@tektalks · 2 posts</div></div><div class="td">$2,200</div><div class="td">May 28</div><div><span class="pill pr">Overdue</span></div><div><button class="btn-r" style="font-size:10px;padding:3px 8px"><i class="ti ti-bell"></i>Chase</button></div><div><button class="del-btn" onclick="confirmDel(this,'deal')"><i class="ti ti-trash"></i></button></div></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     CONTENT REVIEW
+══════════════════════════════════════ -->
+<div id="s-review" class="screen">
+  <div class="ph"><div><div class="pt">Content review</div><div class="ps">Approve or request changes before anything goes live</div></div><div class="ha"><button class="btn-n"><i class="ti ti-filter"></i>Filter</button></div></div>
+  <div class="sg"><div class="stat"><div class="sl">Awaiting review</div><div class="sv">4</div><div class="sd r">Needs your eyes</div></div><div class="stat"><div class="sl">Approved today</div><div class="sv">2</div><div class="sd g">Ready to post</div></div><div class="stat"><div class="sl">Revision requested</div><div class="sv">1</div><div class="sd">Creator notified</div></div><div class="stat"><div class="sl">Published</div><div class="sv">18</div><div class="sd">This month</div></div></div>
+
+  <div style="font-size:10px;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;display:flex;align-items:center;gap:6px">Pending review<span style="flex:1;height:0.5px;background:var(--border);display:block"></span></div>
+
+  <div class="ccard" style="margin-bottom:10px">
+    <div style="display:flex;align-items:center;gap:9px;margin-bottom:10px">
+      <div class="av">KL</div>
+      <div style="flex:1"><div style="font-size:13px;font-weight:500;color:var(--text)">@kaylalooks — GlowLab Summer (Post 1 of 3)</div><div style="font-size:10px;color:var(--text3)">TikTok · Skincare routine · Submitted Jun 7, 2:14pm</div></div>
+      <span class="pill pa">Awaiting review</span>
+    </div>
+    <div style="background:var(--navy3);border-radius:8px;padding:12px;margin-bottom:10px;font-size:12px;color:var(--text2);line-height:1.6">
+      <div style="font-size:10px;color:var(--text3);margin-bottom:5px;text-transform:uppercase;letter-spacing:.4px">Creator caption draft</div>
+      "My morning glow routine has completely changed since I started using @glowlab ✨ AD — this serum is genuinely everything. Link in bio for 20% off! #GlowLab #SkincareTok #GlowUp #ad"
+    </div>
+    <div style="background:var(--navy3);border-radius:8px;padding:10px;margin-bottom:10px">
+      <div style="font-size:10px;color:var(--text3);margin-bottom:5px;text-transform:uppercase;letter-spacing:.4px">FTC check</div>
+      <div class="li" style="margin-bottom:4px"><i class="ti ti-check" style="color:var(--green)"></i><div class="li-txt">#ad disclosed — compliant</div></div>
+      <div class="li" style="margin-bottom:0"><i class="ti ti-check" style="color:var(--green)"></i><div class="li-txt">Brand tag present — compliant</div></div>
+    </div>
+    <div style="display:flex;gap:8px">
+      <button class="btn-g" style="flex:1;justify-content:center"><i class="ti ti-check"></i>Approve — ready to post</button>
+      <button class="btn-r" style="flex:1;justify-content:center"><i class="ti ti-edit"></i>Request revision</button>
+      <button class="del-btn" onclick="confirmDel(this,'post')" style="flex-shrink:0"><i class="ti ti-trash"></i></button>
+    </div>
+  </div>
+
+  <div class="ccard" style="margin-bottom:10px">
+    <div style="display:flex;align-items:center;gap:9px;margin-bottom:10px">
+      <div class="av">MR</div>
+      <div style="flex:1"><div style="font-size:13px;font-weight:500;color:var(--text)">@mrealness — NikeDunk Collab (Post 1 of 2)</div><div style="font-size:10px;color:var(--text3)">Instagram Reel · Street style · Submitted Jun 7, 11:30am</div></div>
+      <span class="pill pa">Awaiting review</span>
+    </div>
+    <div style="background:var(--navy3);border-radius:8px;padding:12px;margin-bottom:10px;font-size:12px;color:var(--text2);line-height:1.6">
+      "These joints are cold 🔥 @nikedunk just dropped and I'm already living in them. Not even gonna lie this is all I'm wearing this summer. #NikeDunk #Sneakers #StreetStyle"
+    </div>
+    <div style="background:var(--red-bg);border:0.5px solid var(--red);border-radius:8px;padding:10px;margin-bottom:10px">
+      <div style="font-size:10px;color:var(--red);margin-bottom:5px;text-transform:uppercase;letter-spacing:.4px">FTC warning</div>
+      <div class="li" style="margin-bottom:4px"><i class="ti ti-alert-triangle" style="color:var(--red)"></i><div class="li-txt" style="color:var(--red)">No #ad or #sponsored disclosure detected — FTC violation risk</div></div>
+      <div class="li" style="margin-bottom:0"><i class="ti ti-check" style="color:var(--green)"></i><div class="li-txt">Brand tag present</div></div>
+    </div>
+    <div style="display:flex;gap:8px">
+      <button class="btn-g" style="flex:1;justify-content:center"><i class="ti ti-check"></i>Approve</button>
+      <button class="btn-r" style="flex:1;justify-content:center"><i class="ti ti-edit"></i>Request revision</button>
+      <button class="del-btn" onclick="confirmDel(this,'post')"><i class="ti ti-trash"></i></button>
+    </div>
+  </div>
+
+  <div style="font-size:10px;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;display:flex;align-items:center;gap:6px">Recently approved<span style="flex:1;height:0.5px;background:var(--border);display:block"></span></div>
+  <div class="card">
+    <div class="th-row" style="grid-template-columns:2fr 1.5fr 1.5fr 1fr 80px 50px"><div class="th">Creator</div><div class="th">Campaign</div><div class="th">Platform</div><div class="th">Approved</div><div class="th">Status</div><div class="th"></div></div>
+    <div class="tr" style="grid-template-columns:2fr 1.5fr 1.5fr 1fr 80px 50px"><div style="display:flex;align-items:center;gap:8px"><div class="av">AJ</div><div class="tn">@alexjones</div></div><div class="td">DripRoom Post 3</div><div><div class="plats"><span class="plat ig">IG</span></div></div><div class="td">Jun 7</div><div><span class="pill pg">Live</span></div><div><button class="del-btn" onclick="confirmDel(this,'post')" title="Take down post"><i class="ti ti-trash"></i></button></div></div>
+    <div class="tr" style="grid-template-columns:2fr 1.5fr 1.5fr 1fr 80px 50px"><div style="display:flex;align-items:center;gap:8px"><div class="av">SP</div><div class="tn">@shopwithsoph</div></div><div class="td">HydroDaily Day 21</div><div><div class="plats"><span class="plat tt">TT</span></div></div><div class="td">Jun 6</div><div><span class="pill pg">Live</span></div><div><button class="del-btn" onclick="confirmDel(this,'post')" title="Take down post"><i class="ti ti-trash"></i></button></div></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     ANALYTICS & ROI
+══════════════════════════════════════ -->
+<div id="s-analytics" class="screen">
+  <div class="ph"><div><div class="pt">Analytics &amp; ROI</div><div class="ps">Campaign performance across all platforms · Director &amp; managers only</div></div><div class="ha"><button class="btn-n"><i class="ti ti-download"></i>Export report</button></div></div>
+  <div class="sg"><div class="stat"><div class="sl">Total impressions</div><div class="sv">48.2M</div><div class="sd g">This month</div></div><div class="stat"><div class="sl">Avg engagement rate</div><div class="sv">7.1%</div><div class="sd g">Above industry avg</div></div><div class="stat"><div class="sl">Total earned media</div><div class="sv">$284K</div><div class="sd">Est. media value</div></div><div class="stat"><div class="sl">Avg ROI per deal</div><div class="sv">7.4x</div><div class="sd g">Industry avg: 5.2x</div></div></div>
+
+  <div style="font-size:10px;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;display:flex;align-items:center;gap:6px">Campaign performance<span style="flex:1;height:0.5px;background:var(--border);display:block"></span></div>
+  <div class="card" style="margin-bottom:14px">
+    <div class="th-row" style="grid-template-columns:2fr 1fr 1fr 1fr 1fr 1fr 1fr"><div class="th">Campaign</div><div class="th">Creator</div><div class="th">Platform</div><div class="th">Views</div><div class="th">Engagement</div><div class="th">Deal value</div><div class="th">ROI</div></div>
+    <div class="tr" style="grid-template-columns:2fr 1fr 1fr 1fr 1fr 1fr 1fr"><div class="tn">DripRoom Fashion Week</div><div style="display:flex;align-items:center;gap:5px"><div class="av" style="width:20px;height:20px;font-size:9px">AJ</div><div class="td">@alexjones</div></div><div><div class="plats"><span class="plat tt">TT</span><span class="plat ig">IG</span></div></div><div class="td">2.1M</div><div class="td" style="color:var(--green)">8.4%</div><div class="td">$3,600</div><div class="td" style="color:var(--green)">9.2x</div></div>
+    <div class="tr" style="grid-template-columns:2fr 1fr 1fr 1fr 1fr 1fr 1fr"><div class="tn">NikeDunk Collab</div><div style="display:flex;align-items:center;gap:5px"><div class="av" style="width:20px;height:20px;font-size:9px">MR</div><div class="td">@mrealness</div></div><div><div class="plats"><span class="plat tt">TT</span><span class="plat ig">IG</span></div></div><div class="td">4.8M</div><div class="td" style="color:var(--green)">11.2%</div><div class="td">$6,000</div><div class="td" style="color:var(--green)">12.1x</div></div>
+    <div class="tr" style="grid-template-columns:2fr 1fr 1fr 1fr 1fr 1fr 1fr"><div class="tn">GlowLab Summer</div><div style="display:flex;align-items:center;gap:5px"><div class="av" style="width:20px;height:20px;font-size:9px">KL</div><div class="td">@kaylalooks</div></div><div><div class="plats"><span class="plat tt">TT</span><span class="plat ig">IG</span><span class="plat yt">YT</span></div></div><div class="td">890K</div><div class="td" style="color:var(--amber)">4.1%</div><div class="td">$2,400</div><div class="td" style="color:var(--amber)">4.8x</div></div>
+    <div class="tr" style="grid-template-columns:2fr 1fr 1fr 1fr 1fr 1fr 1fr"><div class="tn">HydroDaily Challenge</div><div style="display:flex;align-items:center;gap:5px"><div class="av" style="width:20px;height:20px;font-size:9px">SP</div><div class="td">@shopwithsoph</div></div><div><div class="plats"><span class="plat tt">TT</span><span class="plat ig">IG</span><span class="plat fb">FB</span></div></div><div class="td">3.2M</div><div class="td" style="color:var(--green)">6.8%</div><div class="td">$4,800</div><div class="td" style="color:var(--green)">8.3x</div></div>
+  </div>
+
+  <div style="font-size:10px;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;display:flex;align-items:center;gap:6px">Creator performance by platform<span style="flex:1;height:0.5px;background:var(--border);display:block"></span></div>
+  <div class="three-col">
+    <div class="panel"><div class="pnl-t">Top by views</div>
+      <div class="ni-item"><div style="font-size:11px;color:var(--text3);min-width:16px">1</div><div class="av" style="margin:0 8px">MR</div><div><div class="ni-name">@mrealness</div><div class="ni-meta">4.8M views avg</div></div></div>
+      <div class="ni-item"><div style="font-size:11px;color:var(--text3);min-width:16px">2</div><div class="av" style="margin:0 8px">SP</div><div><div class="ni-name">@shopwithsoph</div><div class="ni-meta">3.2M views avg</div></div></div>
+      <div class="ni-item" style="border-bottom:none"><div style="font-size:11px;color:var(--text3);min-width:16px">3</div><div class="av" style="margin:0 8px">AJ</div><div><div class="ni-name">@alexjones</div><div class="ni-meta">2.1M views avg</div></div></div>
+    </div>
+    <div class="panel"><div class="pnl-t">Top by engagement</div>
+      <div class="ni-item"><div style="font-size:11px;color:var(--text3);min-width:16px">1</div><div class="av" style="margin:0 8px">MR</div><div><div class="ni-name">@mrealness</div><div class="ni-meta">11.2% avg</div></div></div>
+      <div class="ni-item"><div style="font-size:11px;color:var(--text3);min-width:16px">2</div><div class="av" style="margin:0 8px">AJ</div><div><div class="ni-name">@alexjones</div><div class="ni-meta">8.4% avg</div></div></div>
+      <div class="ni-item" style="border-bottom:none"><div style="font-size:11px;color:var(--text3);min-width:16px">3</div><div class="av" style="margin:0 8px">TK</div><div><div class="ni-name">@tektalks</div><div class="ni-meta">8.3% avg</div></div></div>
+    </div>
+    <div class="panel"><div class="pnl-t">Top by ROI</div>
+      <div class="ni-item"><div style="font-size:11px;color:var(--text3);min-width:16px">1</div><div class="av" style="margin:0 8px">MR</div><div><div class="ni-name">@mrealness</div><div class="ni-meta">12.1x ROI</div></div></div>
+      <div class="ni-item"><div style="font-size:11px;color:var(--text3);min-width:16px">2</div><div class="av" style="margin:0 8px">AJ</div><div><div class="ni-name">@alexjones</div><div class="ni-meta">9.2x ROI</div></div></div>
+      <div class="ni-item" style="border-bottom:none"><div style="font-size:11px;color:var(--text3);min-width:16px">3</div><div class="av" style="margin:0 8px">SP</div><div><div class="ni-name">@shopwithsoph</div><div class="ni-meta">8.3x ROI</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     FTC & COMPLIANCE
+══════════════════════════════════════ -->
+<div id="s-compliance" class="screen">
+  <div class="ph"><div><div class="pt">FTC &amp; compliance</div><div class="ps">Disclosure tracking, platform rules, legal protection · Director &amp; managers only</div></div><div class="ha"><button class="btn-n"><i class="ti ti-download"></i>Compliance report</button></div></div>
+  <div class="sg"><div class="stat"><div class="sl">Compliant posts</div><div class="sv">94%</div><div class="sd g">This month</div></div><div class="stat"><div class="sl">FTC violations</div><div class="sv">1</div><div class="sd r">Needs fix now</div></div><div class="stat"><div class="sl">Posts reviewed</div><div class="sv">34</div><div class="sd">This month</div></div><div class="stat"><div class="sl">Audit trail</div><div class="sv">Active</div><div class="sd g">All logs saved</div></div></div>
+
+  <div class="policy" style="margin-bottom:14px">
+    <div class="policy-t"><i class="ti ti-gavel"></i>FTC disclosure requirements — all creators must follow these rules</div>
+    <div class="policy-b">Every paid partnership, gifted product, or sponsored post MUST include a clear disclosure at the beginning of the caption or video — not buried. Required disclosures: <strong style="color:var(--red)">#ad, #sponsored, or "Paid partnership with [brand]"</strong> on TikTok, Instagram, YouTube, and Facebook. YouTube requires verbal disclosure within the first 30 seconds AND a description tag. The bot auto-checks every submitted post before it reaches your review queue.</div>
+  </div>
+
+  <div style="font-size:10px;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;display:flex;align-items:center;gap:6px">Compliance status by creator<span style="flex:1;height:0.5px;background:var(--border);display:block"></span></div>
+  <div class="card" style="margin-bottom:14px">
+    <div class="th-row" style="grid-template-columns:2fr 1fr 1fr 1fr 1fr 100px"><div class="th">Creator</div><div class="th">Posts this month</div><div class="th">Compliant</div><div class="th">Flagged</div><div class="th">FTC score</div><div class="th">Status</div></div>
+    <div class="tr" style="grid-template-columns:2fr 1fr 1fr 1fr 1fr 100px"><div style="display:flex;align-items:center;gap:8px"><div class="av">AJ</div><div class="tn">@alexjones</div></div><div class="td">6</div><div class="td" style="color:var(--green)">6</div><div class="td">0</div><div class="td" style="color:var(--green)">100%</div><div><span class="pill pg">Fully compliant</span></div></div>
+    <div class="tr" style="grid-template-columns:2fr 1fr 1fr 1fr 1fr 100px"><div style="display:flex;align-items:center;gap:8px"><div class="av">MR</div><div class="tn">@mrealness</div></div><div class="td">4</div><div class="td" style="color:var(--amber)">3</div><div class="td" style="color:var(--red)">1</div><div class="td" style="color:var(--amber)">75%</div><div><span class="pill pr">Violation — fix now</span></div></div>
+    <div class="tr" style="grid-template-columns:2fr 1fr 1fr 1fr 1fr 100px"><div style="display:flex;align-items:center;gap:8px"><div class="av">KL</div><div class="tn">@kaylalooks</div></div><div class="td">8</div><div class="td" style="color:var(--green)">8</div><div class="td">0</div><div class="td" style="color:var(--green)">100%</div><div><span class="pill pg">Fully compliant</span></div></div>
+    <div class="tr" style="grid-template-columns:2fr 1fr 1fr 1fr 1fr 100px"><div style="display:flex;align-items:center;gap:8px"><div class="av">SP</div><div class="tn">@shopwithsoph</div></div><div class="td">12</div><div class="td" style="color:var(--green)">12</div><div class="td">0</div><div class="td" style="color:var(--green)">100%</div><div><span class="pill pg">Fully compliant</span></div></div>
+  </div>
+
+  <div style="font-size:10px;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;display:flex;align-items:center;gap:6px">Platform rules summary<span style="flex:1;height:0.5px;background:var(--border);display:block"></span></div>
+  <div class="three-col">
+    <div class="panel"><div style="display:flex;align-items:center;gap:8px;margin-bottom:10px"><span class="plat tt" style="font-size:12px;padding:4px 8px">TikTok</span><span class="pill pg">Bot checking</span></div><div style="font-size:11px;color:var(--text2);line-height:1.7">#ad or #sponsored required in caption. Cannot be hidden in hashtag pile. TikTok also requires the "Branded Content" toggle to be enabled on the post.</div></div>
+    <div class="panel"><div style="display:flex;align-items:center;gap:8px;margin-bottom:10px"><span class="plat ig" style="font-size:12px;padding:4px 8px">Instagram</span><span class="pill pg">Bot checking</span></div><div style="font-size:11px;color:var(--text2);line-height:1.7">"Paid partnership with [brand]" label OR #ad in caption. Stories require the branded content sticker. Reels require disclosure in video and caption.</div></div>
+    <div class="panel"><div style="display:flex;align-items:center;gap:8px;margin-bottom:10px"><span class="plat yt" style="font-size:12px;padding:4px 8px">YouTube</span><span class="pill pg">Bot checking</span></div><div style="font-size:11px;color:var(--text2);line-height:1.7">Verbal disclosure required in first 30 seconds. Description must include "This video is sponsored by [brand]." YouTube "Paid Promotion" checkbox must be enabled.</div></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     INBOX (Internal messaging)
+══════════════════════════════════════ -->
+<div id="s-inbox" class="screen">
+  <div class="ph"><div><div class="pt">Inbox</div><div class="ps">All agency communications in one place</div></div><div class="ha"><button class="btn-g"><i class="ti ti-edit"></i>New message</button></div></div>
+  <div class="two-col" style="align-items:start">
+    <div>
+      <div style="font-size:10px;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;display:flex;align-items:center;gap:6px">Conversations<span style="flex:1;height:0.5px;background:var(--border);display:block"></span></div>
+      <div class="card">
+        <div class="tr" style="grid-template-columns:auto 1fr;background:var(--navy4)" onclick="this.style.background='var(--navy4)'">
+          <div class="av" style="margin-right:9px;border:1.5px solid var(--gold)">KL</div>
+          <div><div style="display:flex;justify-content:space-between"><div class="tn">@kaylalooks</div><div style="font-size:10px;color:var(--text3)">2m</div></div><div style="font-size:11px;color:var(--text2)">Hey, when does GlowLab content need to...</div><div><span class="pill pb" style="font-size:9px;margin-top:3px">Creator</span></div></div>
+        </div>
+        <div class="tr" style="grid-template-columns:auto 1fr">
+          <div class="av" style="margin-right:9px">MR</div>
+          <div><div style="display:flex;justify-content:space-between"><div class="tn">@mrealness</div><div style="font-size:10px;color:var(--text3)">1h</div></div><div style="font-size:11px;color:var(--text3)">Got it, I'll add the #ad tag 🙏</div><div><span class="pill pb" style="font-size:9px;margin-top:3px">Creator</span></div></div>
+        </div>
+        <div class="tr" style="grid-template-columns:auto 1fr">
+          <div class="av-sq" style="margin-right:9px">VP</div>
+          <div><div style="display:flex;justify-content:space-between"><div class="tn">Viral Partners</div><div style="font-size:10px;color:var(--text3)">3h</div></div><div style="font-size:11px;color:var(--text3)">Following up on the SportZone collab...</div><div><span class="pill pp" style="font-size:9px;margin-top:3px">Agency</span></div></div>
+        </div>
+        <div class="tr" style="grid-template-columns:auto 1fr">
+          <div class="av-sq" style="margin-right:9px">GL</div>
+          <div><div style="display:flex;justify-content:space-between"><div class="tn">GlowLab (Brand)</div><div style="font-size:10px;color:var(--text3)">5h</div></div><div style="font-size:11px;color:var(--text3)">Can we get the content by June 15?</div><div><span class="pill pgold" style="font-size:9px;margin-top:3px">Brand</span></div></div>
+        </div>
+        <div class="tr" style="grid-template-columns:auto 1fr">
+          <div class="av" style="margin-right:9px">MC</div>
+          <div><div style="display:flex;justify-content:space-between"><div class="tn">Marcus Cole (Agent)</div><div style="font-size:10px;color:var(--text3)">8h</div></div><div style="font-size:11px;color:var(--text3)">Updated @jtrendsetter on the situation</div><div><span class="pill pg" style="font-size:9px;margin-top:3px">Agent</span></div></div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:10px;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;display:flex;align-items:center;gap:6px">@kaylalooks<span style="flex:1;height:0.5px;background:var(--border);display:block"></span></div>
+      <div class="panel" style="min-height:320px;display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;gap:8px;align-items:flex-start">
+          <div class="av">KL</div>
+          <div style="background:var(--navy4);border-radius:0 8px 8px 8px;padding:10px 12px;max-width:80%"><div style="font-size:12px;color:var(--text);line-height:1.5">Hey, when does the GlowLab content need to be submitted by? My schedule this week is packed 😅</div><div style="font-size:10px;color:var(--text4);margin-top:4px">2:12pm</div></div>
+        </div>
+        <div style="display:flex;gap:8px;align-items:flex-start;flex-direction:row-reverse">
+          <div class="av" style="background:var(--gold);color:var(--navy)">JD</div>
+          <div style="background:var(--gold-dim);border:0.5px solid var(--gold);border-radius:8px 0 8px 8px;padding:10px 12px;max-width:80%"><div style="font-size:12px;color:var(--text);line-height:1.5">Hey! Deadline is June 18 — you have until end of day on the 16th to submit for review. You're on post 1 of 3, all good 🙏</div><div style="font-size:10px;color:var(--text4);margin-top:4px">2:18pm · Jordan</div></div>
+        </div>
+        <div style="display:flex;gap:8px;align-items:flex-start">
+          <div class="av">KL</div>
+          <div style="background:var(--navy4);border-radius:0 8px 8px 8px;padding:10px 12px;max-width:80%"><div style="font-size:12px;color:var(--text);line-height:1.5">Perfect, I'll submit post 1 tonight 🙌</div><div style="font-size:10px;color:var(--text4);margin-top:4px">2:20pm</div></div>
+        </div>
+        <div style="margin-top:auto;display:flex;gap:8px">
+          <input type="text" placeholder="Type a message..." style="flex:1;background:var(--navy3);border:0.5px solid var(--border2);border-radius:7px;padding:8px 12px;font-size:12px;color:var(--text);outline:none">
+          <button class="btn-g"><i class="ti ti-send"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     CREATOR: MEDIA KIT
+══════════════════════════════════════ -->
+<div id="s-creator-mediakit" class="screen">
+  <div class="ph"><div><div class="pt">My media kit</div><div class="ps">Your shareable profile for brand partnerships</div></div><div class="ha"><button class="btn-n"><i class="ti ti-download"></i>Download PDF</button><button class="btn-g"><i class="ti ti-link"></i>Copy share link</button></div></div>
+  <div class="notice"><i class="ti ti-info-circle"></i>Your media kit is your professional profile that gets sent to brands. It shows your stats, audience, platforms, and rates. Your agency manages what's visible.</div>
+  <div class="card" style="padding:16px;margin-bottom:12px">
+    <div style="display:flex;gap:14px;align-items:flex-start;margin-bottom:14px">
+      <div class="av-lg">AJ</div>
+      <div style="flex:1">
+        <div style="font-size:18px;font-weight:500;color:var(--text)">Alex Jones</div>
+        <div style="font-size:12px;color:var(--text3);margin-top:2px">Lifestyle &amp; Fashion Creator · NYC</div>
+        <div style="font-size:12px;color:var(--text2);margin-top:6px;line-height:1.6;max-width:480px">Fashion-forward content creator specializing in lifestyle, street style, and everyday luxury. Known for authentic storytelling and highly engaged Gen Z + Millennial audiences across TikTok, Instagram, and YouTube.</div>
+        <div class="plats" style="margin-top:8px"><span class="plat tt">TikTok 284K</span><span class="plat ig">Instagram 501K</span><span class="plat yt">YouTube 312K</span></div>
+      </div>
+    </div>
+    <div class="mg" style="margin-bottom:0">
+      <div class="met"><div class="ml">Total reach</div><div class="mv">1.1M</div><div class="md">All platforms</div></div>
+      <div class="met"><div class="ml">Avg engagement</div><div class="mv">7.4%</div><div class="md">Above average</div></div>
+      <div class="met"><div class="ml">Avg views/post</div><div class="mv">284K</div></div>
+      <div class="met"><div class="ml">Audience: Female</div><div class="mv">68%</div></div>
+      <div class="met"><div class="ml">Audience: 18–24</div><div class="mv">54%</div></div>
+      <div class="met"><div class="ml">Top location</div><div class="mv">US 82%</div></div>
+    </div>
+  </div>
+  <div style="font-size:10px;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;display:flex;align-items:center;gap:6px">Rate card<span style="flex:1;height:0.5px;background:var(--border);display:block"></span></div>
+  <div class="three-col" style="margin-bottom:14px">
+    <div class="panel" style="text-align:center"><div style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px"><span class="plat tt">TikTok</span></div><div style="font-size:20px;font-weight:500;color:var(--gold);margin:8px 0">$1,200</div><div style="font-size:11px;color:var(--text3)">Per sponsored post</div><div style="font-size:11px;color:var(--text3);margin-top:4px">$800 · Story / duet</div><div style="font-size:11px;color:var(--text3)">$400 · TikTok live</div></div>
+    <div class="panel" style="text-align:center"><div style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px"><span class="plat ig">Instagram</span></div><div style="font-size:20px;font-weight:500;color:var(--gold);margin:8px 0">$1,800</div><div style="font-size:11px;color:var(--text3)">Per reel</div><div style="font-size:11px;color:var(--text3);margin-top:4px">$600 · Story set (3)</div><div style="font-size:11px;color:var(--text3)">$1,200 · Feed post</div></div>
+    <div class="panel" style="text-align:center"><div style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px"><span class="plat yt">YouTube</span></div><div style="font-size:20px;font-weight:500;color:var(--gold);margin:8px 0">$2,800</div><div style="font-size:11px;color:var(--text3)">Dedicated video</div><div style="font-size:11px;color:var(--text3);margin-top:4px">$1,400 · Integration (60s)</div><div style="font-size:11px;color:var(--text3)">$600 · Shorts</div></div>
+  </div>
+  <div style="font-size:10px;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;display:flex;align-items:center;gap:6px">Past brand work<span style="flex:1;height:0.5px;background:var(--border);display:block"></span></div>
+  <div class="three-col">
+    <div class="panel" style="text-align:center"><div class="av-sq" style="margin:0 auto 8px"><span>DR</span></div><div style="font-size:12px;font-weight:500;color:var(--text)">DripRoom</div><div style="font-size:11px;color:var(--text3);margin-top:2px">Fashion · 2.1M views</div></div>
+    <div class="panel" style="text-align:center"><div class="av-sq" style="margin:0 auto 8px"><span>FK</span></div><div style="font-size:12px;font-weight:500;color:var(--text)">FreshKicks</div><div style="font-size:11px;color:var(--text3);margin-top:2px">Footwear · 1.4M views</div></div>
+    <div class="panel" style="text-align:center"><div class="av-sq" style="margin:0 auto 8px"><span>GL</span></div><div style="font-size:12px;font-weight:500;color:var(--text)">GlowLab</div><div style="font-size:11px;color:var(--text3);margin-top:2px">Beauty · 890K views</div></div>
+  </div>
+</div>
+
+<!-- CREATOR INBOX -->
+<div id="s-creator-inbox" class="screen">
+  <div class="ph"><div><div class="pt">My inbox</div><div class="ps">Messages from your team at Bloom &amp; Co</div></div></div>
+  <div class="panel" style="min-height:400px;display:flex;flex-direction:column;gap:10px">
+    <div style="display:flex;gap:8px;align-items:flex-start">
+      <div class="av" style="background:var(--gold);color:var(--navy)">B&amp;C</div>
+      <div style="background:var(--navy4);border-radius:0 8px 8px 8px;padding:10px 12px;max-width:80%"><div style="font-size:11px;color:var(--gold);margin-bottom:3px">Bloom &amp; Co Team</div><div style="font-size:12px;color:var(--text);line-height:1.5">Hey Alex! Your DripRoom posts have been approved and payment is being processed. Should hit your account within 3–5 business days 🙌</div><div style="font-size:10px;color:var(--text4);margin-top:4px">Today 9:14am</div></div>
+    </div>
+    <div style="display:flex;gap:8px;align-items:flex-start">
+      <div class="av" style="background:var(--gold);color:var(--navy)">B&amp;C</div>
+      <div style="background:var(--navy4);border-radius:0 8px 8px 8px;padding:10px 12px;max-width:80%"><div style="font-size:11px;color:var(--gold);margin-bottom:3px">Bloom &amp; Co Team</div><div style="font-size:12px;color:var(--text);line-height:1.5">Trend alert 🔥 #glazeskin is taking off right now — would be a great week to post a skincare-adjacent piece on your TikTok while it's hot.</div><div style="font-size:10px;color:var(--text4);margin-top:4px">Today 1:22pm</div></div>
+    </div>
+    <div style="display:flex;gap:8px;align-items:flex-start;flex-direction:row-reverse">
+      <div class="av">AJ</div>
+      <div style="background:var(--gold-dim);border:0.5px solid var(--gold);border-radius:8px 0 8px 8px;padding:10px 12px;max-width:80%"><div style="font-size:12px;color:var(--text);line-height:1.5">Yes! Already had an idea for it. Will film tonight and submit for review tomorrow.</div><div style="font-size:10px;color:var(--text4);margin-top:4px">Today 1:45pm · Alex</div></div>
+    </div>
+    <div style="margin-top:auto;display:flex;gap:8px">
+      <input type="text" placeholder="Message your team..." style="flex:1;background:var(--navy3);border:0.5px solid var(--border2);border-radius:7px;padding:8px 12px;font-size:12px;color:var(--text);outline:none">
+      <button class="btn-g"><i class="ti ti-send"></i></button>
+    </div>
+  </div>
+</div>
+
+</div><!-- /main -->
+</div><!-- /body-wrap -->
+
+<script>
+const roleConfig={
+  director:{
+    label:'Director · Full access',name:'Jordan Davis',alertsVisible:true,
+    defaultScreen:'briefing',
+    screens:['briefing','director','scout','bot','roster','profile','missions','retention','review','mediakits','deals','revenue','analytics','contracts','ftc','messaging','collab','agencies','agentmgr-dash','agent-dash'],
+    sidebarGroups:['director']
+  },
+  agentmgr:{
+    label:'Agent Manager · Team access',name:'Marcus Cole',alertsVisible:true,
+    defaultScreen:'agentmgr-dash',
+    screens:['roster','profile','missions','retention','review','mediakits','deals','revenue','analytics','contracts','ftc','messaging','collab','agencies','agentmgr-dash','agent-dash'],
+    sidebarGroups:['agentmgr']
+  },
+  agent:{
+    label:'Agent · Assigned creators only',name:'Tasha Adams',alertsVisible:false,
+    defaultScreen:'agent-dash',
+    screens:['roster','profile','missions','deals','review','inbox','agent-dash'],
+    sidebarGroups:['agent']
+  },
+  agency:{
+    label:'Agency portal · Limited access',name:'Viral Partners',alertsVisible:false,
+    defaultScreen:'agency-portal',
+    screens:['agency-portal','agency-deals','agency-profile'],
+    sidebarGroups:['agency']
+  },
+  creator:{
+    label:'Creator view · My content only',name:'Alex Jones (@alexjones)',alertsVisible:false,
+    defaultScreen:'creator-dash',
+    screens:['creator-dash','creator-missions','creator-deals','creator-earnings','creator-mediakit','creator-inbox'],
+    sidebarGroups:['creator']
+  }
+};
+
+let currentRole='director';
+
+function setRole(role,btn){
+  currentRole=role;
+  document.querySelectorAll('.role-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const cfg=roleConfig[role];
+  document.getElementById('roleBadge').textContent=cfg.label;
+  document.getElementById('sfRole').textContent=cfg.label;
+  document.getElementById('sfName').textContent=cfg.name;
+  const ap=document.getElementById('alertPill');
+  ap.style.display=cfg.alertsVisible?'flex':'none';
+  buildSidebar(role);
+  nav(cfg.defaultScreen);
+}
+
+function buildSidebar(role){
+  const cfg=roleConfig[role];
+  document.querySelectorAll('.sidebar .nav-grp').forEach(g=>{
+    const roles=g.getAttribute('data-roles')||'';
+    const show=cfg.sidebarGroups.some(r=>roles.includes(r));
+    g.style.display=show?'block':'none';
+  });
+}
+
+function nav(key){
+  const cfg=roleConfig[currentRole];
+  if(!cfg.screens.includes(key)){
+    return;
+  }
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  const t=document.getElementById('s-'+key);
+  if(t)t.classList.add('active');
+  document.querySelectorAll('.ni').forEach(n=>{
+    const oc=n.getAttribute('onclick')||'';
+    n.classList.toggle('active',oc.includes("'"+key+"'"));
+  });
+  document.getElementById('main').scrollTop=0;
+}
+
+function togT(el){
+  el.classList.toggle('on');
+  el.classList.toggle('off');
+}
+
+function toggleCheck(item){
+  const ck=item.querySelector('.ck');
+  ck.classList.toggle('done');
+  ck.innerHTML=ck.classList.contains('done')?'<i class="ti ti-check" style="font-size:9px;color:var(--navy)"></i>':'';
+}
+
+function setPlatTab(el,name){
+  document.querySelectorAll('.ptab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function sendMsg(){
+  const inp=document.getElementById('msgInput');
+  if(!inp||!inp.value.trim())return;
+  const thread=document.querySelector('#s-messaging .msg-thread.active-thread');
+  const area=document.querySelector('#s-messaging [style*="flex-direction:column"] [style*="flex:1"][style*="padding:14px"]');
+  if(area){
+    const msg=document.createElement('div');
+    msg.style.cssText='display:flex;gap:8px;justify-content:flex-end';
+    msg.innerHTML=`<div style="background:var(--gold-dim);border:0.5px solid var(--gold);border-radius:8px 0 8px 8px;padding:9px 12px;max-width:70%"><div style="font-size:12px;color:var(--text);line-height:1.5">${inp.value}</div><div style="font-size:9px;color:var(--text4);margin-top:4px">Just now</div></div><div class="av" style="flex-shrink:0;background:var(--gold);color:var(--navy);width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600">JD</div>`;
+    area.appendChild(msg);
+    area.scrollTop=area.scrollHeight;
+  }
+  inp.value='';
+}
+
+function openMsg(el){
+  document.querySelectorAll('.msg-thread').forEach(t=>{t.classList.remove('active-thread');t.style.background='';});
+  el.classList.add('active-thread');
+  el.style.background='var(--navy4)';
+}
+
+function showContractModal(){
+  alert('Contract template editor coming in the next build.');
+}
+
+buildSidebar('director');
+
+const delLabels={
+  creator:'Remove this creator from your roster? Their deals and missions will be archived.',
+  agency:'Remove this agency from your network? All pending collabs will be cancelled.',
+  deal:'Delete this deal? This cannot be undone.',
+  mission:'Delete this mission? All progress will be lost.',
+  post:'Flag this post for takedown? The creator will be notified.'
+};
+
+function confirmDel(btn,type){
+  const existing=document.getElementById('delModal');
+  if(existing)existing.remove();
+  const overlay=document.createElement('div');
+  overlay.className='del-modal-overlay';
+  overlay.id='delModal';
+  overlay.innerHTML=`<div class="del-modal">
+    <div style="font-size:28px;color:var(--red);margin-bottom:12px"><i class="ti ti-alert-triangle"></i></div>
+    <div class="del-modal-title">Are you sure?</div>
+    <div class="del-modal-sub">${delLabels[type]||'This action cannot be undone.'}</div>
+    <div class="del-modal-btns">
+      <button class="btn-r" onclick="doDelete(this)" data-btn-ref="true">Yes, remove</button>
+      <button class="btn-n" onclick="document.getElementById('delModal').remove()">Cancel</button>
+    </div>
+  </div>`;
+  overlay.addEventListener('click',function(e){if(e.target===overlay)overlay.remove()});
+  overlay._sourceBtn=btn;
+  document.body.appendChild(overlay);
+}
+
+function doDelete(confirmBtn){
+  const overlay=document.getElementById('delModal');
+  const sourceBtn=overlay._sourceBtn;
+  const row=sourceBtn.closest('.tr,.mis,.ccard,.ni-item');
+  if(row){
+    row.style.transition='opacity .3s';
+    row.style.opacity='0';
+    setTimeout(()=>row.remove(),300);
+  }
+  overlay.remove();
+}
+
+function loadLogo(e){
+  const file=e.target.files[0];
+  if(!file)return;
+  const reader=new FileReader();
+  reader.onload=function(ev){
+    document.getElementById('logoImgEl').src=ev.target.result;
+    document.getElementById('logoImg').style.display='block';
+    document.getElementById('logoPlaceholder').style.display='none';
+  };
+  reader.readAsDataURL(file);
+}
+
+
+<!-- ══════════════════════════════════════
+     CONTRACTS & LEGAL
+══════════════════════════════════════ -->
+<div id="s-contracts" class="screen">
+  <div class="ph"><div><div class="pt">Contracts &amp; legal</div><div class="ps">All agreements, e-signatures, and compliance · Director only</div></div><div class="ha"><button class="btn-n"><i class="ti ti-download"></i>Export all</button><button class="btn-g"><i class="ti ti-plus"></i>New contract</button></div></div>
+  <div class="sg"><div class="stat"><div class="sl">Active contracts</div><div class="sv">11</div><div class="sd g">All signed</div></div><div class="stat"><div class="sl">Pending signature</div><div class="sv">3</div><div class="sd r">Awaiting sign</div></div><div class="stat"><div class="sl">Expiring soon</div><div class="sv">2</div><div class="sd r">Within 30 days</div></div><div class="stat"><div class="sl">FTC violations</div><div class="sv">0</div><div class="sd g">All compliant</div></div></div>
+  <div style="font-size:10px;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;display:flex;align-items:center;gap:6px">Creator contracts<span style="flex:1;height:0.5px;background:var(--border);display:block"></span></div>
+  <div class="card" style="margin-bottom:14px">
+    <div class="th-row" style="grid-template-columns:2fr 1.5fr 1fr 1fr 1fr 90px 50px"><div class="th">Creator</div><div class="th">Contract type</div><div class="th">Signed</div><div class="th">Expires</div><div class="th">Status</div><div class="th">Action</div><div class="th"></div></div>
+    <div class="tr" style="grid-template-columns:2fr 1.5fr 1fr 1fr 1fr 90px 50px"><div style="display:flex;align-items:center;gap:8px"><div class="av">AJ</div><div class="tn">@alexjones</div></div><div class="td">Talent management</div><div class="td">Jan 15 2026</div><div class="td">Jan 15 2027</div><div><span class="pill pg">Active</span></div><div><button class="btn-n" style="font-size:10px;padding:3px 8px"><i class="ti ti-eye"></i>View</button></div><div><button class="del-btn" onclick="confirmDel(this,'deal')"><i class="ti ti-trash"></i></button></div></div>
+    <div class="tr" style="grid-template-columns:2fr 1.5fr 1fr 1fr 1fr 90px 50px"><div style="display:flex;align-items:center;gap:8px"><div class="av">MR</div><div class="tn">@mrealness</div></div><div class="td">Talent management</div><div class="td">Mar 2 2026</div><div class="td">Mar 2 2027</div><div><span class="pill pg">Active</span></div><div><button class="btn-n" style="font-size:10px;padding:3px 8px"><i class="ti ti-eye"></i>View</button></div><div><button class="del-btn" onclick="confirmDel(this,'deal')"><i class="ti ti-trash"></i></button></div></div>
+    <div class="tr" style="grid-template-columns:2fr 1.5fr 1fr 1fr 1fr 90px 50px"><div style="display:flex;align-items:center;gap:8px"><div class="av">KL</div><div class="tn">@kaylalooks</div></div><div class="td">Talent management</div><div class="td">Feb 10 2026</div><div class="td">Feb 10 2027</div><div><span class="pill pg">Active</span></div><div><button class="btn-n" style="font-size:10px;padding:3px 8px"><i class="ti ti-eye"></i>View</button></div><div><button class="del-btn" onclick="confirmDel(this,'deal')"><i class="ti ti-trash"></i></button></div></div>
+    <div class="tr" style="grid-template-columns:2fr 1.5fr 1fr 1fr 1fr 90px 50px"><div style="display:flex;align-items:center;gap:8px"><div class="av">TK</div><div class="tn">@tektalks</div></div><div class="td">Talent management</div><div class="td">—</div><div class="td">—</div><div><span class="pill pr">Unsigned</span></div><div><button class="btn-g" style="font-size:10px;padding:3px 8px"><i class="ti ti-send"></i>Send</button></div><div><button class="del-btn" onclick="confirmDel(this,'deal')"><i class="ti ti-trash"></i></button></div></div>
+    <div class="tr" style="grid-template-columns:2fr 1.5fr 1fr 1fr 1fr 90px 50px"><div style="display:flex;align-items:center;gap:8px"><div class="av">SP</div><div class="tn">@shopwithsoph</div></div><div class="td">Talent management</div><div class="td">Apr 1 2026</div><div class="td">Jun 22 2026</div><div><span class="pill pa">Expiring</span></div><div><button class="btn-g" style="font-size:10px;padding:3px 8px"><i class="ti ti-refresh"></i>Renew</button></div><div><button class="del-btn" onclick="confirmDel(this,'deal')"><i class="ti ti-trash"></i></button></div></div>
+  </div>
+  <div style="font-size:10px;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;display:flex;align-items:center;gap:6px">Brand deal contracts<span style="flex:1;height:0.5px;background:var(--border);display:block"></span></div>
+  <div class="card" style="margin-bottom:14px">
+    <div class="th-row" style="grid-template-columns:2fr 1.5fr 1fr 1fr 1fr 90px 50px"><div class="th">Brand</div><div class="th">Creator</div><div class="th">Deal value</div><div class="th">Signed</div><div class="th">Status</div><div class="th">Action</div><div class="th"></div></div>
+    <div class="tr" style="grid-template-columns:2fr 1.5fr 1fr 1fr 1fr 90px 50px"><div style="display:flex;align-items:center;gap:8px"><div class="av-sq">DR</div><div class="tn">DripRoom</div></div><div class="td">@alexjones</div><div class="td">$3,600</div><div class="td">Jun 1 2026</div><div><span class="pill pg">Signed</span></div><div><button class="btn-n" style="font-size:10px;padding:3px 8px"><i class="ti ti-eye"></i>View</button></div><div><button class="del-btn" onclick="confirmDel(this,'deal')"><i class="ti ti-trash"></i></button></div></div>
+    <div class="tr" style="grid-template-columns:2fr 1.5fr 1fr 1fr 1fr 90px 50px"><div style="display:flex;align-items:center;gap:8px"><div class="av-sq">FK</div><div class="tn">FreshKicks</div></div><div class="td">@alexjones</div><div class="td">$1,800</div><div class="td">—</div><div><span class="pill pa">Pending</span></div><div><button class="btn-g" style="font-size:10px;padding:3px 8px"><i class="ti ti-send"></i>Send</button></div><div><button class="del-btn" onclick="confirmDel(this,'deal')"><i class="ti ti-trash"></i></button></div></div>
+    <div class="tr" style="grid-template-columns:2fr 1.5fr 1fr 1fr 1fr 90px 50px"><div style="display:flex;align-items:center;gap:8px"><div class="av-sq">GL</div><div class="tn">GlowLab</div></div><div class="td">@kaylalooks</div><div class="td">$2,400</div><div class="td">May 28 2026</div><div><span class="pill pg">Signed</span></div><div><button class="btn-n" style="font-size:10px;padding:3px 8px"><i class="ti ti-eye"></i>View</button></div><div><button class="del-btn" onclick="confirmDel(this,'deal')"><i class="ti ti-trash"></i></button></div></div>
+  </div>
+  <div style="font-size:10px;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;display:flex;align-items:center;gap:6px">Contract templates<span style="flex:1;height:0.5px;background:var(--border);display:block"></span></div>
+  <div class="three-col">
+    <div class="panel" style="cursor:pointer" onclick="showContractModal()"><div style="font-size:20px;color:var(--gold);margin-bottom:8px"><i class="ti ti-file-text"></i></div><div style="font-size:13px;font-weight:500;color:var(--text);margin-bottom:4px">Talent management agreement</div><div style="font-size:11px;color:var(--text3);line-height:1.5">Standard creator signing contract. Includes commission %, exclusivity, content rights, and termination clauses.</div><button class="btn-g" style="margin-top:10px;font-size:11px"><i class="ti ti-edit"></i>Use template</button></div>
+    <div class="panel" style="cursor:pointer"><div style="font-size:20px;color:var(--gold);margin-bottom:8px"><i class="ti ti-receipt"></i></div><div style="font-size:13px;font-weight:500;color:var(--text);margin-bottom:4px">Brand deal agreement</div><div style="font-size:11px;color:var(--text3);line-height:1.5">Campaign contract covering deliverables, timeline, usage rights, FTC disclosure, and payment terms.</div><button class="btn-g" style="margin-top:10px;font-size:11px"><i class="ti ti-edit"></i>Use template</button></div>
+    <div class="panel" style="cursor:pointer"><div style="font-size:20px;color:var(--gold);margin-bottom:8px"><i class="ti ti-building"></i></div><div style="font-size:13px;font-weight:500;color:var(--text);margin-bottom:4px">Agency collab agreement</div><div style="font-size:11px;color:var(--text3);line-height:1.5">Network partnership contract. Revenue split terms, anti-poaching clause, and dispute resolution.</div><button class="btn-g" style="margin-top:10px;font-size:11px"><i class="ti ti-edit"></i>Use template</button></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     CONTENT REVIEW
+══════════════════════════════════════ -->
+<div id="s-review" class="screen">
+  <div class="ph"><div><div class="pt">Content review</div><div class="ps">Approve or reject creator content before it goes live</div></div><div class="ha"><button class="btn-n"><i class="ti ti-filter"></i>Filter</button></div></div>
+  <div class="sg"><div class="stat"><div class="sl">Awaiting review</div><div class="sv">5</div><div class="sd r">Needs your eyes</div></div><div class="stat"><div class="sl">Approved today</div><div class="sv">3</div><div class="sd g">Ready to post</div></div><div class="stat"><div class="sl">Revision requested</div><div class="sv">2</div><div class="sd">Creator notified</div></div><div class="stat"><div class="sl">FTC flags</div><div class="sv">1</div><div class="sd r">Missing #ad tag</div></div></div>
+  <div class="notice"><i class="ti ti-info-circle"></i>Creators submit content here before posting. You review, approve, or request changes. Nothing goes live without your sign-off on sponsored posts.</div>
+
+  <div style="font-size:10px;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;display:flex;align-items:center;gap:6px">Pending review<span style="flex:1;height:0.5px;background:var(--border);display:block"></span></div>
+
+  <div class="ccard" style="margin-bottom:10px">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+      <div class="av">AJ</div>
+      <div style="flex:1"><div style="font-size:13px;font-weight:500;color:var(--text)">@alexjones · DripRoom Fashion Week</div><div style="font-size:10px;color:var(--text3)">TikTok · Post 2 of 3 · Submitted 1 hour ago</div></div>
+      <span class="pill pa">Awaiting review</span>
+    </div>
+    <div style="background:var(--navy3);border-radius:8px;padding:12px;margin-bottom:10px;font-size:12px;color:var(--text2);line-height:1.6">
+      <strong style="color:var(--text)">Caption draft:</strong> "Obsessed with this DripRoom summer collection 🔥 the fits are everything — link in bio for 20% off! #DripRoom #SummerFashion #OOTD"
+      <div style="margin-top:8px"><span class="pill pr"><i class="ti ti-alert-triangle"></i>FTC flag — missing #ad or #sponsored disclosure</span></div>
+    </div>
+    <div style="display:flex;gap:8px">
+      <button class="btn-g" style="font-size:11px"><i class="ti ti-check"></i>Approve</button>
+      <button class="btn-r" style="font-size:11px"><i class="ti ti-edit"></i>Request revision</button>
+      <button class="del-btn" style="font-size:11px" onclick="confirmDel(this,'post')"><i class="ti ti-trash"></i>Reject post</button>
+    </div>
+  </div>
+
+  <div class="ccard" style="margin-bottom:10px">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+      <div class="av">KL</div>
+      <div style="flex:1"><div style="font-size:13px;font-weight:500;color:var(--text)">@kaylalooks · GlowLab Summer Launch</div><div style="font-size:10px;color:var(--text3)">Instagram Reel · Post 1 of 3 · Submitted 3 hours ago</div></div>
+      <span class="pill pa">Awaiting review</span>
+    </div>
+    <div style="background:var(--navy3);border-radius:8px;padding:12px;margin-bottom:10px;font-size:12px;color:var(--text2);line-height:1.6">
+      <strong style="color:var(--text)">Caption draft:</strong> "My morning skincare routine has been completely transformed by @glowlab ✨ This serum is genuinely life-changing. Use code KAYLA20 for 20% off. #ad #GlowLab #SkincareTok #MorningRoutine"
+      <div style="margin-top:8px"><span class="pill pg"><i class="ti ti-check"></i>FTC compliant — #ad present</span></div>
+    </div>
+    <div style="display:flex;gap:8px">
+      <button class="btn-g" style="font-size:11px"><i class="ti ti-check"></i>Approve</button>
+      <button class="btn-r" style="font-size:11px"><i class="ti ti-edit"></i>Request revision</button>
+      <button class="del-btn" style="font-size:11px" onclick="confirmDel(this,'post')"><i class="ti ti-trash"></i>Reject post</button>
+    </div>
+  </div>
+
+  <div class="ccard">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+      <div class="av">MR</div>
+      <div style="flex:1"><div style="font-size:13px;font-weight:500;color:var(--text)">@mrealness · NikeDunk Collab</div><div style="font-size:10px;color:var(--text3)">TikTok · Post 1 of 2 · Submitted 5 hours ago</div></div>
+      <span class="pill pa">Awaiting review</span>
+    </div>
+    <div style="background:var(--navy3);border-radius:8px;padding:12px;margin-bottom:10px;font-size:12px;color:var(--text2);line-height:1.6">
+      <strong style="color:var(--text)">Caption draft:</strong> "These joints are different bro 🏀 @nike never misses. #ad #NikeDunk #Sneakerhead #StreetStyle"
+      <div style="margin-top:8px"><span class="pill pg"><i class="ti ti-check"></i>FTC compliant — #ad present</span></div>
+    </div>
+    <div style="display:flex;gap:8px">
+      <button class="btn-g" style="font-size:11px"><i class="ti ti-check"></i>Approve</button>
+      <button class="btn-r" style="font-size:11px"><i class="ti ti-edit"></i>Request revision</button>
+      <button class="del-btn" style="font-size:11px" onclick="confirmDel(this,'post')"><i class="ti ti-trash"></i>Reject post</button>
+    </div>
+  </div>
+
+  <div style="font-size:10px;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin:14px 0 10px;display:flex;align-items:center;gap:6px">Approved — ready to post<span style="flex:1;height:0.5px;background:var(--border);display:block"></span></div>
+  <div class="card">
+    <div class="th-row" style="grid-template-columns:2fr 1.5fr 1fr 1fr 80px"><div class="th">Creator</div><div class="th">Campaign</div><div class="th">Platform</div><div class="th">Approved</div><div class="th">FTC</div></div>
+    <div class="tr" style="grid-template-columns:2fr 1.5fr 1fr 1fr 80px"><div style="display:flex;align-items:center;gap:8px"><div class="av">AJ</div><div class="tn">@alexjones · DripRoom post 1</div></div><div class="td">DripRoom Fashion Week</div><div><span class="plat tt">TT</span></div><div class="td">Jun 7</div><div><span class="pill pg">OK</span></div></div>
+    <div class="tr" style="grid-template-columns:2fr 1.5fr 1fr 1fr 80px"><div style="display:flex;align-items:center;gap:8px"><div class="av">SP</div><div class="tn">@shopwithsoph · HydroDaily post 4</div></div><div class="td">HydroDaily Challenge</div><div><span class="plat ig">IG</span></div><div class="td">Jun 6</div><div><span class="pill pg">OK</span></div></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     MEDIA KITS & RATE CARDS
+══════════════════════════════════════ -->
+<div id="s-mediakits" class="screen">
+  <div class="ph"><div><div class="pt">Media kits &amp; rate cards</div><div class="ps">Shareable creator profiles for brand pitches</div></div><div class="ha"><button class="btn-g"><i class="ti ti-plus"></i>Generate kit</button></div></div>
+  <div class="notice"><i class="ti ti-info-circle"></i>Media kits are shareable pages you send to brands. Rate cards standardize your pricing. Creators cannot see each other's kits or rates.</div>
+
+  <div style="font-size:10px;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;display:flex;align-items:center;gap:6px">Creator media kits<span style="flex:1;height:0.5px;background:var(--border);display:block"></span></div>
+  <div class="three-col">
+    <div class="panel">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+        <div class="av-lg">AJ</div>
+        <div><div style="font-size:14px;font-weight:500;color:var(--text)">@alexjones</div><div style="font-size:11px;color:var(--text3)">Lifestyle · Fashion · NYC</div></div>
+      </div>
+      <div class="mg2" style="margin-bottom:10px">
+        <div class="met"><div class="ml">Total reach</div><div class="mv">1.1M</div></div>
+        <div class="met"><div class="ml">Avg eng.</div><div class="mv">7.4%</div></div>
+      </div>
+      <div class="plats" style="margin-bottom:10px"><span class="plat tt">TT 284K</span><span class="plat ig">IG 501K</span><span class="plat yt">YT 312K</span></div>
+      <div style="background:var(--navy3);border-radius:8px;padding:8px 10px;margin-bottom:10px">
+        <div style="font-size:10px;color:var(--text3);margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px">Rate card</div>
+        <div style="font-size:11px;color:var(--text2);display:flex;justify-content:space-between;margin-bottom:3px"><span>TikTok post</span><span style="color:var(--gold)">$1,200</span></div>
+        <div style="font-size:11px;color:var(--text2);display:flex;justify-content:space-between;margin-bottom:3px"><span>Instagram reel</span><span style="color:var(--gold)">$1,800</span></div>
+        <div style="font-size:11px;color:var(--text2);display:flex;justify-content:space-between;margin-bottom:3px"><span>YouTube integration</span><span style="color:var(--gold)">$3,500</span></div>
+        <div style="font-size:11px;color:var(--text2);display:flex;justify-content:space-between"><span>Story (3-pack)</span><span style="color:var(--gold)">$600</span></div>
+      </div>
+      <div style="display:flex;gap:6px"><button class="btn-g" style="flex:1;justify-content:center;font-size:11px"><i class="ti ti-share"></i>Share kit</button><button class="btn-n" style="font-size:11px"><i class="ti ti-edit"></i>Edit</button></div>
+    </div>
+    <div class="panel">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+        <div class="av-lg">KL</div>
+        <div><div style="font-size:14px;font-weight:500;color:var(--text)">@kaylalooks</div><div style="font-size:11px;color:var(--text3)">Beauty · Skincare · LA</div></div>
+      </div>
+      <div class="mg2" style="margin-bottom:10px">
+        <div class="met"><div class="ml">Total reach</div><div class="mv">1.8M</div></div>
+        <div class="met"><div class="ml">Avg eng.</div><div class="mv">4.1%</div></div>
+      </div>
+      <div class="plats" style="margin-bottom:10px"><span class="plat tt">TT 512K</span><span class="plat ig">IG 900K</span><span class="plat sc">SNAP 400K</span></div>
+      <div style="background:var(--navy3);border-radius:8px;padding:8px 10px;margin-bottom:10px">
+        <div style="font-size:10px;color:var(--text3);margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px">Rate card</div>
+        <div style="font-size:11px;color:var(--text2);display:flex;justify-content:space-between;margin-bottom:3px"><span>TikTok post</span><span style="color:var(--gold)">$2,800</span></div>
+        <div style="font-size:11px;color:var(--text2);display:flex;justify-content:space-between;margin-bottom:3px"><span>Instagram reel</span><span style="color:var(--gold)">$3,200</span></div>
+        <div style="font-size:11px;color:var(--text2);display:flex;justify-content:space-between;margin-bottom:3px"><span>YouTube integration</span><span style="color:var(--gold)">$5,500</span></div>
+        <div style="font-size:11px;color:var(--text2);display:flex;justify-content:space-between"><span>Story (3-pack)</span><span style="color:var(--gold)">$900</span></div>
+      </div>
+      <div style="display:flex;gap:6px"><button class="btn-g" style="flex:1;justify-content:center;font-size:11px"><i class="ti ti-share"></i>Share kit</button><button class="btn-n" style="font-size:11px"><i class="ti ti-edit"></i>Edit</button></div>
+    </div>
+    <div class="panel">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+        <div class="av-lg">MR</div>
+        <div><div style="font-size:14px;font-weight:500;color:var(--text)">@mrealness</div><div style="font-size:11px;color:var(--text3)">Comedy · Street · ATL</div></div>
+      </div>
+      <div class="mg2" style="margin-bottom:10px">
+        <div class="met"><div class="ml">Total reach</div><div class="mv">380K</div></div>
+        <div class="met"><div class="ml">Avg eng.</div><div class="mv">11.2%</div></div>
+      </div>
+      <div class="plats" style="margin-bottom:10px"><span class="plat tt">TT 91K</span><span class="plat xp">X 180K</span><span class="plat kk">KICK 109K</span></div>
+      <div style="background:var(--navy3);border-radius:8px;padding:8px 10px;margin-bottom:10px">
+        <div style="font-size:10px;color:var(--text3);margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px">Rate card</div>
+        <div style="font-size:11px;color:var(--text2);display:flex;justify-content:space-between;margin-bottom:3px"><span>TikTok post</span><span style="color:var(--gold)">$800</span></div>
+        <div style="font-size:11px;color:var(--text2);display:flex;justify-content:space-between;margin-bottom:3px"><span>X post + thread</span><span style="color:var(--gold)">$600</span></div>
+        <div style="font-size:11px;color:var(--text2);display:flex;justify-content:space-between;margin-bottom:3px"><span>Kick stream mention</span><span style="color:var(--gold)">$1,200</span></div>
+        <div style="font-size:11px;color:var(--text2);display:flex;justify-content:space-between"><span>Bundle (all 3)</span><span style="color:var(--gold)">$2,200</span></div>
+      </div>
+      <div style="display:flex;gap:6px"><button class="btn-g" style="flex:1;justify-content:center;font-size:11px"><i class="ti ti-share"></i>Share kit</button><button class="btn-n" style="font-size:11px"><i class="ti ti-edit"></i>Edit</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     ANALYTICS & ROI
+══════════════════════════════════════ -->
+<div id="s-analytics" class="screen">
+  <div class="ph"><div><div class="pt">Analytics &amp; ROI</div><div class="ps">Campaign performance across all platforms</div></div><div class="ha"><button class="btn-n"><i class="ti ti-download"></i>Export report</button><button class="btn-g"><i class="ti ti-calendar"></i>Jun 2026</button></div></div>
+  <div class="sg"><div class="stat"><div class="sl">Total impressions</div><div class="sv">14.2M</div><div class="sd g">This month</div></div><div class="stat"><div class="sl">Avg campaign ROI</div><div class="sv">4.8×</div><div class="sd g">Above industry avg</div></div><div class="stat"><div class="sl">Total engagements</div><div class="sv">892K</div><div class="sd g">Across all deals</div></div><div class="stat"><div class="sl">Conversion rate</div><div class="sv">3.2%</div><div class="sd g">Tracked via links</div></div></div>
+
+  <div style="font-size:10px;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;display:flex;align-items:center;gap:6px">Campaign ROI breakdown<span style="flex:1;height:0.5px;background:var(--border);display:block"></span></div>
+  <div class="card" style="margin-bottom:14px">
+    <div class="th-row" style="grid-template-columns:2fr 1.5fr 1fr 1fr 1fr 1fr 80px"><div class="th">Campaign</div><div class="th">Creator</div><div class="th">Brand spend</div><div class="th">Impressions</div><div class="th">Engagements</div><div class="th">ROI</div><div class="th">Platform</div></div>
+    <div class="tr" style="grid-template-columns:2fr 1.5fr 1fr 1fr 1fr 1fr 80px"><div class="tn">DripRoom Fashion Week</div><div style="display:flex;align-items:center;gap:6px"><div class="av" style="width:22px;height:22px;font-size:9px">AJ</div><div class="td">@alexjones</div></div><div class="td">$3,600</div><div class="td">2.1M</div><div class="td">156K</div><div class="td" style="color:var(--green)">5.8×</div><div><div class="plats"><span class="plat tt">TT</span><span class="plat ig">IG</span></div></div></div>
+    <div class="tr" style="grid-template-columns:2fr 1.5fr 1fr 1fr 1fr 1fr 80px"><div class="tn">NikeDunk Collab</div><div style="display:flex;align-items:center;gap:6px"><div class="av" style="width:22px;height:22px;font-size:9px">MR</div><div class="td">@mrealness</div></div><div class="td">$6,000</div><div class="td">4.8M</div><div class="td">312K</div><div class="td" style="color:var(--green)">8.2×</div><div><div class="plats"><span class="plat tt">TT</span><span class="plat xp">X</span></div></div></div>
+    <div class="tr" style="grid-template-columns:2fr 1.5fr 1fr 1fr 1fr 1fr 80px"><div class="tn">GlowLab Summer</div><div style="display:flex;align-items:center;gap:6px"><div class="av" style="width:22px;height:22px;font-size:9px">KL</div><div class="td">@kaylalooks</div></div><div class="td">$2,400</div><div class="td">1.4M</div><div class="td">98K</div><div class="td" style="color:var(--amber)">2.9×</div><div><div class="plats"><span class="plat tt">TT</span><span class="plat ig">IG</span></div></div></div>
+    <div class="tr" style="grid-template-columns:2fr 1.5fr 1fr 1fr 1fr 1fr 80px"><div class="tn">HydroDaily Challenge</div><div style="display:flex;align-items:center;gap:6px"><div class="av" style="width:22px;height:22px;font-size:9px">SP</div><div class="td">@shopwithsoph</div></div><div class="td">$4,800</div><div class="td">3.2M</div><div class="td">201K</div><div class="td" style="color:var(--green)">4.1×</div><div><div class="plats"><span class="plat tt">TT</span><span class="plat ig">IG</span><span class="plat fb">FB</span></div></div></div>
+  </div>
+
+  <div style="font-size:10px;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;display:flex;align-items:center;gap:6px">Creator performance — all platforms<span style="flex:1;height:0.5px;background:var(--border);display:block"></span></div>
+  <div class="three-col">
+    <div class="panel"><div class="pnl-t">Top platform by reach</div>
+      <div class="ni-item"><div class="plat ig" style="padding:5px 9px;font-size:11px;border-radius:6px">Instagram</div><div style="margin-left:9px"><div class="ni-name">8.4M reach</div><div class="ni-meta">Avg 6.1% eng.</div></div><span class="pill pg" style="margin-left:auto">#1</span></div>
+      <div class="ni-item"><div class="plat tt" style="padding:5px 9px;font-size:11px;border-radius:6px">TikTok</div><div style="margin-left:9px"><div class="ni-name">6.2M reach</div><div class="ni-meta">Avg 8.4% eng.</div></div><span class="pill pb" style="margin-left:auto">#2</span></div>
+      <div class="ni-item" style="border-bottom:none"><div class="plat yt" style="padding:5px 9px;font-size:11px;border-radius:6px">YouTube</div><div style="margin-left:9px"><div class="ni-name">3.1M reach</div><div class="ni-meta">Avg 7.2% eng.</div></div><span class="pill pa" style="margin-left:auto">#3</span></div>
+    </div>
+    <div class="panel"><div class="pnl-t">Best performing creators</div>
+      <div class="ni-item"><div class="av">MR</div><div style="margin-left:8px"><div class="ni-name">@mrealness</div><div class="ni-meta">11.2% avg · 8.2× ROI</div></div><span class="pill pg" style="margin-left:auto">Best ROI</span></div>
+      <div class="ni-item"><div class="av">AJ</div><div style="margin-left:8px"><div class="ni-name">@alexjones</div><div class="ni-meta">7.4% avg · 5.8× ROI</div></div><span class="pill pb" style="margin-left:auto">Rising</span></div>
+      <div class="ni-item" style="border-bottom:none"><div class="av">SP</div><div style="margin-left:8px"><div class="ni-name">@shopwithsoph</div><div class="ni-meta">5.9% avg · 4.1× ROI</div></div><span class="pill pa" style="margin-left:auto">Steady</span></div>
+    </div>
+    <div class="panel"><div class="pnl-t">FTC compliance rate</div>
+      <div style="text-align:center;padding:14px 0">
+        <div style="font-size:36px;font-weight:600;color:var(--green)">94%</div>
+        <div style="font-size:11px;color:var(--text3);margin-top:4px">Posts with proper disclosure</div>
+        <div style="margin-top:12px"><span class="pill pr"><i class="ti ti-alert-triangle"></i>1 post flagged this month</span></div>
+        <div style="font-size:11px;color:var(--text3);margin-top:8px">@alexjones · DripRoom post 2<br>Missing #ad tag — pending fix</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     FTC & COMPLIANCE
+══════════════════════════════════════ -->
+<div id="s-ftc" class="screen">
+  <div class="ph"><div><div class="pt">FTC &amp; compliance</div><div class="ps">Disclosure tracking, platform rules, and legal protection</div></div><div class="ha"><button class="btn-n"><i class="ti ti-download"></i>Export audit</button></div></div>
+  <div class="sg"><div class="stat"><div class="sl">Compliant posts</div><div class="sv">94%</div><div class="sd g">This month</div></div><div class="stat"><div class="sl">Flagged posts</div><div class="sv">1</div><div class="sd r">Needs fix now</div></div><div class="stat"><div class="sl">Auto-checked</div><div class="sv">47</div><div class="sd">Posts scanned</div></div><div class="stat"><div class="sl">Risk level</div><div class="sv">Low</div><div class="sd g">No violations</div></div></div>
+
+  <div class="alert-item warn" style="margin-bottom:12px;display:flex;align-items:flex-start;gap:9px;padding:12px;border-radius:8px;background:var(--amber-bg);border:0.5px solid var(--amber)">
+    <i class="ti ti-alert-triangle" style="font-size:18px;color:var(--amber);margin-top:1px"></i>
+    <div><div style="font-size:13px;font-weight:500;color:var(--text);margin-bottom:3px">FTC flag — @alexjones · DripRoom post 2</div><div style="font-size:11px;color:var(--text3);line-height:1.5">Sponsored post submitted without #ad or #sponsored disclosure. FTC guidelines require clear disclosure on all paid partnerships. Creator has been notified. Post cannot go live until fixed.</div></div>
+    <button class="btn-g" style="margin-left:auto;font-size:11px;flex-shrink:0"><i class="ti ti-send"></i>Remind creator</button>
+  </div>
+
+  <div style="font-size:10px;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;display:flex;align-items:center;gap:6px">FTC disclosure rules — auto-enforced<span style="flex:1;height:0.5px;background:var(--border);display:block"></span></div>
+  <div class="three-col" style="margin-bottom:14px">
+    <div class="panel"><div style="font-size:18px;color:var(--gold);margin-bottom:8px"><i class="ti ti-hash"></i></div><div style="font-size:13px;font-weight:500;color:var(--text);margin-bottom:4px">Required hashtags</div><div style="font-size:11px;color:var(--text3);line-height:1.6">Every sponsored post must include #ad, #sponsored, or #partner. The bot scans all submitted captions and flags any that are missing these tags before the post goes live.</div></div>
+    <div class="panel"><div style="font-size:18px;color:var(--gold);margin-bottom:8px"><i class="ti ti-eye"></i></div><div style="font-size:13px;font-weight:500;color:var(--text);margin-bottom:4px">Clear and prominent placement</div><div style="font-size:11px;color:var(--text3);line-height:1.6">FTC requires disclosure to be visible without clicking "more." The review system checks that disclosures appear in the first line of captions, not buried at the end.</div></div>
+    <div class="panel"><div style="font-size:18px;color:var(--gold);margin-bottom:8px"><i class="ti ti-file-certificate"></i></div><div style="font-size:13px;font-weight:500;color:var(--text);margin-bottom:4px">Platform-specific rules</div><div style="font-size:11px;color:var(--text3);line-height:1.6">TikTok, Instagram, and YouTube each have their own branded content tools. Creators must enable the paid partnership label in addition to caption disclosures on these platforms.</div></div>
+  </div>
+
+  <div style="font-size:10px;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;display:flex;align-items:center;gap:6px">Compliance audit log<span style="flex:1;height:0.5px;background:var(--border);display:block"></span></div>
+  <div class="card">
+    <div class="th-row" style="grid-template-columns:2fr 1.5fr 1fr 1fr 1fr 80px"><div class="th">Creator</div><div class="th">Campaign</div><div class="th">Platform</div><div class="th">Checked</div><div class="th">Disclosure</div><div class="th">Status</div></div>
+    <div class="tr" style="grid-template-columns:2fr 1.5fr 1fr 1fr 1fr 80px"><div style="display:flex;align-items:center;gap:8px"><div class="av">AJ</div><div class="tn">@alexjones</div></div><div class="td">DripRoom post 1</div><div><span class="plat tt">TT</span></div><div class="td">Jun 7</div><div class="td" style="color:var(--green)">#ad present</div><div><span class="pill pg">Clear</span></div></div>
+    <div class="tr" style="grid-template-columns:2fr 1.5fr 1fr 1fr 1fr 80px"><div style="display:flex;align-items:center;gap:8px"><div class="av">AJ</div><div class="tn">@alexjones</div></div><div class="td">DripRoom post 2</div><div><span class="plat tt">TT</span></div><div class="td">Jun 8</div><div class="td" style="color:var(--red)">Missing #ad</div><div><span class="pill pr">Flagged</span></div></div>
+    <div class="tr" style="grid-template-columns:2fr 1.5fr 1fr 1fr 1fr 80px"><div style="display:flex;align-items:center;gap:8px"><div class="av">KL</div><div class="tn">@kaylalooks</div></div><div class="td">GlowLab post 1</div><div><span class="plat ig">IG</span></div><div class="td">Jun 7</div><div class="td" style="color:var(--green)">#ad present</div><div><span class="pill pg">Clear</span></div></div>
+    <div class="tr" style="grid-template-columns:2fr 1.5fr 1fr 1fr 1fr 80px"><div style="display:flex;align-items:center;gap:8px"><div class="av">MR</div><div class="tn">@mrealness</div></div><div class="td">NikeDunk post 1</div><div><span class="plat tt">TT</span></div><div class="td">Jun 6</div><div class="td" style="color:var(--green)">#ad present</div><div><span class="pill pg">Clear</span></div></div>
+    <div class="tr" style="grid-template-columns:2fr 1.5fr 1fr 1fr 1fr 80px"><div style="display:flex;align-items:center;gap:8px"><div class="av">SP</div><div class="tn">@shopwithsoph</div></div><div class="td">HydroDaily post 4</div><div><span class="plat ig">IG</span></div><div class="td">Jun 5</div><div class="td" style="color:var(--green)">#ad present</div><div><span class="pill pg">Clear</span></div></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     MESSAGING
+══════════════════════════════════════ -->
+<div id="s-messaging" class="screen">
+  <div class="ph"><div><div class="pt">Messaging</div><div class="ps">Internal inbox — all conversations in one place</div></div><div class="ha"><button class="btn-g"><i class="ti ti-edit"></i>New message</button></div></div>
+  <div style="display:grid;grid-template-columns:220px 1fr;gap:0;background:var(--navy2);border:0.5px solid var(--border);border-radius:var(--r12);overflow:hidden;min-height:500px">
+    <!-- Inbox list -->
+    <div style="border-right:0.5px solid var(--border);overflow-y:auto">
+      <div style="padding:10px 12px;border-bottom:0.5px solid var(--border);font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.5px">Inbox</div>
+      <div onclick="openMsg(this)" class="msg-thread active-thread" style="padding:10px 12px;border-bottom:0.5px solid var(--border);cursor:pointer;background:var(--navy4)">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:3px"><div class="av" style="width:24px;height:24px;font-size:9px">AJ</div><div style="font-size:12px;font-weight:500;color:var(--text)">@alexjones</div><div style="margin-left:auto;font-size:9px;color:var(--text4)">2m</div></div>
+        <div style="font-size:11px;color:var(--text3);padding-left:32px">Got the brief, will have draft by tomorrow</div>
+      </div>
+      <div onclick="openMsg(this)" class="msg-thread" style="padding:10px 12px;border-bottom:0.5px solid var(--border);cursor:pointer">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:3px"><div class="av" style="width:24px;height:24px;font-size:9px">KL</div><div style="font-size:12px;font-weight:500;color:var(--text)">@kaylalooks</div><div style="margin-left:auto;font-size:9px;color:var(--text4)">1h</div></div>
+        <div style="font-size:11px;color:var(--text3);padding-left:32px">Can we push the GlowLab deadline?</div>
+      </div>
+      <div onclick="openMsg(this)" class="msg-thread" style="padding:10px 12px;border-bottom:0.5px solid var(--border);cursor:pointer">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:3px"><div class="av" style="width:24px;height:24px;font-size:9px">MR</div><div style="font-size:12px;font-weight:500;color:var(--text)">@mrealness</div><div style="margin-left:auto;font-size:9px;color:var(--text4)">3h</div></div>
+        <div style="font-size:11px;color:var(--text3);padding-left:32px">Yo the NikeDunk vid is ready to review</div>
+      </div>
+      <div onclick="openMsg(this)" class="msg-thread" style="padding:10px 12px;border-bottom:0.5px solid var(--border);cursor:pointer">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:3px"><div class="av-sq" style="width:24px;height:24px;font-size:9px;border-radius:5px">EL</div><div style="font-size:12px;font-weight:500;color:var(--text)">Elevate Agency</div><div style="margin-left:auto;font-size:9px;color:var(--text4)">5h</div></div>
+        <div style="font-size:11px;color:var(--text3);padding-left:32px">Ready to lock in the NikeDunk split?</div>
+      </div>
+      <div onclick="openMsg(this)" class="msg-thread" style="padding:10px 12px;cursor:pointer">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:3px"><div class="av-sq" style="width:24px;height:24px;font-size:9px;border-radius:5px">DR</div><div style="font-size:12px;font-weight:500;color:var(--text)">DripRoom Brand</div><div style="margin-left:auto;font-size:9px;color:var(--text4)">1d</div></div>
+        <div style="font-size:11px;color:var(--text3);padding-left:32px">Loved post 1! Can we add another?</div>
+      </div>
+    </div>
+    <!-- Message thread -->
+    <div style="display:flex;flex-direction:column">
+      <div style="padding:12px 14px;border-bottom:0.5px solid var(--border);display:flex;align-items:center;gap:9px">
+        <div class="av">AJ</div>
+        <div><div style="font-size:13px;font-weight:500;color:var(--text)">@alexjones</div><div style="font-size:10px;color:var(--text3)">Creator · DripRoom campaign</div></div>
+        <div style="margin-left:auto;display:flex;gap:6px"><button class="btn-n" style="font-size:11px;padding:4px 9px"><i class="ti ti-file-text"></i>Contract</button><button class="btn-n" style="font-size:11px;padding:4px 9px"><i class="ti ti-target"></i>Mission</button></div>
+      </div>
+      <div style="flex:1;padding:14px;overflow-y:auto;display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;gap:8px">
+          <div class="av" style="flex-shrink:0">AJ</div>
+          <div style="background:var(--navy4);border-radius:0 8px 8px 8px;padding:9px 12px;max-width:70%"><div style="font-size:12px;color:var(--text);line-height:1.5">Hey! Just got the DripRoom brief. Looks good. I'll have the first draft caption ready by tomorrow morning.</div><div style="font-size:9px;color:var(--text4);margin-top:4px">Jun 8 · 10:32am</div></div>
+        </div>
+        <div style="display:flex;gap:8px;justify-content:flex-end">
+          <div style="background:var(--gold-dim);border:0.5px solid var(--gold);border-radius:8px 0 8px 8px;padding:9px 12px;max-width:70%"><div style="font-size:12px;color:var(--text);line-height:1.5">Perfect. Remember the caption needs #ad up front — FTC requirement on all sponsored posts. Don't bury it.</div><div style="font-size:9px;color:var(--text4);margin-top:4px">Jun 8 · 10:45am</div></div>
+          <div class="av" style="flex-shrink:0;background:var(--gold);color:var(--navy)">JD</div>
+        </div>
+        <div style="display:flex;gap:8px">
+          <div class="av" style="flex-shrink:0">AJ</div>
+          <div style="background:var(--navy4);border-radius:0 8px 8px 8px;padding:9px 12px;max-width:70%"><div style="font-size:12px;color:var(--text);line-height:1.5">Got it, will put #ad right at the start. Got the draft ready, submitting to review now.</div><div style="font-size:9px;color:var(--text4);margin-top:4px">Jun 8 · 2:14pm</div></div>
+        </div>
+      </div>
+      <div style="padding:10px 14px;border-top:0.5px solid var(--border);display:flex;gap:8px;align-items:center">
+        <input id="msgInput" type="text" placeholder="Type a message..." style="flex:1;background:var(--navy3);border:0.5px solid var(--border2);border-radius:8px;padding:8px 12px;font-size:12px;color:var(--text);font-family:var(--font-sans),sans-serif" onkeydown="if(event.key==='Enter')sendMsg()">
+        <button class="btn-g" style="font-size:12px" onclick="sendMsg()"><i class="ti ti-send"></i>Send</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</script>
+</body>
+</html>
