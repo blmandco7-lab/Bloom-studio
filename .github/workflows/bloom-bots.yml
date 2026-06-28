@@ -1,0 +1,27 @@
+name: Bloom Studio Bots
+
+on:
+  schedule:
+    - cron: '0 14 * * *'
+    - cron: '0 13 * * 1'
+  workflow_dispatch:
+
+jobs:
+  bloom-bots:
+    name: Run Bloom Bots
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install dependencies
+        run: npm install firebase-admin node-fetch
+      - name: Run bots
+        env:
+          FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+        run: node scripts/bloom-bots.js
