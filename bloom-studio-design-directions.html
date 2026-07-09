@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Bloom Studio — Design Directions</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+  * { box-sizing: border-box; margin:0; padding:0; }
+  body { background:#040507; font-family:'DM Sans',sans-serif; padding:0; }
+
+  /* ── Switcher bar ── */
+  .switcher { position:sticky; top:0; z-index:100; background:#0c0d10; border-bottom:1px solid #1c1d22; padding:14px 24px; display:flex; align-items:center; gap:14px; }
+  .switcher-label { font-size:11px; color:#6b6f78; text-transform:uppercase; letter-spacing:1px; margin-right:4px; }
+  .switch-btn { font-family:'DM Sans',sans-serif; background:transparent; border:1px solid #2a2c33; color:#9a9ea8; padding:8px 18px; border-radius:8px; font-size:13px; cursor:pointer; transition:all .15s; }
+  .switch-btn:hover { border-color:#4a4d55; color:#e8e9ec; }
+  .switch-btn.active-a { background:#e0bc6a; border-color:#e0bc6a; color:#1a1000; font-weight:500; }
+  .switch-btn.active-b { background:#3ddc97; border-color:#3ddc97; color:#00170d; font-weight:500; }
+
+  .stage { display:none; padding:48px 40px 80px; }
+  .stage.visible { display:block; }
+  .frame { max-width:1080px; margin:0 auto; }
+
+  /* ═══════════════════════════════════════════════
+     DIRECTION A — "ATELIER"
+     Elevates the existing navy+gold DNA: warmer, softer,
+     more editorial. Gradients, ambient glow, generous space.
+     ═══════════════════════════════════════════════ */
+  .atelier { background: radial-gradient(ellipse 1200px 600px at 20% -10%, #16233a 0%, #0a1220 45%, #060b14 100%); border-radius:24px; padding:56px 52px; }
+  .atelier .eyebrow { font-size:11px; letter-spacing:2.5px; text-transform:uppercase; color:#8a9db8; font-weight:500; margin-bottom:10px; }
+  .atelier h1 { font-family:'Fraunces',serif; font-size:34px; font-weight:600; color:#f4f1ea; letter-spacing:-.3px; margin-bottom:6px; }
+  .atelier .sub { font-size:14px; color:#7f92ab; margin-bottom:40px; }
+  .atelier .divider { height:1px; background:linear-gradient(90deg, rgba(224,188,106,.5), rgba(224,188,106,0) 60%); margin-bottom:32px; }
+
+  .atelier .stat-row { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:36px; }
+  .atelier .stat { background:linear-gradient(160deg, #141f33 0%, #0d1626 100%); border:1px solid rgba(224,188,106,.12); border-radius:16px; padding:20px 20px 18px; position:relative; overflow:hidden; }
+  .atelier .stat::before { content:''; position:absolute; top:-30%; right:-20%; width:120px; height:120px; background:radial-gradient(circle, rgba(224,188,106,.10), transparent 70%); }
+  .atelier .stat-label { font-size:11px; color:#7f92ab; letter-spacing:.5px; margin-bottom:10px; }
+  .atelier .stat-value { font-family:'Fraunces',serif; font-size:28px; color:#f4f1ea; font-weight:500; margin-bottom:6px; }
+  .atelier .stat-delta { font-size:11px; color:#7bc99a; }
+  .atelier .stat-delta.warn { color:#e0a86a; }
+
+  .atelier .section-title { font-family:'Fraunces',serif; font-size:16px; color:#e6d9b8; margin-bottom:16px; display:flex; align-items:center; gap:10px; }
+  .atelier .section-title i { font-size:15px; color:#e0bc6a; }
+
+  .atelier .card-grid { display:grid; grid-template-columns:1.4fr 1fr; gap:20px; }
+  .atelier .list-card { background:rgba(20,31,51,.5); border:1px solid rgba(255,255,255,.06); border-radius:18px; padding:6px; backdrop-filter:blur(8px); }
+  .atelier .item { display:flex; align-items:center; gap:14px; padding:14px 16px; border-radius:12px; transition:background .15s; }
+  .atelier .item:hover { background:rgba(255,255,255,.03); }
+  .atelier .item + .item { border-top:1px solid rgba(255,255,255,.05); }
+  .atelier .avatar { width:38px; height:38px; border-radius:50%; background:linear-gradient(140deg,#e0bc6a,#b8935a); display:flex; align-items:center; justify-content:center; font-family:'Fraunces',serif; font-weight:600; font-size:13px; color:#1a1000; flex-shrink:0; box-shadow:0 0 0 2px rgba(224,188,106,.2); }
+  .atelier .item-title { font-size:13.5px; color:#eef1f5; font-weight:500; margin-bottom:2px; }
+  .atelier .item-sub { font-size:11.5px; color:#7f92ab; }
+  .atelier .pill { font-size:10px; padding:4px 11px; border-radius:20px; font-weight:500; letter-spacing:.2px; margin-left:auto; flex-shrink:0; }
+  .atelier .pill.urgent { background:rgba(224,120,106,.15); color:#f0a99a; border:1px solid rgba(224,120,106,.25); }
+  .atelier .pill.high { background:rgba(224,188,106,.12); color:#e6d9b8; border:1px solid rgba(224,188,106,.22); }
+  .atelier .pill.ok { background:rgba(123,201,154,.12); color:#a8d9bd; border:1px solid rgba(123,201,154,.2); }
+
+  .atelier .mission { background:rgba(20,31,51,.5); border:1px solid rgba(255,255,255,.06); border-radius:14px; padding:16px; margin-bottom:12px; }
+  .atelier .mission-top { display:flex; align-items:center; gap:8px; margin-bottom:10px; }
+  .atelier .mission-tag { font-size:9.5px; text-transform:uppercase; letter-spacing:.5px; color:#8fa8c9; background:rgba(138,168,201,.1); padding:3px 9px; border-radius:6px; }
+  .atelier .mission-title { font-size:13px; color:#eef1f5; margin-bottom:10px; }
+  .atelier .bar-track { height:5px; background:rgba(255,255,255,.06); border-radius:3px; overflow:hidden; margin-bottom:8px; }
+  .atelier .bar-fill { height:100%; background:linear-gradient(90deg,#e0bc6a,#c9a84c); border-radius:3px; }
+  .atelier .mission-foot { display:flex; justify-content:space-between; font-size:10.5px; color:#7f92ab; }
+
+  /* ═══════════════════════════════════════════════
+     DIRECTION B — "COMMAND"
+     Precision ops-tool. Near-black, thin borders, mono
+     data, one disciplined accent (mint), tight rhythm.
+     ═══════════════════════════════════════════════ */
+  .command { background:#08090b; border:1px solid #1a1c20; border-radius:12px; padding:40px 44px; }
+  .command .eyebrow { font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:1px; color:#3ddc97; margin-bottom:8px; }
+  .command h1 { font-family:'Space Grotesk',sans-serif; font-size:26px; font-weight:600; color:#f2f3f5; letter-spacing:-.4px; margin-bottom:4px; }
+  .command .sub { font-size:13px; color:#71757d; margin-bottom:32px; }
+
+  .command .stat-row { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:#1a1c20; border:1px solid #1a1c20; border-radius:10px; overflow:hidden; margin-bottom:32px; }
+  .command .stat { background:#0d0e11; padding:18px 18px 16px; }
+  .command .stat-label { font-size:10.5px; color:#71757d; letter-spacing:.3px; margin-bottom:10px; text-transform:uppercase; }
+  .command .stat-value { font-family:'JetBrains Mono',monospace; font-size:24px; color:#f2f3f5; font-weight:500; margin-bottom:6px; letter-spacing:-.5px; }
+  .command .stat-delta { font-family:'JetBrains Mono',monospace; font-size:11px; color:#3ddc97; }
+  .command .stat-delta.warn { color:#e0965a; }
+
+  .command .section-title { font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:500; color:#c8cbd1; margin-bottom:14px; text-transform:uppercase; letter-spacing:.5px; display:flex; align-items:center; gap:8px; }
+  .command .section-title i { font-size:14px; color:#3ddc97; }
+
+  .command .card-grid { display:grid; grid-template-columns:1.4fr 1fr; gap:1px; background:#1a1c20; border:1px solid #1a1c20; border-radius:10px; overflow:hidden; }
+  .command .list-card { background:#0d0e11; padding:4px; }
+  .command .item { display:flex; align-items:center; gap:12px; padding:12px 14px; }
+  .command .item + .item { border-top:1px solid #16171b; }
+  .command .avatar { width:30px; height:30px; border-radius:6px; background:#16171b; border:1px solid #26282e; display:flex; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace; font-weight:500; font-size:11px; color:#9a9ea8; flex-shrink:0; }
+  .command .item-title { font-size:13px; color:#e8e9ec; font-weight:400; margin-bottom:2px; }
+  .command .item-sub { font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#71757d; }
+  .command .pill { font-family:'JetBrains Mono',monospace; font-size:9.5px; padding:3px 9px; border-radius:4px; margin-left:auto; flex-shrink:0; border:1px solid; }
+  .command .pill.urgent { color:#e0705a; border-color:#3a1f18; background:#150c0a; }
+  .command .pill.high { color:#e0b05a; border-color:#3a2f18; background:#150f0a; }
+  .command .pill.ok { color:#3ddc97; border-color:#183a2a; background:#0a1510; }
+
+  .command .mission { background:#0d0e11; padding:14px; }
+  .command .mission + .mission { border-top:1px solid #16171b; }
+  .command .mission-top { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
+  .command .mission-tag { font-family:'JetBrains Mono',monospace; font-size:9px; text-transform:uppercase; color:#71757d; border:1px solid #26282e; padding:2px 7px; border-radius:4px; }
+  .command .mission-title { font-size:12.5px; color:#e8e9ec; margin-bottom:9px; }
+  .command .bar-track { height:3px; background:#1a1c20; border-radius:0; margin-bottom:7px; }
+  .command .bar-fill { height:100%; background:#3ddc97; }
+  .command .mission-foot { display:flex; justify-content:space-between; font-family:'JetBrains Mono',monospace; font-size:10px; color:#71757d; }
+</style>
+</head>
+<body>
+
+<div class="switcher">
+  <span class="switcher-label">Direction</span>
+  <button class="switch-btn active-a" id="btn-a" onclick="show('a')">A — Atelier</button>
+  <button class="switch-btn" id="btn-b" onclick="show('b')">B — Command</button>
+</div>
+
+<!-- ══════════ DIRECTION A ══════════ -->
+<div class="stage visible" id="stage-a">
+  <div class="frame">
+    <div class="atelier">
+      <div class="eyebrow">Thursday, July 9 · Director view</div>
+      <h1>Good morning, Director</h1>
+      <div class="sub">3 urgent items need your attention today</div>
+      <div class="divider"></div>
+
+      <div class="stat-row">
+        <div class="stat"><div class="stat-label">Active missions</div><div class="stat-value">7</div><div class="stat-delta">4 on track</div></div>
+        <div class="stat"><div class="stat-label">Action queue</div><div class="stat-value">11</div><div class="stat-delta warn">2 urgent</div></div>
+        <div class="stat"><div class="stat-label">Revenue this month</div><div class="stat-value">$38K</div><div class="stat-delta">+18%</div></div>
+        <div class="stat"><div class="stat-label">Roster health</div><div class="stat-value">94%</div><div class="stat-delta">All compliant</div></div>
+      </div>
+
+      <div class="card-grid">
+        <div>
+          <div class="section-title"><i class="ti ti-list-check"></i>Action queue</div>
+          <div class="list-card">
+            <div class="item"><div class="avatar">JT</div><div><div class="item-title">Review @jtrendsetter brand safety post</div><div class="item-sub">Flagged 2h ago</div></div><span class="pill urgent">Urgent</span></div>
+            <div class="item"><div class="avatar">TT</div><div><div class="item-title">Contact @tektalks re: NovaTech deadline</div><div class="item-sub">Due tomorrow</div></div><span class="pill urgent">Urgent</span></div>
+            <div class="item"><div class="avatar">VP</div><div><div class="item-title">Accept Viral Partners collab — $8K</div><div class="item-sub">Awaiting reply</div></div><span class="pill high">High</span></div>
+            <div class="item"><div class="avatar">SS</div><div><div class="item-title">Review @shopwithsoph contract expiry</div><div class="item-sub">14 days left</div></div><span class="pill high">High</span></div>
+          </div>
+        </div>
+        <div>
+          <div class="section-title"><i class="ti ti-target"></i>Mission status</div>
+          <div class="mission">
+            <div class="mission-top"><span class="mission-tag">Campaign</span></div>
+            <div class="mission-title">DripRoom Fashion Week</div>
+            <div class="bar-track"><div class="bar-fill" style="width:100%"></div></div>
+            <div class="mission-foot"><span>@alexjones · 3/3</span><span style="color:#7bc99a">$3,600</span></div>
+          </div>
+          <div class="mission">
+            <div class="mission-top"><span class="mission-tag">Promo</span></div>
+            <div class="mission-title">GlowLab Summer</div>
+            <div class="bar-track"><div class="bar-fill" style="width:33%"></div></div>
+            <div class="mission-foot"><span>@kaylalooks · 1/3</span><span style="color:#e0a86a">Due Jun 18</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ DIRECTION B ══════════ -->
+<div class="stage" id="stage-b">
+  <div class="frame">
+    <div class="command">
+      <div class="eyebrow">// thu jul 09 — director</div>
+      <h1>Daily briefing</h1>
+      <div class="sub">3 urgent items require action</div>
+
+      <div class="stat-row">
+        <div class="stat"><div class="stat-label">Active missions</div><div class="stat-value">07</div><div class="stat-delta">4 on track</div></div>
+        <div class="stat"><div class="stat-label">Action queue</div><div class="stat-value">11</div><div class="stat-delta warn">2 urgent</div></div>
+        <div class="stat"><div class="stat-label">Revenue MTD</div><div class="stat-value">$38.0K</div><div class="stat-delta">+18%</div></div>
+        <div class="stat"><div class="stat-label">Roster health</div><div class="stat-value">94%</div><div class="stat-delta">nominal</div></div>
+      </div>
+
+      <div class="card-grid">
+        <div>
+          <div class="section-title"><i class="ti ti-list-check"></i>Action queue</div>
+          <div class="list-card">
+            <div class="item"><div class="avatar">JT</div><div><div class="item-title">Review @jtrendsetter brand safety post</div><div class="item-sub">flagged · 2h</div></div><span class="pill urgent">urgent</span></div>
+            <div class="item"><div class="avatar">TT</div><div><div class="item-title">Contact @tektalks re: NovaTech deadline</div><div class="item-sub">due · 1d</div></div><span class="pill urgent">urgent</span></div>
+            <div class="item"><div class="avatar">VP</div><div><div class="item-title">Accept Viral Partners collab — $8K</div><div class="item-sub">awaiting reply</div></div><span class="pill high">high</span></div>
+            <div class="item"><div class="avatar">SS</div><div><div class="item-title">Review @shopwithsoph contract expiry</div><div class="item-sub">14d left</div></div><span class="pill high">high</span></div>
+          </div>
+        </div>
+        <div>
+          <div class="section-title"><i class="ti ti-target"></i>Missions</div>
+          <div class="list-card">
+            <div class="mission">
+              <div class="mission-top"><span class="mission-tag">campaign</span></div>
+              <div class="mission-title">DripRoom Fashion Week</div>
+              <div class="bar-track"><div class="bar-fill" style="width:100%"></div></div>
+              <div class="mission-foot"><span>@alexjones · 3/3</span><span style="color:#3ddc97">$3,600</span></div>
+            </div>
+            <div class="mission">
+              <div class="mission-top"><span class="mission-tag">promo</span></div>
+              <div class="mission-title">GlowLab Summer</div>
+              <div class="bar-track"><div class="bar-fill" style="width:33%"></div></div>
+              <div class="mission-foot"><span>@kaylalooks · 1/3</span><span style="color:#e0965a">due jun 18</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function show(which) {
+  document.getElementById('stage-a').classList.toggle('visible', which==='a');
+  document.getElementById('stage-b').classList.toggle('visible', which==='b');
+  document.getElementById('btn-a').classList.toggle('active-a', which==='a');
+  document.getElementById('btn-b').classList.toggle('active-b', which==='b');
+}
+</script>
+</body>
+</html>
