@@ -1,0 +1,35 @@
+name: Bloom Studio — Daily Bots
+
+# Runs automatically every day, and can also be run manually any time from
+# the "Actions" tab on GitHub (useful for testing without waiting for the
+# schedule). Runs entirely on GitHub's own servers — no hosting, no billing.
+
+"on":
+  schedule:
+    # Runs at 13:00 UTC every day (~9am Eastern / 6am Pacific).
+    # To change the time, edit the cron value below.
+    # Format: minute hour day month day-of-week (all in UTC)
+    - cron: '0 13 * * *'
+  workflow_dispatch: {} # adds a "Run workflow" button on GitHub for manual testing
+
+jobs:
+  run-bots:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        working-directory: scripts
+        run: npm install
+
+      - name: Run daily bot checks
+        working-directory: scripts
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+        run: node daily-bots.js
